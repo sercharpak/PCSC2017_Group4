@@ -1,6 +1,6 @@
 # PCSC_Project
 Repository for the final project for the Programming Concepts in Scientific Computing during the 2017-2 semester.
-### Members
+### Group 4 - Members
 1. Sergio Daniel Hernandez Charpak
 2. Didier Bieler
 ### Project 8: Image/sound processing
