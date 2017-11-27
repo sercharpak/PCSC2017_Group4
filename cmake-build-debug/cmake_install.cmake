@@ -1,4 +1,4 @@
-# Install script for directory: /home/dbieler/PCSC2017_Group4
+# Install script for directory: /home/shernand/Public/Scien_Conce/PCSC2017_Group4
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -40,5 +40,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "/home/dbieler/PCSC2017_Group4/cmake-build-debug/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "/home/shernand/Public/Scien_Conce/PCSC2017_Group4/cmake-build-debug/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")
