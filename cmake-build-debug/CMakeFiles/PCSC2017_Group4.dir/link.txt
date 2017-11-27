@@ -1,0 +1,1 @@
+/usr/bin/c++  -g   CMakeFiles/PCSC2017_Group4.dir/main.cpp.o  -o PCSC2017_Group4 
