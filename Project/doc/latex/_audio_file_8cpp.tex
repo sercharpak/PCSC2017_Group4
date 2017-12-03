@@ -1,0 +1,58 @@
+\hypertarget{_audio_file_8cpp}{\section{Audio\-File.\-cpp File Reference}
+\label{_audio_file_8cpp}\index{Audio\-File.\-cpp@{Audio\-File.\-cpp}}
+}
+{\ttfamily \#include \char`\"{}Audio\-File.\-h\char`\"{}}\\*
+{\ttfamily \#include $<$fstream$>$}\\*
+{\ttfamily \#include $<$unordered\-\_\-map$>$}\\*
+{\ttfamily \#include $<$iterator$>$}\\*
+\subsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+std\-::unordered\-\_\-map$<$ uint32\-\_\-t, \\*
+std\-::vector$<$ uint8\-\_\-t $>$ $>$ {\bfseries aiff\-Sample\-Rate\-Table}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+\begin{DoxyAuthor}{Author}
+Adam Stark 
+\end{DoxyAuthor}
+\begin{DoxyCopyright}{Copyright}
+Copyright (C) 2017 Adam Stark
+\end{DoxyCopyright}
+This file is part of the '\hyperlink{class_audio_file}{Audio\-File}' library
+
+This program is free software\-: you can redistribute it and/or modify it under the terms of the G\-N\-U General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful, but W\-I\-T\-H\-O\-U\-T A\-N\-Y W\-A\-R\-R\-A\-N\-T\-Y; without even the implied warranty of M\-E\-R\-C\-H\-A\-N\-T\-A\-B\-I\-L\-I\-T\-Y or F\-I\-T\-N\-E\-S\-S F\-O\-R A P\-A\-R\-T\-I\-C\-U\-L\-A\-R P\-U\-R\-P\-O\-S\-E. See the G\-N\-U General Public License for more details.
+
+You should have received a copy of the G\-N\-U General Public License along with this program. If not, see \href{http://www.gnu.org/licenses/}{\tt http\-://www.\-gnu.\-org/licenses/}. 
+
+\subsection{Variable Documentation}
+\hypertarget{_audio_file_8cpp_abf9b30998d0448afa3d74af3ac87eb67}{\index{Audio\-File.\-cpp@{Audio\-File.\-cpp}!aiff\-Sample\-Rate\-Table@{aiff\-Sample\-Rate\-Table}}
+\index{aiff\-Sample\-Rate\-Table@{aiff\-Sample\-Rate\-Table}!AudioFile.cpp@{Audio\-File.\-cpp}}
+\subsubsection[{aiff\-Sample\-Rate\-Table}]{\setlength{\rightskip}{0pt plus 5cm}std\-::unordered\-\_\-map$<$uint32\-\_\-t, std\-::vector$<$uint8\-\_\-t$>$ $>$ aiff\-Sample\-Rate\-Table}}\label{_audio_file_8cpp_abf9b30998d0448afa3d74af3ac87eb67}
+{\bfseries Initial value\-:}
+\begin{DoxyCode}
+= \{
+    \{8000, \{64, 11, 250, 0, 0, 0, 0, 0, 0, 0\}\},
+    \{11025, \{64, 12, 172, 68, 0, 0, 0, 0, 0, 0\}\},
+    \{16000, \{64, 12, 250, 0, 0, 0, 0, 0, 0, 0\}\},
+    \{22050, \{64, 13, 172, 68, 0, 0, 0, 0, 0, 0\}\},
+    \{32000, \{64, 13, 250, 0, 0, 0, 0, 0, 0, 0\}\},
+    \{37800, \{64, 14, 147, 168, 0, 0, 0, 0, 0, 0\}\},
+    \{44056, \{64, 14, 172, 24, 0, 0, 0, 0, 0, 0\}\},
+    \{44100, \{64, 14, 172, 68, 0, 0, 0, 0, 0, 0\}\},
+    \{47250, \{64, 14, 184, 146, 0, 0, 0, 0, 0, 0\}\},
+    \{48000, \{64, 14, 187, 128, 0, 0, 0, 0, 0, 0\}\},
+    \{50000, \{64, 14, 195, 80, 0, 0, 0, 0, 0, 0\}\},
+    \{50400, \{64, 14, 196, 224, 0, 0, 0, 0, 0, 0\}\},
+    \{88200, \{64, 15, 172, 68, 0, 0, 0, 0, 0, 0\}\},
+    \{96000, \{64, 15, 187, 128, 0, 0, 0, 0, 0, 0\}\},
+    \{176400, \{64, 16, 172, 68, 0, 0, 0, 0, 0, 0\}\},
+    \{192000, \{64, 16, 187, 128, 0, 0, 0, 0, 0, 0\}\},
+    \{352800, \{64, 17, 172, 68, 0, 0, 0, 0, 0, 0\}\},
+    \{2822400, \{64, 20, 172, 68, 0, 0, 0, 0, 0, 0\}\},
+    \{5644800, \{64, 21, 172, 68, 0, 0, 0, 0, 0, 0\}\}
+\}
+\end{DoxyCode}

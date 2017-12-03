@@ -3,7 +3,7 @@ project(PCSC2017_Group4)
 
 set(CMAKE_CXX_STANDARD 11)
 
-set(SOURCE_FILES main.cpp)
+set(SOURCE_FILES main.cpp StandardFilter.cpp )
 add_executable(PCSC2017_Group4 ${SOURCE_FILES})
 
 file(COPY "Doxyfile" DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/)

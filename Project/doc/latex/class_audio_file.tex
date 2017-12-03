@@ -1,0 +1,265 @@
+\hypertarget{class_audio_file}{\section{Audio\-File$<$ T $>$ Class Template Reference}
+\label{class_audio_file}\index{Audio\-File$<$ T $>$@{Audio\-File$<$ T $>$}}
+}
+\subsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_audio_file_ad1260a47791dc30cbabfe3ff2ea099b1}{typedef std\-::vector\\*
+$<$ std\-::vector$<$ T $>$ $>$ {\bfseries Audio\-Buffer}}\label{class_audio_file_ad1260a47791dc30cbabfe3ff2ea099b1}
+
+\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_audio_file_ae74399e93d3f4623c7421ee10cfc0e15}{Audio\-File} ()
+\item 
+bool \hyperlink{class_audio_file_a0ff16123b519a4665e9f3e7d341f0a26}{load} (std\-::string file\-Path)
+\item 
+bool \hyperlink{class_audio_file_a415239cad5b54b4fef4a210ab79911e3}{save} (std\-::string file\-Path, \hyperlink{_audio_file_8h_ad18559d169602e85d0ad68da6ef8593f}{Audio\-File\-Format} format=Audio\-File\-Format\-::\-Wave)
+\item 
+uint32\-\_\-t \hyperlink{class_audio_file_a284e63ed11cd183da2a9a5c03a3f2ac9}{get\-Sample\-Rate} () const 
+\item 
+int \hyperlink{class_audio_file_a8bcf0b569fb1ad83f16b73358a362e5c}{get\-Num\-Channels} () const 
+\item 
+bool \hyperlink{class_audio_file_a4b268d82202c22b2e8e896531bdcb778}{is\-Mono} () const 
+\item 
+bool \hyperlink{class_audio_file_a87fc46a0062c665a903ddf9c3df7638e}{is\-Stereo} () const 
+\item 
+int \hyperlink{class_audio_file_ac5c806565bde9d5e80216fd067ba1e8a}{get\-Bit\-Depth} () const 
+\item 
+int \hyperlink{class_audio_file_ae0899f74308e06331db70b4afb8d3300}{get\-Num\-Samples\-Per\-Channel} () const 
+\item 
+double \hyperlink{class_audio_file_a4eee797b7612a3a3b423928f65fb6238}{get\-Length\-In\-Seconds} () const 
+\item 
+void \hyperlink{class_audio_file_a067817a4494de9e3b50658fa6f3d79be}{print\-Summary} () const 
+\item 
+bool \hyperlink{class_audio_file_afa0a0f7d576b0597c938c5a89746636e}{set\-Audio\-Buffer} (Audio\-Buffer \&new\-Buffer)
+\item 
+void \hyperlink{class_audio_file_ac155ed12db0f3b02011a7d75b525e71a}{set\-Audio\-Buffer\-Size} (int num\-Channels, int num\-Samples)
+\item 
+void \hyperlink{class_audio_file_a4cff9513d49e21d25de13513564784b7}{set\-Num\-Samples\-Per\-Channel} (int num\-Samples)
+\item 
+void \hyperlink{class_audio_file_a354018a94ae15907d7308782f2adadbb}{set\-Num\-Channels} (int num\-Channels)
+\item 
+void \hyperlink{class_audio_file_a2adf2ea23e7daeb8401e717c1b3d874b}{set\-Bit\-Depth} (int num\-Bits\-Per\-Sample)
+\item 
+void \hyperlink{class_audio_file_a2d8fa306e40535113c3eba111e16483b}{set\-Sample\-Rate} (uint32\-\_\-t new\-Sample\-Rate)
+\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+Audio\-Buffer \hyperlink{class_audio_file_af937119db095c5af870851050dcbeabb}{samples}
+\end{DoxyCompactItemize}
+\subsection*{Protected Types}
+\begin{DoxyCompactItemize}
+\item 
+enum {\bfseries Endianness} \{ {\bfseries Little\-Endian}, 
+{\bfseries Big\-Endian}
+ \}
+\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_audio_file_a0d55bc7ae7b9eb014b93b6baabab8ba7}{\hyperlink{_audio_file_8h_ad18559d169602e85d0ad68da6ef8593f}{Audio\-File\-Format} {\bfseries determine\-Audio\-File\-Format} (std\-::vector$<$ uint8\-\_\-t $>$ \&file\-Data)}\label{class_audio_file_a0d55bc7ae7b9eb014b93b6baabab8ba7}
+
+\item 
+\hypertarget{class_audio_file_afea0b1dbe7788155f249fa3b8a0ad693}{bool {\bfseries decode\-Wave\-File} (std\-::vector$<$ uint8\-\_\-t $>$ \&file\-Data)}\label{class_audio_file_afea0b1dbe7788155f249fa3b8a0ad693}
+
+\item 
+\hypertarget{class_audio_file_a1d68d689475374b830c3e41d7cd54dfa}{bool {\bfseries decode\-Aiff\-File} (std\-::vector$<$ uint8\-\_\-t $>$ \&file\-Data)}\label{class_audio_file_a1d68d689475374b830c3e41d7cd54dfa}
+
+\item 
+\hypertarget{class_audio_file_a9b1997f2466ec1674ce17bebb9a1ba2d}{bool {\bfseries save\-To\-Wave\-File} (std\-::string file\-Path)}\label{class_audio_file_a9b1997f2466ec1674ce17bebb9a1ba2d}
+
+\item 
+\hypertarget{class_audio_file_aa6ed89cc0884105f7022c7595c1609ea}{bool {\bfseries save\-To\-Aiff\-File} (std\-::string file\-Path)}\label{class_audio_file_aa6ed89cc0884105f7022c7595c1609ea}
+
+\item 
+\hypertarget{class_audio_file_a4859348770aba2ab8638a6d2d29490ad}{void {\bfseries clear\-Audio\-Buffer} ()}\label{class_audio_file_a4859348770aba2ab8638a6d2d29490ad}
+
+\item 
+\hypertarget{class_audio_file_a5fcde4e965721804e6f60fc38936887f}{int32\-\_\-t {\bfseries four\-Bytes\-To\-Int} (std\-::vector$<$ uint8\-\_\-t $>$ \&source, int start\-Index, Endianness endianness=Endianness\-::\-Little\-Endian)}\label{class_audio_file_a5fcde4e965721804e6f60fc38936887f}
+
+\item 
+\hypertarget{class_audio_file_a279bb7ae95e4b3b9db5e9c9e141b564d}{int16\-\_\-t {\bfseries two\-Bytes\-To\-Int} (std\-::vector$<$ uint8\-\_\-t $>$ \&source, int start\-Index, Endianness endianness=Endianness\-::\-Little\-Endian)}\label{class_audio_file_a279bb7ae95e4b3b9db5e9c9e141b564d}
+
+\item 
+\hypertarget{class_audio_file_a7446935a450d4aa8da37e5ac1fd4133b}{int {\bfseries get\-Index\-Of\-String} (std\-::vector$<$ uint8\-\_\-t $>$ \&source, std\-::string s)}\label{class_audio_file_a7446935a450d4aa8da37e5ac1fd4133b}
+
+\item 
+\hypertarget{class_audio_file_a2ff18ea40f28f1758f0ca78b2185c789}{T {\bfseries sixteen\-Bit\-Int\-To\-Sample} (int16\-\_\-t sample)}\label{class_audio_file_a2ff18ea40f28f1758f0ca78b2185c789}
+
+\item 
+\hypertarget{class_audio_file_afd351555e7868d1c9cbf77d93edc09dd}{uint32\-\_\-t {\bfseries get\-Aiff\-Sample\-Rate} (std\-::vector$<$ uint8\-\_\-t $>$ \&file\-Data, int sample\-Rate\-Start\-Index)}\label{class_audio_file_afd351555e7868d1c9cbf77d93edc09dd}
+
+\item 
+\hypertarget{class_audio_file_a801f2c42d590c1fcba274c6d1f70cfbc}{bool {\bfseries ten\-Byte\-Match} (std\-::vector$<$ uint8\-\_\-t $>$ \&v1, int start\-Index1, std\-::vector$<$ uint8\-\_\-t $>$ \&v2, int start\-Index2)}\label{class_audio_file_a801f2c42d590c1fcba274c6d1f70cfbc}
+
+\item 
+\hypertarget{class_audio_file_aa25ff369a0e2ca315c7abf3982ef1c18}{void {\bfseries add\-Sample\-Rate\-To\-Aiff\-Data} (std\-::vector$<$ uint8\-\_\-t $>$ \&file\-Data, uint32\-\_\-t sample\-Rate)}\label{class_audio_file_aa25ff369a0e2ca315c7abf3982ef1c18}
+
+\item 
+\hypertarget{class_audio_file_a21b500e75c67e28f38554c2eb752e24b}{void {\bfseries add\-String\-To\-File\-Data} (std\-::vector$<$ uint8\-\_\-t $>$ \&file\-Data, std\-::string s)}\label{class_audio_file_a21b500e75c67e28f38554c2eb752e24b}
+
+\item 
+\hypertarget{class_audio_file_add8628d661b806fbba0e28231da97563}{void {\bfseries add\-Int32\-To\-File\-Data} (std\-::vector$<$ uint8\-\_\-t $>$ \&file\-Data, int32\-\_\-t i, Endianness endianness=Endianness\-::\-Little\-Endian)}\label{class_audio_file_add8628d661b806fbba0e28231da97563}
+
+\item 
+\hypertarget{class_audio_file_aba8b98835fdc51bc9d0e04634c70603a}{void {\bfseries add\-Int16\-To\-File\-Data} (std\-::vector$<$ uint8\-\_\-t $>$ \&file\-Data, int16\-\_\-t i, Endianness endianness=Endianness\-::\-Little\-Endian)}\label{class_audio_file_aba8b98835fdc51bc9d0e04634c70603a}
+
+\item 
+\hypertarget{class_audio_file_a734c540c871a3843f01f908bbfc3962d}{bool {\bfseries write\-Data\-To\-File} (std\-::vector$<$ uint8\-\_\-t $>$ \&file\-Data, std\-::string file\-Path)}\label{class_audio_file_a734c540c871a3843f01f908bbfc3962d}
+
+\end{DoxyCompactItemize}
+\subsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_audio_file_aeafbb547cc9b08418212c41215c57838}{\hyperlink{_audio_file_8h_ad18559d169602e85d0ad68da6ef8593f}{Audio\-File\-Format} {\bfseries audio\-File\-Format}}\label{class_audio_file_aeafbb547cc9b08418212c41215c57838}
+
+\item 
+\hypertarget{class_audio_file_aa8517ad3c63493253ecf59bb0c9974c1}{uint32\-\_\-t {\bfseries sample\-Rate}}\label{class_audio_file_aa8517ad3c63493253ecf59bb0c9974c1}
+
+\item 
+\hypertarget{class_audio_file_a19f9bc02bc118b7c2fa3d50e7bbb49b3}{int {\bfseries bit\-Depth}}\label{class_audio_file_a19f9bc02bc118b7c2fa3d50e7bbb49b3}
+
+\end{DoxyCompactItemize}
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{class_audio_file_ae74399e93d3f4623c7421ee10cfc0e15}{\index{Audio\-File@{Audio\-File}!Audio\-File@{Audio\-File}}
+\index{Audio\-File@{Audio\-File}!AudioFile@{Audio\-File}}
+\subsubsection[{Audio\-File}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class T $>$ {\bf Audio\-File}$<$ T $>$\-::{\bf Audio\-File} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{class_audio_file_ae74399e93d3f4623c7421ee10cfc0e15}
+Constructor 
+
+\subsection{Member Function Documentation}
+\hypertarget{class_audio_file_ac5c806565bde9d5e80216fd067ba1e8a}{\index{Audio\-File@{Audio\-File}!get\-Bit\-Depth@{get\-Bit\-Depth}}
+\index{get\-Bit\-Depth@{get\-Bit\-Depth}!AudioFile@{Audio\-File}}
+\subsubsection[{get\-Bit\-Depth}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class T $>$ int {\bf Audio\-File}$<$ T $>$\-::get\-Bit\-Depth (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}\label{class_audio_file_ac5c806565bde9d5e80216fd067ba1e8a}
+the bit depth of each sample \hypertarget{class_audio_file_a4eee797b7612a3a3b423928f65fb6238}{\index{Audio\-File@{Audio\-File}!get\-Length\-In\-Seconds@{get\-Length\-In\-Seconds}}
+\index{get\-Length\-In\-Seconds@{get\-Length\-In\-Seconds}!AudioFile@{Audio\-File}}
+\subsubsection[{get\-Length\-In\-Seconds}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class T $>$ double {\bf Audio\-File}$<$ T $>$\-::get\-Length\-In\-Seconds (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}\label{class_audio_file_a4eee797b7612a3a3b423928f65fb6238}
+the length in seconds of the audio file based on the number of samples and sample rate \hypertarget{class_audio_file_a8bcf0b569fb1ad83f16b73358a362e5c}{\index{Audio\-File@{Audio\-File}!get\-Num\-Channels@{get\-Num\-Channels}}
+\index{get\-Num\-Channels@{get\-Num\-Channels}!AudioFile@{Audio\-File}}
+\subsubsection[{get\-Num\-Channels}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class T $>$ int {\bf Audio\-File}$<$ T $>$\-::get\-Num\-Channels (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}\label{class_audio_file_a8bcf0b569fb1ad83f16b73358a362e5c}
+the number of audio channels in the buffer \hypertarget{class_audio_file_ae0899f74308e06331db70b4afb8d3300}{\index{Audio\-File@{Audio\-File}!get\-Num\-Samples\-Per\-Channel@{get\-Num\-Samples\-Per\-Channel}}
+\index{get\-Num\-Samples\-Per\-Channel@{get\-Num\-Samples\-Per\-Channel}!AudioFile@{Audio\-File}}
+\subsubsection[{get\-Num\-Samples\-Per\-Channel}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class T $>$ int {\bf Audio\-File}$<$ T $>$\-::get\-Num\-Samples\-Per\-Channel (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}\label{class_audio_file_ae0899f74308e06331db70b4afb8d3300}
+the number of samples per channel \hypertarget{class_audio_file_a284e63ed11cd183da2a9a5c03a3f2ac9}{\index{Audio\-File@{Audio\-File}!get\-Sample\-Rate@{get\-Sample\-Rate}}
+\index{get\-Sample\-Rate@{get\-Sample\-Rate}!AudioFile@{Audio\-File}}
+\subsubsection[{get\-Sample\-Rate}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class T $>$ uint32\-\_\-t {\bf Audio\-File}$<$ T $>$\-::get\-Sample\-Rate (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}\label{class_audio_file_a284e63ed11cd183da2a9a5c03a3f2ac9}
+the sample rate \hypertarget{class_audio_file_a4b268d82202c22b2e8e896531bdcb778}{\index{Audio\-File@{Audio\-File}!is\-Mono@{is\-Mono}}
+\index{is\-Mono@{is\-Mono}!AudioFile@{Audio\-File}}
+\subsubsection[{is\-Mono}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class T $>$ bool {\bf Audio\-File}$<$ T $>$\-::is\-Mono (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}\label{class_audio_file_a4b268d82202c22b2e8e896531bdcb778}
+true if the audio file is mono \hypertarget{class_audio_file_a87fc46a0062c665a903ddf9c3df7638e}{\index{Audio\-File@{Audio\-File}!is\-Stereo@{is\-Stereo}}
+\index{is\-Stereo@{is\-Stereo}!AudioFile@{Audio\-File}}
+\subsubsection[{is\-Stereo}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class T $>$ bool {\bf Audio\-File}$<$ T $>$\-::is\-Stereo (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}\label{class_audio_file_a87fc46a0062c665a903ddf9c3df7638e}
+true if the audio file is stereo \hypertarget{class_audio_file_a0ff16123b519a4665e9f3e7d341f0a26}{\index{Audio\-File@{Audio\-File}!load@{load}}
+\index{load@{load}!AudioFile@{Audio\-File}}
+\subsubsection[{load}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class T $>$ bool {\bf Audio\-File}$<$ T $>$\-::load (
+\begin{DoxyParamCaption}
+\item[{std\-::string}]{file\-Path}
+\end{DoxyParamCaption}
+)}}\label{class_audio_file_a0ff16123b519a4665e9f3e7d341f0a26}
+Loads an audio file from a given file path.  true if the file was successfully loaded \hypertarget{class_audio_file_a067817a4494de9e3b50658fa6f3d79be}{\index{Audio\-File@{Audio\-File}!print\-Summary@{print\-Summary}}
+\index{print\-Summary@{print\-Summary}!AudioFile@{Audio\-File}}
+\subsubsection[{print\-Summary}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class T $>$ void {\bf Audio\-File}$<$ T $>$\-::print\-Summary (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}\label{class_audio_file_a067817a4494de9e3b50658fa6f3d79be}
+Prints a summary of the audio file to the console \hypertarget{class_audio_file_a415239cad5b54b4fef4a210ab79911e3}{\index{Audio\-File@{Audio\-File}!save@{save}}
+\index{save@{save}!AudioFile@{Audio\-File}}
+\subsubsection[{save}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class T $>$ bool {\bf Audio\-File}$<$ T $>$\-::save (
+\begin{DoxyParamCaption}
+\item[{std\-::string}]{file\-Path, }
+\item[{{\bf Audio\-File\-Format}}]{format = {\ttfamily AudioFileFormat\-:\-:Wave}}
+\end{DoxyParamCaption}
+)}}\label{class_audio_file_a415239cad5b54b4fef4a210ab79911e3}
+Saves an audio file to a given file path.  true if the file was successfully saved \hypertarget{class_audio_file_afa0a0f7d576b0597c938c5a89746636e}{\index{Audio\-File@{Audio\-File}!set\-Audio\-Buffer@{set\-Audio\-Buffer}}
+\index{set\-Audio\-Buffer@{set\-Audio\-Buffer}!AudioFile@{Audio\-File}}
+\subsubsection[{set\-Audio\-Buffer}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class T $>$ bool {\bf Audio\-File}$<$ T $>$\-::set\-Audio\-Buffer (
+\begin{DoxyParamCaption}
+\item[{Audio\-Buffer \&}]{new\-Buffer}
+\end{DoxyParamCaption}
+)}}\label{class_audio_file_afa0a0f7d576b0597c938c5a89746636e}
+Set the audio buffer for this \hyperlink{class_audio_file}{Audio\-File} by copying samples from another buffer.  true if the buffer was copied successfully. \hypertarget{class_audio_file_ac155ed12db0f3b02011a7d75b525e71a}{\index{Audio\-File@{Audio\-File}!set\-Audio\-Buffer\-Size@{set\-Audio\-Buffer\-Size}}
+\index{set\-Audio\-Buffer\-Size@{set\-Audio\-Buffer\-Size}!AudioFile@{Audio\-File}}
+\subsubsection[{set\-Audio\-Buffer\-Size}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class T $>$ void {\bf Audio\-File}$<$ T $>$\-::set\-Audio\-Buffer\-Size (
+\begin{DoxyParamCaption}
+\item[{int}]{num\-Channels, }
+\item[{int}]{num\-Samples}
+\end{DoxyParamCaption}
+)}}\label{class_audio_file_ac155ed12db0f3b02011a7d75b525e71a}
+Sets the audio buffer to a given number of channels and number of samples per channel. This will try to preserve the existing audio, adding zeros to any new channels or new samples in a given channel. \hypertarget{class_audio_file_a2adf2ea23e7daeb8401e717c1b3d874b}{\index{Audio\-File@{Audio\-File}!set\-Bit\-Depth@{set\-Bit\-Depth}}
+\index{set\-Bit\-Depth@{set\-Bit\-Depth}!AudioFile@{Audio\-File}}
+\subsubsection[{set\-Bit\-Depth}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class T $>$ void {\bf Audio\-File}$<$ T $>$\-::set\-Bit\-Depth (
+\begin{DoxyParamCaption}
+\item[{int}]{num\-Bits\-Per\-Sample}
+\end{DoxyParamCaption}
+)}}\label{class_audio_file_a2adf2ea23e7daeb8401e717c1b3d874b}
+Sets the bit depth for the audio file. If you use the \hyperlink{class_audio_file_a415239cad5b54b4fef4a210ab79911e3}{save()} function, this bit depth rate will be used \hypertarget{class_audio_file_a354018a94ae15907d7308782f2adadbb}{\index{Audio\-File@{Audio\-File}!set\-Num\-Channels@{set\-Num\-Channels}}
+\index{set\-Num\-Channels@{set\-Num\-Channels}!AudioFile@{Audio\-File}}
+\subsubsection[{set\-Num\-Channels}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class T $>$ void {\bf Audio\-File}$<$ T $>$\-::set\-Num\-Channels (
+\begin{DoxyParamCaption}
+\item[{int}]{num\-Channels}
+\end{DoxyParamCaption}
+)}}\label{class_audio_file_a354018a94ae15907d7308782f2adadbb}
+Sets the number of channels. New channels will have the correct number of samples and be initialised to zero \hypertarget{class_audio_file_a4cff9513d49e21d25de13513564784b7}{\index{Audio\-File@{Audio\-File}!set\-Num\-Samples\-Per\-Channel@{set\-Num\-Samples\-Per\-Channel}}
+\index{set\-Num\-Samples\-Per\-Channel@{set\-Num\-Samples\-Per\-Channel}!AudioFile@{Audio\-File}}
+\subsubsection[{set\-Num\-Samples\-Per\-Channel}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class T $>$ void {\bf Audio\-File}$<$ T $>$\-::set\-Num\-Samples\-Per\-Channel (
+\begin{DoxyParamCaption}
+\item[{int}]{num\-Samples}
+\end{DoxyParamCaption}
+)}}\label{class_audio_file_a4cff9513d49e21d25de13513564784b7}
+Sets the number of samples per channel in the audio buffer. This will try to preserve the existing audio, adding zeros to new samples in a given channel if the number of samples is increased. \hypertarget{class_audio_file_a2d8fa306e40535113c3eba111e16483b}{\index{Audio\-File@{Audio\-File}!set\-Sample\-Rate@{set\-Sample\-Rate}}
+\index{set\-Sample\-Rate@{set\-Sample\-Rate}!AudioFile@{Audio\-File}}
+\subsubsection[{set\-Sample\-Rate}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class T $>$ void {\bf Audio\-File}$<$ T $>$\-::set\-Sample\-Rate (
+\begin{DoxyParamCaption}
+\item[{uint32\-\_\-t}]{new\-Sample\-Rate}
+\end{DoxyParamCaption}
+)}}\label{class_audio_file_a2d8fa306e40535113c3eba111e16483b}
+Sets the sample rate for the audio file. If you use the \hyperlink{class_audio_file_a415239cad5b54b4fef4a210ab79911e3}{save()} function, this sample rate will be used 
+
+\subsection{Member Data Documentation}
+\hypertarget{class_audio_file_af937119db095c5af870851050dcbeabb}{\index{Audio\-File@{Audio\-File}!samples@{samples}}
+\index{samples@{samples}!AudioFile@{Audio\-File}}
+\subsubsection[{samples}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class T$>$ Audio\-Buffer {\bf Audio\-File}$<$ T $>$\-::samples}}\label{class_audio_file_af937119db095c5af870851050dcbeabb}
+A vector of vectors holding the audio samples for the \hyperlink{class_audio_file}{Audio\-File}. You can access the samples by channel and then by sample index, i.\-e\-: \begin{DoxyVerb} samples[channel][sampleIndex]\end{DoxyVerb}
+ 
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+\hyperlink{_audio_file_8h}{Audio\-File.\-h}\item 
+\hyperlink{_audio_file_8cpp}{Audio\-File.\-cpp}\end{DoxyCompactItemize}
