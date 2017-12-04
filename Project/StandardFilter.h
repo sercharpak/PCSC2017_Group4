@@ -12,6 +12,9 @@
 template <class T>
 class StandardFilter {
 public:
+    /** Standard Constructor
+     */
+    StandardFilter();
     /** Constructor with the length of the mask
      * @param pLength int which indicated the length of the filter
      */
@@ -55,5 +58,7 @@ private:
     int length;
 };
 
+#include "StandardFilter_imp.h"
 
-#endif //PCSC2017_GROUP4_ABSTRACTFILTER_H
+
+#endif //PCSC2017_GROUP4_STANDARDFILTER_H
