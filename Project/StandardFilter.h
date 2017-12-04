@@ -11,8 +11,16 @@
 #include <vector>
 template <class T>
 class StandardFilter {
+protected:
+    /** Numerator coefficients of the mask of the filter.
+     */
+    std::vector<T> mask;
+    /** Length of the mask of the filter
+    */
+    int length;
 public:
     /** Standard Constructor
+     * The length is set to 5
      */
     StandardFilter();
     /** Constructor with the length of the mask
@@ -49,13 +57,6 @@ public:
     //TODO change the std::vector<T> with the Signal class
     std::vector<T> apply(std::vector<T> pSignal);
 
-private:
-    /** Numerator coefficients of the mask of the filter.
-     */
-    std::vector<T> mask;
-    /** Length of the mask of the filter
-    */
-    int length;
 };
 
 #include "StandardFilter_imp.h"

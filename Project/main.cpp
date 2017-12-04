@@ -5,7 +5,7 @@
 #include "AudioFile.h"
 #include "Signal.h"
 #include "StandardFilter.h"
-//#include "MeanFilter.h"
+#include "MeanFilter.h"
 #include <fstream>
 #include <vector>
 #include <cmath>
@@ -28,24 +28,30 @@ int main(int argc, char* argv[]) {
     try {
         Signal Sign("../test-audio/wav_mono_16bit_44100.wav");
         int channel = 0;
+
         std::vector<double> signalToFilter = Sign.getAudioFile().samples[channel];
+
         std::cout << signalToFilter.size();
         int filterSize = 5;
+
         StandardFilter<double> meanFilter = StandardFilter<double>(filterSize);
         std::vector<double> maskMean = std::vector<double>(filterSize);
+
         std::for_each(maskMean.begin(), maskMean.end(),
                       [filterSize](double &x) { x = (1.0/filterSize); }); //Fills the mask
         std::for_each(maskMean.begin(), maskMean.end(),
                       [](double x) { std::cout << x << std::endl; });
         meanFilter.setMask(maskMean);
+
         std::vector<double> signalFiltered =meanFilter.apply(signalToFilter);
 
         std::cout << signalFiltered.size();
 
-        //MeanFilter<double> myMean = MeanFilter<double>(filterSize);
+        MeanFilter<double> myMean = MeanFilter<double>(filterSize);
 
+        std::vector<double> signalFilteredMyMean = myMean.apply(signalToFilter);
 
-
+        std::cout << signalFilteredMyMean.size();
 
         std::ofstream write_output("Output_Filter.dat");
         std::vector<double> time;
@@ -62,7 +68,8 @@ int main(int argc, char* argv[]) {
             double currentSample = Sign.getAudioFile().samples[channel][i];
             write_output<<time[i]<<" ";
             write_output<<currentSample<<" ";
-            write_output<<signalFiltered[i]<<std::endl;
+            write_output<<signalFiltered[i]<<" ";
+            write_output<<signalFilteredMyMean[i]<<std::endl;
 
         }
 

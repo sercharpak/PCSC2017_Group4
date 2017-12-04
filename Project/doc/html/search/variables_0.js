@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['samples',['samples',['../class_audio_file.html#af937119db095c5af870851050dcbeabb',1,'AudioFile']]]
+  ['length',['length',['../class_standard_filter.html#aa693971cea1c7c485a19928fd77a91c7',1,'StandardFilter']]]
 ];
