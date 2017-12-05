@@ -1,5 +1,0 @@
-/opt/clion-2017.2.1/bin/cmake/bin/cmake -DCMAKE_BUILD_TYPE=Debug -G "CodeBlocks - Unix Makefiles" /home/shernand/Public/Scien_Conce/PCSC2017_Group4
--- Found Doxygen: /usr/bin/doxygen (found version "1.8.13") 
--- Configuring done
--- Generating done
--- Build files have been written to: /home/shernand/Public/Scien_Conce/PCSC2017_Group4/cmake-build-debug
