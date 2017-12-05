@@ -4,10 +4,12 @@
 
 #include "AudioFile.h"
 #include "Signal.h"
+#include "Read.h"
 #include <fstream>
 #include <vector>
 #include <cmath>
 #include <algorithm>
+#include <complex>
 
 int main(int argc, char* argv[]) {
     //Examples taken from: https://github.com/adamstark/AudioFile
@@ -22,7 +24,7 @@ int main(int argc, char* argv[]) {
 
     AudioFile<double> audioFile;
     */
-    try {
+    //try {
 
 
         /*
@@ -69,10 +71,36 @@ int main(int argc, char* argv[]) {
         //Partie pour calculer l'histogramme d'un signal
         //Il faut maintenant mettre cette partie dans la classe signal
         */
+        /*
         Signal Sign("./wav_mono_16bit_44100.wav");
         std::ofstream write_hist("Histogram.dat");
-        Histogram(Sign,50,write_hist);
+        Sign.Histogram(50,write_hist);
         write_hist.close();
+
+        AudioFile<double> audio = Sign.getAudioFile();
+
+        // Do you expect the fourier transform depending on w? Do we need to do lambda functor?
+
+        std::ofstream write_tf("tf.dat");
+        double w(-0.5);
+        while (w <= 0.5){
+            std::complex<double> Fourier_transform(0,0);
+            for (size_t k(0); k < audio.getNumSamplesPerChannel(); ++k) {
+                std::complex<double> temp(audio.samples[0][k] * cos(k * w),(-1.0) * audio.samples[0][k] * sin(k * w));
+                Fourier_transform = Fourier_transform + temp;
+            }
+
+            write_tf << w << " " ;
+            write_tf << std::abs(Fourier_transform) << std::endl;
+
+            w+=0.01;
+        }
+        write_tf.close();
+
+
+        */
+
+
 
         /*
         std::sort(audioFile.samples[channel].begin(),audioFile.samples[channel].end());// Faire une copie pour éviter de
@@ -107,6 +135,63 @@ int main(int argc, char* argv[]) {
 
         }
 */
+
+    ReadAudioFile audio ("./wav_mono_16bit_44100.wav");
+    Signal sign;
+    sign = audio.construct();
+    std::ofstream write_hist("Histogram.dat");
+    sign.Histogram(10,write_hist);
+    write_hist.close();
+
+    AudioFile<double> audioFile;
+    double numSamples = 352800;
+    AudioFile<double>::AudioBuffer buffer;
+    buffer.resize(1);
+    buffer[0].resize(numSamples);
+    double pi (M_PI);
+
+    double w1 (44100.0 / 400.0);
+
+    for (int i = 0; i < numSamples; i++)
+    {
+        double t = i/ 44100.0;
+        buffer[0][i] = sin(440*t*2*pi);//sin(440*i);
+
+    }
+
+    bool ok = audioFile.setAudioBuffer(buffer);
+
+    // Set the number of samples per channel
+    audioFile.setNumSamplesPerChannel (numSamples);
+
+// Set the number of channels
+    audioFile.setNumChannels (1);
+
+    // Set bit depth and sample rate
+    audioFile.setBitDepth (16);
+    audioFile.setSampleRate (44100);
+
+    //  Save the audio file to disk
+
+    // Wave file (implicit)
+    audioFile.save ("LA.wav");
+
+    std::ofstream write_tf("tf.dat");
+
+    for (size_t w(0);w<=10;++w){
+
+        std::complex<double> Fourier_transform(0,0);
+
+        for (size_t k(0); k < numSamples; ++k) {
+            double t(k/44100.0);
+            std::complex<double> temp(audioFile.samples[0][k] * cos((2*pi*t)),(-1.0) * audioFile.samples[0][k] * sin((2*pi*t)));
+            Fourier_transform += temp;
+        }
+
+        write_tf << w << " " ;
+        write_tf << std::abs(Fourier_transform) << std::endl;
+    }
+    write_tf.close();
 
 
 
@@ -165,12 +250,12 @@ int main(int argc, char* argv[]) {
 // Aiff file
     audioFile.save ("audioFile.aif", AudioFileFormat::Aiff);
 */
-    }
+    /*}
     catch(const std::runtime_error &e){
         std::cout << e.what() <<std::endl;
         return 1;
     }
-
+*/
 
 
 

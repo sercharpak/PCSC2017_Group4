@@ -15,10 +15,14 @@ class Signal{
 private:
     std::vector<double> time;
     std::vector<double> FourierTransform; //Need to put complex number
-    AudioFile<double> audioFile;
+    std::vector<double> sample;
+    //AudioFile<double> audioFile;
 public:
     /** Constructors */
-    Signal(std::string name);
+    //Signal(std::string name);
+    Signal(AudioFile<double> audio);
+    Signal(std::vector<double> sam);
+    Signal();
 
     /** Destructor */
     ~Signal();
@@ -26,13 +30,12 @@ public:
 
     /** Getters */
     std::vector<double> getTime() const;
-    AudioFile<double> getAudioFile() const;
 
-
+    /** Histogramm */
+    void Histogram(int number_bin,std::ofstream& file) ;
 
 };
 
-/** Histogramm */ // Je l'ai mis à l'extérieur mais peut-être mieux dans la classe
-void Histogram(const Signal& Sign, int number_bin,std::ofstream& file);
+
 
 #endif //PROJECT_SIGNAL_H
