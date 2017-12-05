@@ -1,0 +1,4 @@
+/home/didier/clion-2017.2.2/bin/cmake/bin/cmake -DCMAKE_BUILD_TYPE=Debug -G "CodeBlocks - Unix Makefiles" /home/didier/Documents/EPFL/PCSC_Project
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /home/didier/Documents/EPFL/PCSC_Project/cmake-build-debug
