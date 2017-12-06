@@ -1,5 +1,0 @@
-/home/didier/Documents/EPFL/PCSC_Project/cmake-build-debug/CMakeFiles/rebuild_cache.dir
-/home/didier/Documents/EPFL/PCSC_Project/cmake-build-debug/CMakeFiles/edit_cache.dir
-/home/didier/Documents/EPFL/PCSC_Project/cmake-build-debug/CMakeFiles/doc.dir
-/home/didier/Documents/EPFL/PCSC_Project/cmake-build-debug/CMakeFiles/main2.dir
-/home/didier/Documents/EPFL/PCSC_Project/cmake-build-debug/CMakeFiles/PCSC2017_Group4.dir
