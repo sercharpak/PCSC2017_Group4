@@ -5,13 +5,14 @@
 #ifndef PROJECT_SIGNAL_H
 #define PROJECT_SIGNAL_H
 
-#include "AudioFile.h"
 #include <complex>
 #include <stdexcept>
 #include <fstream>
 #include <algorithm>
 #include <utility> //For the function swap
 #include <iostream>
+
+#include "AudioFile.h"
 
 
 class Signal{
@@ -34,6 +35,8 @@ public:
 
     /** Getters */
     std::vector<double> getTime() const;
+    std::vector<std::complex<double>> getFourierTransform() const;
+    std::vector<int> getFrequencies() const;
 
     /** Histogramm */
     void Histogram(int number_bin,std::ofstream& file) ;

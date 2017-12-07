@@ -2,15 +2,17 @@
 // Created by shernand on 11/30/17.
 //
 
+#include <fstream>
+#include <vector>
+#include <cmath>
+#include <algorithm>
+#include <iostream>
+
 #include "AudioFile.h"
 #include "Signal.h"
 #include "StandardFilter.h"
 #include "MeanFilter.h"
 #include "Read.h"
-#include <fstream>
-#include <vector>
-#include <cmath>
-#include <algorithm>
 
 int main(int argc, char* argv[]) {
 

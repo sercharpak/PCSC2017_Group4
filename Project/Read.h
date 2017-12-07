@@ -5,11 +5,12 @@
 #ifndef PROJECT_READ_H
 #define PROJECT_READ_H
 
-#include "Signal.h"
 #include <iostream>
 #include <vector>
 #include <string>
 #include <cmath>
+#include "Signal.h"
+
 
 class ConstructSignal {
 public:

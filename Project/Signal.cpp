@@ -53,9 +53,13 @@ std::vector<double> Signal::getTime() const{
     return time;
 }
 
-/*AudioFile<double> Signal::getAudioFile() const{
-    return audioFile;
-}*/
+std::vector<std::complex<double>> Signal::getFourierTransform() const{
+    return FourierTransform;
+}
+
+std::vector<int> Signal::getFrequencies() const{
+    return Frequencies;
+}
 
 void Signal::Histogram(int number_bin, std::ofstream& file){
 

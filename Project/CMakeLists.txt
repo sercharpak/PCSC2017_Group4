@@ -5,6 +5,7 @@ set(CMAKE_CXX_STANDARD 11)
 
 set(SOURCE_FILES Read.cpp Signal.cpp AudioFile.cpp test_main.cpp  )
 add_executable(Project ${SOURCE_FILES})
+add_executable(TestFT Read.cpp Signal.cpp AudioFile.cpp TestFT.cpp)
 
 file(COPY "Doxyfile" DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/)
 file(COPY "atom_icon_192.ico" DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/)
