@@ -6,12 +6,15 @@
 #include "Signal.h"
 #include "StandardFilter.h"
 #include "MeanFilter.h"
+#include "Read.h"
 #include <fstream>
 #include <vector>
 #include <cmath>
 #include <algorithm>
 
 int main(int argc, char* argv[]) {
+
+    /*
     try {
         Signal Sign("../test-audio/wav_mono_16bit_44100.wav");
         std::ofstream write_hist("Histogram.dat");
@@ -21,11 +24,28 @@ int main(int argc, char* argv[]) {
     catch(const std::runtime_error &e){
         std::cout << e.what() <<std::endl;
         return 1;
-    }
+    }*/
     //TODO Testing a filter
     //SDHC: to plot in gnuplot
     //plot "cmake-build-debug/Output_Filter.dat" using 1:2 title "Original", "cmake-build-debug/Output_Filter.dat" using 1:3 title "Filtered"
+    ConstructFromFrequency LA_Note(440);
+    Signal LA_NoteSignal;
+    LA_NoteSignal = LA_Note.construct();
+
+    std::ofstream write_hist("Hist_LA.dat");
+    std::ofstream write_fre("Fre_LA.dat");
+
+    LA_NoteSignal.FourierTransformCalculator(-100,500,write_fre);
+    LA_NoteSignal.Histogram(50,write_hist);
+
+    std:: ofstream write_sample("Sample.dat");
+    LA_NoteSignal.SaveSignal(write_sample);
+
+    /*
     try {
+
+
+
         Signal Sign("../test-audio/wav_mono_16bit_44100.wav");
         int channel = 0;
 
@@ -79,6 +99,6 @@ int main(int argc, char* argv[]) {
         std::cout << e.what() <<std::endl;
         return 1;
     }
-
+    */
     return 0;
 }

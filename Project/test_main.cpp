@@ -178,13 +178,13 @@ int main(int argc, char* argv[]) {
 
     std::ofstream write_tf("tf.dat");
 
-    for (size_t w(0);w<=10;++w){
+    for (size_t w(0);w<=500;++w){
 
         std::complex<double> Fourier_transform(0,0);
 
-        for (size_t k(0); k < numSamples; ++k) {
+        for (size_t k(0); k < 44100; ++k) {
             double t(k/44100.0);
-            std::complex<double> temp(audioFile.samples[0][k] * cos((2*pi*t)),(-1.0) * audioFile.samples[0][k] * sin((2*pi*t)));
+            std::complex<double> temp(audioFile.samples[0][k] * cos((2*pi*t*w)),(-1.0) * audioFile.samples[0][k] * sin((2*pi*t*w)));
             Fourier_transform += temp;
         }
 

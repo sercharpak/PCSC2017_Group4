@@ -70,23 +70,12 @@ void Signal::Histogram(int number_bin, std::ofstream& file){
     double bin(audio[0] + pas);
     double value_per_bin(0);
 
-    //file << bin << " ";
-    //file << 0 << std::endl;
-
-
     for (int i = 0; i < numSamples; i++)
     {
 
         double currentSample = audio[i];
 
         if (currentSample> bin){
-            //double dessin(pas/20); // Parameter useful to plot the histogramm in gnuplot
-            //for (size_t j(0); j<20; j++) {
-            //    file << bin + dessin*j << " ";
-            //    file << value_per_bin << std::endl;
-            //}
-            //file <<bin+pas << " ";
-            //file<<0<<std::endl;
             file << bin << " ";
             file << value_per_bin << std::endl;
             bin += pas;
@@ -95,7 +84,43 @@ void Signal::Histogram(int number_bin, std::ofstream& file){
         value_per_bin +=1;
 
     }
+}
 
+
+void Signal::FourierTransformCalculator(int min_frequency, int max_frequency){
+    if (min_frequency > max_frequency){//Check if the values are not in the wrong order...
+        int temp (min_frequency);
+        min_frequency = max_frequency;
+        max_frequency = temp;
+        //std::swap(min_frequency,max_frequency); Doesnt work
+    }
+
+    for (int w(min_frequency);w<=max_frequency;++w){
+        std::complex<double> Fourier_transform(0,0);
+        //We use a sampling rate of 44100...
+        for (size_t k(0); k < 44100; ++k) {
+            double t(k/44100.0);
+            std::complex<double> temp(sample[k] * cos((2*M_PI*t*w)),(-1.0) * sample[k] * sin((2*M_PI*t*w)));
+            Fourier_transform += temp;
+        }
+        FourierTransform.push_back(Fourier_transform);
+        Frequencies.push_back(w);
+    }
+}
+
+void Signal::FourierTransformCalculator(int min_frequency, int max_frequency, std::ofstream& file) {
+    Signal::FourierTransformCalculator(min_frequency,max_frequency);
+    for (size_t i (0); i<Frequencies.size(); ++i){
+        file << Frequencies[i] << " ";
+        file << std::abs(FourierTransform[i]) << std::endl;
+    }
+}
+
+void Signal::SaveSignal(std::ofstream& file){
+    for (size_t i(0); i< sample.size(); ++i){
+        file << time[i] << " ";
+        file << sample[i] << std::endl;
+    }
 }
 
 
