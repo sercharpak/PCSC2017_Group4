@@ -4,8 +4,7 @@
 
 #ifndef PCSC2017_GROUP4_STANDARDFILTER_H
 #define PCSC2017_GROUP4_STANDARDFILTER_H
-/*
- * Class which defines the standard  of a filter on our signal.
+/** Class which defines a standard filter in the spatial domain.
  */
 #include <math.h>
 #include <vector>
