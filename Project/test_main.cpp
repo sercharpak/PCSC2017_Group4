@@ -137,6 +137,24 @@ int main(int argc, char* argv[]) {
 */
 
     ReadAudioFile audio ("./wav_mono_16bit_44100.wav");
+    AudioFile<double> a;
+    a.load ("./wav_mono_16bit_44100.wav");
+    std::ofstream ww("ww.dat");
+    for (size_t i(0); i<a.samples[0].size();++i){
+        ww << i<<" ";
+        ww << a.samples[0][i] << std::endl;
+    }
+
+    std::string nameFile ("./ww.dat");
+    ReadAmplitudeFile test_readAm(nameFile);
+    Signal signA;
+    signA = test_readAm.construct();
+
+    std::ofstream write_amps("AMPS.dat");
+    signA.SaveSignal(write_amps);
+    write_amps.close();
+
+
     Signal sign;
     sign = audio.construct();
     std::ofstream write_hist("Histogram.dat");

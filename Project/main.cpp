@@ -38,8 +38,21 @@ int main(int argc, char* argv[]) {
     LA_NoteSignal.FourierTransformCalculator(-100,500,write_fre);
     LA_NoteSignal.Histogram(50,write_hist);
 
-    std:: ofstream write_sample("Sample.dat");
+    std:: ofstream write_sample("Sample_LA.dat");
     LA_NoteSignal.SaveSignal(write_sample);
+
+    ReadAudioFile Sound("./wav_mono_16bit_44100.wav");
+    Signal SoundSignal;
+    SoundSignal = Sound.construct();
+
+    std::ofstream write_hist_Sound("Hist_S.dat");
+    std::ofstream write_fre_Sound("Fre_S.dat");
+
+    SoundSignal.FourierTransformCalculator(0,500,write_fre_Sound);
+    SoundSignal.Histogram(50,write_hist_Sound);
+
+    std:: ofstream write_sample_Sound("Sample_S.dat");
+    SoundSignal.SaveSignal(write_sample_Sound);
 
     /*
     try {

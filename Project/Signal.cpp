@@ -114,6 +114,8 @@ void Signal::FourierTransformCalculator(int min_frequency, int max_frequency, st
         file << Frequencies[i] << " ";
         file << std::abs(FourierTransform[i]) << std::endl;
     }
+
+    std::cout<<"Fourier Transform calculated successfully" << std::endl;
 }
 
 void Signal::SaveSignal(std::ofstream& file){
@@ -121,6 +123,8 @@ void Signal::SaveSignal(std::ofstream& file){
         file << time[i] << " ";
         file << sample[i] << std::endl;
     }
+
+    std::cout<<"Signal saved successfully" << std::endl;
 }
 
 

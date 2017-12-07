@@ -15,9 +15,9 @@ Fs = 44100;
 f = Fs*(0:(n/2))/n;
 P = abs(Y/n);
 
-%plot(f,P(1:n/2+1)) 
+plot(f,P(1:n/2+1)) 
 grid on;
 
 x = linspace(0,2*pi,1000);
 
-plot(x,sin(2*pi*440*x));
+%plot(x,sin(2*pi*440*x));

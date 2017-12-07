@@ -17,7 +17,7 @@ public:
     virtual Signal construct () = 0;
 
 };
-
+//IMPORTANT: THE FILE NAMES MUST BE IN ABSOLUTE
 class ReadAudioFile:public ConstructSignal{
 private:
     std::string name;
@@ -33,8 +33,6 @@ public:
     ConstructFromFrequency(double f);
     virtual Signal construct() override ;
 };
-
-
 
 class ReadAmplitudeFile : public ConstructSignal{
 private:

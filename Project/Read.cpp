@@ -4,12 +4,13 @@
 
 #include "Read.h"
 
-ReadAudioFile::ReadAudioFile(std::string n):name(n){}
+ReadAudioFile::ReadAudioFile(std::string n):name(n){
+    std::cout<<"File :"<< n << " successfully loaded " << std::endl;
+}
 Signal ReadAudioFile::construct()
 {
     AudioFile<double> audio;
     audio.load(name);
-    audio.printSummary();
     Signal sign (audio);
     return sign;
 }
@@ -33,8 +34,20 @@ Signal ConstructFromFrequency::construct()
     return sign;
 }
 
-ReadAmplitudeFile::ReadAmplitudeFile(std::string n) :name(n){}
+ReadAmplitudeFile::ReadAmplitudeFile(std::string n) :name(n){
+    std::cout<<"File :"<< n << " successfully loaded " << std::endl;
+}
 Signal ReadAmplitudeFile::construct()
 {
-    //Lire le fichier et créer le signal
+    std::vector<double> sample;
+    std::ifstream FileToRead(name);
+    while(!FileToRead.eof()){
+        double t,s;
+        FileToRead >> t >> s;
+        sample.push_back(s);
+    }
+
+    Signal sign(sample);
+    return sign;
+
 }
