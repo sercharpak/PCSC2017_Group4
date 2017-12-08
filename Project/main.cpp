@@ -43,6 +43,8 @@ int main(int argc, char* argv[]) {
     std:: ofstream write_sample("Sample_LA.dat");
     LA_NoteSignal.SaveSignal(write_sample);
 
+    LA_NoteSignal.WriteSound("LA440.wav");
+
     ReadAudioFile Sound("./wav_mono_16bit_44100.wav");
     Signal SoundSignal;
     SoundSignal = Sound.construct();
@@ -56,6 +58,37 @@ int main(int argc, char* argv[]) {
     std:: ofstream write_sample_Sound("Sample_S.dat");
     SoundSignal.SaveSignal(write_sample_Sound);
 
+    SoundSignal.WriteSound("test.wav");
+
+    /*std::ofstream write_tf("inv.dat");
+
+    size_t size_signal(SoundSignal.getTime().size());
+    size_t size_fre(SoundSignal.getFrequencies().size());
+
+    std::vector<std::complex<double>> FT = SoundSignal.getFourierTransform();
+    std::vector<int> Freq = SoundSignal.getFrequencies();
+    double pi(M_PI);
+
+    double sampleRate = 44100.0;
+
+    for (size_t w(0);w<30000;++w){
+        std::complex<double> InvFourier(0,0);
+        //double t(0.0);
+        for (size_t k(0); k < size_fre; ++k) {
+            std::complex<double> temp(cos(2 * pi * Freq[k] * w), sin(2 * pi * Freq[k] * w));
+            //inv += FT[k].real()*pow(cos((2*pi*t*w)),1)*(1.0/sqrt(size_signal)) - FT[k].imag()*pow(sin((2*pi*t*w)),1)*(1.0/sqrt(size_signal));
+            //std::cout<<FT[k] * temp<<std::endl;
+            //std::cout<<inv<<std::endl;
+            std::complex<double> temp2(FT[k].real()*temp.real()-FT[k].imag()*temp.imag(),FT[k].real()*temp.imag()+FT[k].imag()*temp.real());
+            InvFourier += (1.0/sqrt(size_fre))*temp2;
+        }
+        std::cout<<"w = " << w << std::endl;
+        write_tf << w << " " ;
+        write_tf << abs(InvFourier) << std::endl;
+
+    }
+    write_tf.close();
+    */
     /*
     try {
 

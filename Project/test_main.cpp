@@ -196,6 +196,7 @@ int main(int argc, char* argv[]) {
 
     std::ofstream write_tf("tf.dat");
 
+
     for (size_t w(0);w<=500;++w){
 
         std::complex<double> Fourier_transform(0,0);
@@ -208,8 +209,12 @@ int main(int argc, char* argv[]) {
 
         write_tf << w << " " ;
         write_tf << std::abs(Fourier_transform) << std::endl;
+
     }
     write_tf.close();
+
+
+
 
 
 
