@@ -3,7 +3,7 @@ project(Project)
 
 set(CMAKE_CXX_STANDARD 11)
 
-set(SOURCE_FILES Read.cpp Signal.cpp AudioFile.cpp test_main.cpp  )
+set(SOURCE_FILES Read.cpp Signal.cpp AudioFile.cpp main.cpp )
 add_executable(Project ${SOURCE_FILES})
 add_executable(TestFT Read.cpp Signal.cpp AudioFile.cpp TestFT.cpp)
 

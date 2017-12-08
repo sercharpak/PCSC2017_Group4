@@ -4,30 +4,6 @@
 
 #include "Signal.h"
 
-/*
-Signal::Signal(std::string name){
-    //Need to add the loading of the data and check if it is open...
-    //Two cases : 1) We check for the parameters
-                //2) We do a constructor from a string
-
-    //AudioFile<double> audio;
-    //audioFile = audio ;
-
-    if(audioFile.load(name)==false){//Voir si c'est la meilleure manière de faire
-        throw std::runtime_error("ERROR: The file you want doesn't exist...");
-    };
-
-    double numSamples(audioFile.getNumSamplesPerChannel());
-    double step((numSamples /(audioFile.getSampleRate()*1.0))/numSamples);
-
-    for (int i = 0; i<numSamples;++i){
-        time.push_back(i*step);
-    }
-
-    //In the constructor, need to have the fourier transform of the signal.
-    //Is it possible to use a method of the class or is it not good?
-}
-*/
 Signal::Signal(AudioFile<double> audio):sample(audio.samples[0]){
     double numSamples(audio.getNumSamplesPerChannel());
     double step((numSamples /(audio.getSampleRate()*1.0))/numSamples);
@@ -99,17 +75,20 @@ void Signal::FourierTransformCalculator(int min_frequency, int max_frequency){
         //std::swap(min_frequency,max_frequency); Doesnt work
     }
 
+    size_t size(sample.size());
+
     for (int w(min_frequency);w<=max_frequency;++w){
         std::complex<double> Fourier_transform(0,0);
         //We use a sampling rate of 44100...
-        for (size_t k(0); k < 44100; ++k) {
+        for (size_t k(0); k < size; ++k) {
             double t(k/44100.0);
-            std::complex<double> temp(sample[k] * cos((2*M_PI*t*w)),(-1.0) * sample[k] * sin((2*M_PI*t*w)));
+            std::complex<double> temp(sample[k] * cos((2*M_PI*t*w))*(1.0/(sqrt(size))),(-1.0) * sample[k] * sin((2*M_PI*t*w))*(1.0/(sqrt(size))));
             Fourier_transform += temp;
         }
         FourierTransform.push_back(Fourier_transform);
         Frequencies.push_back(w);
     }
+    std::cout<<"Fourier Transform calculated successfully" << std::endl;
 }
 
 void Signal::FourierTransformCalculator(int min_frequency, int max_frequency, std::ofstream& file) {
@@ -129,6 +108,46 @@ void Signal::SaveSignal(std::ofstream& file){
     }
 
     std::cout<<"Signal saved successfully" << std::endl;
+}
+
+void Signal::InverseFourierTransform(){
+    //Compute the inverse Fourier Transform
+}
+
+void Signal::WriteSound(std::string FileName){
+
+    AudioFile<double> audioFile;
+    double numSamples = sample.size();
+    AudioFile<double>::AudioBuffer buffer;
+    buffer.resize(1);
+    buffer[0].resize(numSamples);
+    double pi (M_PI);
+
+    //double w1 (44100.0 / 400.0);
+
+    for (int i = 0; i < numSamples; i++)
+    {
+        //double t = i/ 44100.0;
+        buffer[0][i] = sample[i];//sin(440*i);
+
+    }
+
+    bool ok = audioFile.setAudioBuffer(buffer);
+
+    // Set the number of samples per channel
+    audioFile.setNumSamplesPerChannel (numSamples);
+
+// Set the number of channels
+    audioFile.setNumChannels (1);
+
+    // Set bit depth and sample rate
+    audioFile.setBitDepth (16);
+    audioFile.setSampleRate (44100);
+
+    //  Save the audio file to disk
+
+    // Wave file (implicit)
+    audioFile.save (FileName);
 }
 
 

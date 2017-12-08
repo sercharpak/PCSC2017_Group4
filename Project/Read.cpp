@@ -1,6 +1,17 @@
 //
 // Created by didier on 04/12/17.
 //
+//=======================================================================
+/** @file Read.h
+ *  @author Didier Bieler && Sergio Hernandez
+ *
+ * This file is part of the project of Sound Processing
+ *
+ *
+ * This classes are useful to generate a signal from different ways
+ *
+ */
+//=======================================================================
 
 #include "Read.h"
 

@@ -18,13 +18,12 @@
 class Signal{
 private:
     std::vector<double> time;
-    std::vector<std::complex<double>> FourierTransform; //Need to put complex number
+    std::vector<std::complex<double>> FourierTransform;
     std::vector<int> Frequencies;
     std::vector<double> sample;
     //AudioFile<double> audioFile;
 public:
     /** Constructors */
-    //Signal(std::string name);
     Signal(AudioFile<double> audio);
     Signal(std::vector<double> sam);
     Signal();
@@ -62,8 +61,16 @@ public:
      */
     void SaveSignal(std::ofstream& file);
 
+    /** Compute the inverse Fourier Transform
+     */
+    void InverseFourierTransform();
+
+    /** Write the signal inside a sound file
+     *
+     * @param FileName name of the sound file inside we want to put the signal
+     */
+    void WriteSound(std::string FileName);
+
 };
-
-
 
 #endif //PROJECT_SIGNAL_H
