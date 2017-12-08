@@ -29,6 +29,10 @@ std::vector<double> Signal::getTime() const{
     return time;
 }
 
+std::vector<double> Signal::getSamples() const{
+    return sample;
+}
+
 std::vector<std::complex<double>> Signal::getFourierTransform() const{
     return FourierTransform;
 }

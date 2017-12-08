@@ -53,7 +53,7 @@ public:
      * @param Signal the signal to which we want to apply the filter.
      * @return the Signal filtered
      */
-    //TODO change the std::vector<T> with the Signal class
+    //\TODO change the std::vector<T> with the Signal class
     std::vector<T> apply(std::vector<T> pSignal);
 
 };
