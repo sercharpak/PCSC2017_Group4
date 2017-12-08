@@ -58,7 +58,7 @@ int main(int argc, char* argv[]) {
     std:: ofstream write_sample_Sound("Sample_S.dat");
     SoundSignal.SaveSignal(write_sample_Sound);
 
-    
+
 
     /*std::ofstream write_tf("inv.dat");
 
