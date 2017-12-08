@@ -35,6 +35,7 @@ public:
 
     /** Getters */
     std::vector<double> getTime() const;
+    std::vector<double> getSamples() const;
     std::vector<std::complex<double>> getFourierTransform() const;
     std::vector<int> getFrequencies() const;
 

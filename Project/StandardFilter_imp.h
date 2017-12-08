@@ -45,10 +45,9 @@ int StandardFilter<T>::getLength()
 template<typename T>
 std::vector<T> StandardFilter<T>::apply(std::vector<T> pSignal)
 {
-    //TODO Manage properly the boundary conditions.
-    //TODO Verify that the mirror boundary conditions are correct
-    //TODO Use some of the new C++ features here (for_each, iota, etc...)
-    //TODO verify if no recursion can be done as a standard manner.
+    //\todo Verify that the mirror boundary conditions are correct
+    //\todo Use some of the new C++ features here (for_each, iota, etc...)
+    //\todo verify if no recursion can be done as a standard manner.
     int n = pSignal.size();
     std::vector<T> outputSignal = std::vector<T>(n);
     int l0 = (length -1)/2;
