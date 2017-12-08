@@ -26,10 +26,9 @@ Signal ReadAudioFile::construct()
     return sign;
 }
 
-ConstructFromFrequency::ConstructFromFrequency(double f):frequency(f){}
+ConstructFromFrequency::ConstructFromFrequency(double f, double n):frequency(f), numSamples(n){}
 Signal ConstructFromFrequency::construct()
 {
-    double numSamples (352800.0);
     std::vector<double> sample;
     double pi (M_PI);
     double sampleRate(44100.0);

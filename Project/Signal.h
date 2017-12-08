@@ -72,6 +72,13 @@ public:
      */
     void WriteSound(std::string FileName);
 
+    /** Concatenation of two signals
+     *
+     *
+     */
+
 };
+
+Signal concatenate(const Signal& S1,const Signal& S2);
 
 #endif //PROJECT_SIGNAL_H

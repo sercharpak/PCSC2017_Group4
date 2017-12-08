@@ -36,7 +36,7 @@ int main(int argc, char* argv[]) {
     //Test if the only frequency that we found is the 440 frequency.
 
     for (size_t i(0); i< LA_NoteSignal.getFourierTransform().size(); ++i){
-        if (std::abs(LA_NoteSignal.getFourierTransform()[i]) > pow(10.0,-11.0)){
+        if (std::abs(LA_NoteSignal.getFourierTransform()[i]) > pow(10.0,-10.0)){
             //I test what are the frequencies for which the modulus is negligeable
             std::cout << "The frequency " << LA_NoteSignal.getFrequencies()[i] << " is non-zero" << std::endl;
         }

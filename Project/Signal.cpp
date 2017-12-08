@@ -70,7 +70,6 @@ void Signal::Histogram(int number_bin, std::ofstream& file){
     }
 }
 
-
 void Signal::FourierTransformCalculator(int min_frequency, int max_frequency){
     if (min_frequency > max_frequency){//Check if the values are not in the wrong order...
         int temp (min_frequency);
@@ -101,8 +100,6 @@ void Signal::FourierTransformCalculator(int min_frequency, int max_frequency, st
         file << Frequencies[i] << " ";
         file << std::abs(FourierTransform[i]) << std::endl;
     }
-
-    std::cout<<"Fourier Transform calculated successfully" << std::endl;
 }
 
 void Signal::SaveSignal(std::ofstream& file){
@@ -127,13 +124,9 @@ void Signal::WriteSound(std::string FileName){
     buffer[0].resize(numSamples);
     double pi (M_PI);
 
-    //double w1 (44100.0 / 400.0);
-
     for (int i = 0; i < numSamples; i++)
     {
-        //double t = i/ 44100.0;
-        buffer[0][i] = sample[i];//sin(440*i);
-
+        buffer[0][i] = sample[i];
     }
 
     bool ok = audioFile.setAudioBuffer(buffer);
@@ -141,7 +134,7 @@ void Signal::WriteSound(std::string FileName){
     // Set the number of samples per channel
     audioFile.setNumSamplesPerChannel (numSamples);
 
-// Set the number of channels
+    // Set the number of channels
     audioFile.setNumChannels (1);
 
     // Set bit depth and sample rate
@@ -152,6 +145,21 @@ void Signal::WriteSound(std::string FileName){
 
     // Wave file (implicit)
     audioFile.save (FileName);
+
+    std::cout<<"Audio file : " << FileName << " saved " << std::endl;
+}
+
+Signal concatenate(const Signal& S1,const Signal& S2) {
+    std::vector<double> Sf = S1.getSamples();
+    double sizeS2(S2.getSamples().size());
+    for (size_t i(0); i < sizeS2; ++i){
+        Sf.push_back(S2.getSamples()[i]);
+    }
+
+    Signal sign(Sf);
+    std::cout << "Concatenation done" << std::endl;
+
+    return Sf;
 }
 
 

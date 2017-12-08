@@ -59,12 +59,13 @@ class ConstructFromFrequency: public ConstructSignal{
 private:
     /** Frequency of the signal we want to construct */
     double frequency;
+    double numSamples;
 public:
     /** Constructor with the frequency
      *
      * @param f frequency
      */
-    ConstructFromFrequency(double f);
+    ConstructFromFrequency(double f, double n=352800.0);
 
     /** Construct the signal from the frequency
      *
