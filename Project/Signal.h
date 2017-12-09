@@ -72,12 +72,15 @@ public:
      */
     void WriteSound(std::string FileName);
 
-    /** Concatenation of two signals
-     *
-     *
-     */
+
 
 };
+
+/** Concatenation of two signals
+     *
+     * @param S1 First Signal
+     * @param S2 Second signal we write after S1
+     */
 
 Signal concatenate(const Signal& S1,const Signal& S2);
 

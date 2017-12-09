@@ -58,6 +58,34 @@ int main(int argc, char* argv[]) {
     std:: ofstream write_sample_Sound("Sample_S.dat");
     SoundSignal.SaveSignal(write_sample_Sound);
 
+    std::ofstream write_tf("inv.dat");
+
+    size_t size(SoundSignal.getFrequencies().size());
+    std::vector<std::complex<double>> ResultSample;
+    std::vector<std::complex<double>> Fourier = SoundSignal.getFourierTransform();
+    std::vector<int> Freque = SoundSignal.getFrequencies();
+
+    std::vector<double> EndSample(352800);
+
+    for (int w(0);w<=352800;++w){
+        std::complex<double> Fourier_transform(0,0);
+        //We use a sampling rate of 44100...
+        for (size_t k(0); k < size; ++k) {
+            //double t(k/44100.0);
+            double t(Freque[k]/44100.0);
+            std::complex<double> temp(cos((2*M_PI*t*w)),sin((2*M_PI*t*w)));
+            Fourier_transform += (1.0/sqrt(size))*Fourier[k] *temp;
+        }
+        ResultSample.push_back(Fourier_transform);
+        EndSample[w] = ResultSample[w].real();
+        write_tf << w << " ";
+        write_tf << ResultSample[w].real() << std::endl;
+        std::cout<<w << std::endl;
+    }
+
+    Signal SignFI(EndSample);
+
+    SignFI.WriteSound("Retour.wav");
 
 
     /*std::ofstream write_tf("inv.dat");

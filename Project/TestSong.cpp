@@ -43,6 +43,9 @@ int main(int argc, char* argv[]) {
     Song = concatenate(Song,RE_NoteSignal);
     Song = concatenate(Song, DO_NoteSignal);
 
+    std::ofstream SongFourier("SongFourier.dat");
+    Song.FourierTransformCalculator(0,400,SongFourier);
+
     // Finally I wrote the signal in a sound file.
     Song.WriteSound("Song.wav");
 
