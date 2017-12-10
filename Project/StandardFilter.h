@@ -8,6 +8,7 @@
  */
 #include <math.h>
 #include <vector>
+#include "FilterSizeException.hpp"
 template <class T>
 class StandardFilter {
 protected:

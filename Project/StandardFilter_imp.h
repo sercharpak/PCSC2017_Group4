@@ -9,6 +9,10 @@ template<typename T> StandardFilter<T>::StandardFilter()
 
 template<typename T> StandardFilter<T>::StandardFilter(int pLength)
 {
+    //Checks if the length is even
+    if(pLength % 2 == 0){
+        throw FilterSizeException();
+    }
     length=pLength;
     mask = std::vector<T>(pLength);
 }
