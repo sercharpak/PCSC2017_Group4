@@ -1,0 +1,12 @@
+#Text file with the options to execute te Sound Processing Program
+#-----Input-File-----
+#-Can be:
+#-an AudioFile:'audio'
+#-a text file with the frequencies:'freq'
+#-a text file with the times and amplitudes:'ampl'
+type_input=audio
+filename='../test-audio/wav_mono_16bit_44100.wav'
+filters=mean,prewitt,laplace
+fourierCompute=1
+fourierWrite=1
+outputFile='test_mono_16bit_44100.wav'
