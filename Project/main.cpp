@@ -72,14 +72,14 @@ int main(int argc, char* argv[]) {
         //We use a sampling rate of 44100...
         for (size_t k(0); k < size; ++k) {
             //double t(k/44100.0);
-            double t(Freque[k]/44100.0);
+            double t(k/44100.0);
             std::complex<double> temp(cos((2*M_PI*t*w)),sin((2*M_PI*t*w)));
-            Fourier_transform += (1.0/sqrt(size))*Fourier[k] *temp;
+            Fourier_transform += (1.0/size)*Fourier[k] *temp;
         }
         ResultSample.push_back(Fourier_transform);
-        EndSample[w] = ResultSample[w].real();
+        EndSample[w] = ResultSample[w].real()+ ResultSample[w].imag();
         write_tf << w << " ";
-        write_tf << ResultSample[w].real() << std::endl;
+        write_tf << (ResultSample[w].real()+ResultSample[w].imag()) << std::endl;
         std::cout<<w << std::endl;
     }
 
