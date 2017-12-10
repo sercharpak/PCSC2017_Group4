@@ -2,7 +2,7 @@
 // Created by didier on 04/12/17.
 //
 //=======================================================================
-/** @file Read.h
+/** @file Read.cpp
  *  @author Didier Bieler && Sergio Hernandez
  *
  * This file is part of the project of Sound Processing

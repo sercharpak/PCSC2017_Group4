@@ -264,8 +264,6 @@ int testFiltersSpatial(){
 
 int testFiltersSpatialSignal(){
     try {
-
-
         ReadAudioFile Sound("../test-audio/wav_mono_16bit_44100.wav");
         Signal SoundSignal;
         SoundSignal = Sound.construct();
@@ -307,6 +305,8 @@ int testFiltersSpatialSignal(){
         }
 
         write_output.close();
+
+
         return 0;
     }
     catch(const std::runtime_error &e){
