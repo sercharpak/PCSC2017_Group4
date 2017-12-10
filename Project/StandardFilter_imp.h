@@ -9,6 +9,10 @@ template<typename T> StandardFilter<T>::StandardFilter()
 
 template<typename T> StandardFilter<T>::StandardFilter(int pLength)
 {
+    //Checks if the length is even
+    if(pLength % 2 == 0){
+        throw FilterSizeException();
+    }
     length=pLength;
     mask = std::vector<T>(pLength);
 }
@@ -66,5 +70,13 @@ std::vector<T> StandardFilter<T>::apply(std::vector<T> pSignal)
         }
         outputSignal[i] = outputValue;
     }
+    return outputSignal;
+}
+template<typename T>
+Signal StandardFilter<T>::apply(Signal pSignal)
+{
+    std::vector<T> samples = pSignal.getSamples();
+    std::vector<T> outSamples = apply(samples);
+    Signal outputSignal = Signal(outSamples);
     return outputSignal;
 }

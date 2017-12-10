@@ -8,6 +8,7 @@
  */
 #include <math.h>
 #include <vector>
+#include "FilterSizeException.hpp"
 template <class T>
 class StandardFilter {
 protected:
@@ -49,12 +50,16 @@ public:
      * @return int the length of the filter
      */
     int getLength();
-    /** Applies the filter to the signal
-     * @param Signal the signal to which we want to apply the filter.
-     * @return the Signal filtered
+    /** Applies the filter to the raw data of a signal
+     * @param std::vector<T> the raw data to which we want to apply the filter.
+     * @return std::vector<T> the raw data filtered
      */
-    //\TODO change the std::vector<T> with the Signal class
     std::vector<T> apply(std::vector<T> pSignal);
+    /** Applies the filter to the signal object
+     * @param Signal the signal to which we want to apply the filter.
+     * @return New Signal object with the data filtered
+     */
+    Signal apply(Signal pSignal);
 
 };
 

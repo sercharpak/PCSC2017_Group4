@@ -12,7 +12,14 @@
 #include "Signal.h"
 #include "StandardFilter.h"
 #include "MeanFilter.h"
+#include "PrewittFilter.h"
+#include "LaplaceFilter.h"
 #include "Read.h"
+#include "FilterSizeException.hpp"
+
+int testFiltersSpatial();
+int testFiltersSpatialSignal();
+int testIDFT();
 
 int main(int argc, char* argv[]) {
 
@@ -27,9 +34,7 @@ int main(int argc, char* argv[]) {
         std::cout << e.what() <<std::endl;
         return 1;
     }*/
-    //TODO Testing a filter
-    //SDHC: to plot in gnuplot
-    //plot "cmake-build-debug/Output_Filter.dat" using 1:2 title "Original", "cmake-build-debug/Output_Filter.dat" using 1:3 title "Filtered"
+    /*
     ConstructFromFrequency LA_Note(440);
     Signal LA_NoteSignal;
     LA_NoteSignal = LA_Note.construct();
@@ -45,7 +50,7 @@ int main(int argc, char* argv[]) {
 
     LA_NoteSignal.WriteSound("LA440.wav");
 
-    ReadAudioFile Sound("./wav_mono_16bit_44100.wav");
+    ReadAudioFile Sound("../test-audio/wav_mono_16bit_44100.wav");
     Signal SoundSignal;
     SoundSignal = Sound.construct();
 
@@ -86,7 +91,7 @@ int main(int argc, char* argv[]) {
     Signal SignFI(EndSample);
 
     SignFI.WriteSound("Retour.wav");
-
+    */
 
     /*std::ofstream write_tf("inv.dat");
 
@@ -117,64 +122,195 @@ int main(int argc, char* argv[]) {
     }
     write_tf.close();
     */
-    /*
-    try {
 
+    //SDHC \todo Testing the Spatial Domain Filters
+    int testSpatialFilters = testFiltersSpatial();
+    int testSpatialFilterSignals = testFiltersSpatialSignal();
+    //SDHC \todo Testing my own DFT and IDFT so far it DOES NOT WORK
+    //int testIDFTs = testIDFT();
+    return 0;
+}
 
+int testIDFT(){
+    try{
+        Signal SoundSignal;
+        //ReadAudioFile Sound("../test-audio/wav_mono_16bit_44100.wav");
+        ConstructFromFrequency LA_Note(440);
+        SoundSignal = LA_Note.construct();
 
-        Signal Sign("../test-audio/wav_mono_16bit_44100.wav");
-        int channel = 0;
+        //SoundSignal = Sound.construct();
 
-        std::vector<double> signalToFilter = Sign.getAudioFile().samples[channel];
+        //Testing DFT
+        std::vector<double> signalOrig = SoundSignal.getSamples();
+        int N = signalOrig.size();
 
-        std::cout << signalToFilter.size();
-        int filterSize = 5;
+        std::vector<std::complex<double>> signalDFT = std::vector<std::complex<double>>(N);
+        std::vector<double> frequencies = std::vector<double>(N);
 
-        StandardFilter<double> meanFilter = StandardFilter<double>(filterSize);
-        std::vector<double> maskMean = std::vector<double>(filterSize);
+        //For all frequencies it takes too long
+        //We need to put some limits for the possible frequencies
 
-        std::for_each(maskMean.begin(), maskMean.end(),
-                      [filterSize](double &x) { x = (1.0/filterSize); }); //Fills the mask
-        std::for_each(maskMean.begin(), maskMean.end(),
-                      [](double x) { std::cout << x << std::endl; });
-        meanFilter.setMask(maskMean);
+        std::cout << "Computing the DTF " << std::endl;
 
-        std::vector<double> signalFiltered =meanFilter.apply(signalToFilter);
-
-        std::cout << signalFiltered.size();
-
-        MeanFilter<double> myMean = MeanFilter<double>(filterSize);
-
-        std::vector<double> signalFilteredMyMean = myMean.apply(signalToFilter);
-
-        std::cout << signalFilteredMyMean.size();
-
-        std::ofstream write_output("Output_Filter.dat");
-        std::vector<double> time;
-        int sampleRate = Sign.getAudioFile().getSampleRate();
-        int numSamples = Sign.getAudioFile().getNumSamplesPerChannel();
-        double step((numSamples /(sampleRate*1.0))/numSamples);
-
-        for (int i = 0; i<numSamples;++i){
-            time.push_back(i*step);
+        for (int k=0;k<N;++k){
+            //Value k
+            std::complex<double> sum(0,0);
+            for (int n=0;n<N;++n){
+                //Sum
+                double x_n = signalOrig[n];
+                double exp_arg = (-2.0*M_PI*k*n)/N ;
+                std::complex<double> sum_temp(x_n*cos(exp_arg),x_n*sin(exp_arg));
+                sum = sum + sum_temp;
+            }
+            signalDFT[k]=sum;
+            double freq = k/N;
+            frequencies[k]=freq;
         }
-        std::cout<<time.size()<<std::endl;
-        for (int i = 0; i < numSamples; i++)
+        std::cout << "Finished computing the DTF " << std::endl;
+
+        std::cout << "Computing the IDTF " << std::endl;
+        std::vector<double> signalRecov = std::vector<double>(N);
+        for (int n=0;n<N;++n){
+            //Value k
+            std::complex<double> sum(0,0);
+            for (int k=0;k<N;++k){
+                //Sum
+                std::complex<double> X_k = signalDFT[k];
+                double exp_arg = (2.0*M_PI*k*n)/N ;
+                double real_part = X_k.real()*cos(exp_arg) - X_k.imag()*sin(exp_arg);
+                double imag_part = X_k.real()*sin(exp_arg) + X_k.imag()*cos(exp_arg);
+                std::complex<double> sum_temp(real_part,imag_part);
+                sum = sum + sum_temp;
+            }
+            signalRecov[n]=sum.real();
+        }
+
+        std::cout << "Finished computing the IDTF " << std::endl;
+
+        std::vector<double> time = SoundSignal.getTime();
+
+        std::ofstream write_output("Output_DFT.dat");
+        for (int i = 0; i < N; i++)
         {
-            double currentSample = Sign.getAudioFile().samples[channel][i];
             write_output<<time[i]<<" ";
-            write_output<<currentSample<<" ";
-            write_output<<signalFiltered[i]<<" ";
-            write_output<<signalFilteredMyMean[i]<<std::endl;
+            write_output<<signalOrig[i]<<" ";
+            write_output<<frequencies[i]<<" ";
+            write_output<<signalDFT[i].real()<<std::endl;
+            write_output<<signalRecov[i]<<std::endl;
 
         }
 
         write_output.close();
+        return 0;
     }
     catch(const std::runtime_error &e){
         std::cout << e.what() <<std::endl;
         return 1;
     }
-    */
-    return 0;
+}
+
+int testFiltersSpatial(){
+    try {
+
+
+        ReadAudioFile Sound("../test-audio/wav_mono_16bit_44100.wav");
+        Signal SoundSignal;
+        SoundSignal = Sound.construct();
+
+        std::vector<double> signalToFilter = SoundSignal.getSamples();
+        int numSamples = signalToFilter.size();
+        std::cout << "Size of the input signal " << signalToFilter.size()<< std::endl;
+
+        int filterSize = 6;
+
+        MeanFilter<double> myMean = MeanFilter<double>(filterSize);
+        std::vector<double> signalFilteredMyMean = myMean.apply(signalToFilter);
+        std::cout << "Size of the mean signal " << signalFilteredMyMean.size()<< std::endl;
+
+        PrewittFilter<double> myEdge = PrewittFilter<double>(filterSize);
+        std::vector<double> signalFilteredMyEdge = myEdge.apply(signalToFilter);
+        std::cout << "Size of the Prewitt edge signal " << signalFilteredMyEdge.size()<< std::endl;
+
+        LaplaceFilter<double> myLaplace = LaplaceFilter<double>(filterSize);
+        std::vector<double> signalFilteredMyLaplace = myLaplace.apply(signalToFilter);
+        std::cout << "Size of the Lapalcian signal " << signalFilteredMyLaplace.size()<< std::endl;
+
+
+        std::ofstream write_output("Output_Filter.dat");
+        std::vector<double> time = SoundSignal.getTime();
+        std::cout << "Size of the time " << time.size()<< std::endl;
+        for (int i = 0; i < numSamples; i++)
+        {
+            write_output<<time[i]<<" ";
+            write_output<<signalToFilter[i]<<" ";
+            write_output<<signalFilteredMyMean[i]<<" ";
+            write_output<<signalFilteredMyEdge[i]<<" ";
+            write_output<<signalFilteredMyLaplace[i]<<std::endl;
+
+        }
+
+        write_output.close();
+        return 0;
+    }
+        catch (FilterSizeException &e){
+            std::cout << e.what() <<std::endl;
+            return 1;
+        }
+    catch(const std::runtime_error &e){
+        std::cout << e.what() <<std::endl;
+        return 1;
+    }
+}
+
+int testFiltersSpatialSignal(){
+    try {
+
+
+        ReadAudioFile Sound("../test-audio/wav_mono_16bit_44100.wav");
+        Signal SoundSignal;
+        SoundSignal = Sound.construct();
+
+        std::vector<double> signalToFilter = SoundSignal.getSamples();
+        int numSamples = signalToFilter.size();
+        std::cout << "Size of the input signal " << signalToFilter.size()<< std::endl;
+
+        int filterSize = 5;
+
+        MeanFilter<double> myMean = MeanFilter<double>(filterSize);
+        Signal signalFilteredMyMean = myMean.apply(SoundSignal);
+        std::cout << "Size of the mean signal " << signalFilteredMyMean.getSamples().size()<< std::endl;
+
+        PrewittFilter<double> myEdge = PrewittFilter<double>(filterSize);
+        Signal signalFilteredMyEdge = myEdge.apply(SoundSignal);
+        std::cout << "Size of the Prewitt edge signal " << signalFilteredMyEdge.getSamples().size()<< std::endl;
+
+        LaplaceFilter<double> myLaplace = LaplaceFilter<double>(filterSize);
+        Signal signalFilteredMyLaplace = myLaplace.apply(SoundSignal);
+        std::cout << "Size of the Laplace signal " << signalFilteredMyLaplace.getSamples().size()<< std::endl;
+
+
+        std::ofstream write_output("Output_Filter_Signal.dat");
+        std::vector<double> time = SoundSignal.getTime();
+        std::cout << "Size of the time " << time.size()<< std::endl;
+
+        std::vector<double> meanSamples = signalFilteredMyMean.getSamples();
+        std::vector<double> edgeSamples = signalFilteredMyEdge.getSamples();
+        std::vector<double> laplaceSamples = signalFilteredMyLaplace.getSamples();
+        for (int i = 0; i < numSamples; i++)
+        {
+            write_output<<time[i]<<" ";
+            write_output<<signalToFilter[i]<<" ";
+            write_output<<meanSamples[i]<<" ";
+            write_output<<edgeSamples[i]<<" ";
+            write_output<<laplaceSamples[i]<<std::endl;
+
+        }
+
+        write_output.close();
+        return 0;
+    }
+    catch(const std::runtime_error &e){
+        std::cout << e.what() <<std::endl;
+        return 1;
+    }
 }
