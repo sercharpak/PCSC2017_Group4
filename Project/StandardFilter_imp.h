@@ -68,3 +68,11 @@ std::vector<T> StandardFilter<T>::apply(std::vector<T> pSignal)
     }
     return outputSignal;
 }
+template<typename T>
+Signal StandardFilter<T>::apply(Signal pSignal)
+{
+    std::vector<T> samples = pSignal.getSamples();
+    std::vector<T> outSamples = apply(samples);
+    Signal outputSignal = Signal(outSamples);
+    return outputSignal;
+}
