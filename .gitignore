@@ -10,5 +10,13 @@ cmake_install.cmake
 cmake-build-debug/
 cmake-build-debug
 *cmake-build-debug
+Project/doc/*
 *doc
-*.ipynb_checkpoints/*
+*doc*
+doc
+doc/
+Project/doc/*
+.ipynb_checkpoints/
+*.ipynb_checkpoints
+.ipynb_checkpoints*
+*.ipynb_checkpoints
