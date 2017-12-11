@@ -1,7 +1,17 @@
 //
 // Created by Sergio Daniel Hernandez on 12/3/17.
 //
-
+//=======================================================================
+/** @file StandardFilter.h
+ *  @author Didier Bieler && Sergio Hernandez
+ *
+ * This file is part of the project of Sound Processing
+ *
+ *
+ * This class defines a standard filter in the spatial domain.
+ *
+ */
+//=======================================================================
 #ifndef PCSC2017_GROUP4_STANDARDFILTER_H
 #define PCSC2017_GROUP4_STANDARDFILTER_H
 /** Class which defines a standard filter in the spatial domain.

@@ -1,7 +1,17 @@
 //
 // Created by shernand on 12/4/17.
 //
-
+//=======================================================================
+/** @file MeanFilter.h
+ *  @author Didier Bieler && Sergio Hernandez
+ *
+ * This file is part of the project of Sound Processing
+ *
+ *
+ * This class defines a mean filter in the spatial domain.
+ *
+ */
+//=======================================================================
 #ifndef PROJECT_MEANFILTER_H
 #define PROJECT_MEANFILTER_H
 /** Class which defines a mean filter in the spatial domain.

@@ -1,6 +1,17 @@
 //
 // Created by Sergio Daniel Hernandez on 12/3/17.
 //
+//=======================================================================
+/** @file StandardFilter.h
+ *  @author Didier Bieler && Sergio Hernandez
+ *
+ * This file is part of the project of Sound Processing
+ *
+ *
+ * This class defines a standard filter in the spatial domain.
+ *
+ */
+//=======================================================================
 template<typename T> StandardFilter<T>::StandardFilter()
 {
     length=5;

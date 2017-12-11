@@ -1,7 +1,17 @@
 //
 // Created by shernand on 12/7/17.
 //
-
+//=======================================================================
+/** @file PrewittFilter.h
+ *  @author Didier Bieler && Sergio Hernandez
+ *
+ * This file is part of the project of Sound Processing
+ *
+ *
+ * This class defines a prewitt edge detection filter in the spatial domain.
+ *
+ */
+//=======================================================================
 #ifndef PROJECT_PREWITTFILTER_H
 #define PROJECT_PREWITTFILTER_H
 /** Class which defines a prewitt edge detection filter in the spatial domain.

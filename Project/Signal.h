@@ -1,7 +1,18 @@
 //
 // Created by didier on 02/12/17.
 //
-
+//=======================================================================
+/** @file Signal.h
+ *  @author Didier Bieler && Sergio Hernandez
+ *
+ * This file is part of the project of Sound Processing
+ *
+ *
+ * Signal is the core class of the program. It contains the raw sound signals and the
+ * Fourier Transform related methods.
+ *
+ */
+//=======================================================================
 #ifndef PROJECT_SIGNAL_H
 #define PROJECT_SIGNAL_H
 

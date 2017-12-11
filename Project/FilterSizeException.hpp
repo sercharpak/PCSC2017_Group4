@@ -1,9 +1,19 @@
 //
-// Created by shernand on 11/13/17.
+// Created by shernand on 10/12/17.
 //
-
-#ifndef EXCEPTIONDEF
-#define EXCEPTIONDEF
+//=======================================================================
+/** @file FilterSizeException.hpp
+ *  @author Didier Bieler && Sergio Hernandez
+ *
+ * This file is part of the project of Sound Processing
+ *
+ *
+ * This class defines an Exception in the case of a wrong filter size delivered to a StandardFilter class object.
+ *
+ */
+//=======================================================================
+#ifndef FILTERSIZEEXCEPTIONDEF
+#define FILTERSIZEEXCEPTIONDEF
 
 #include <string>
 #include <stdexcept>
@@ -15,4 +25,4 @@ public:
         return "FILTER SIZE ERROR: Filter size must be odd (3,5,7, etc...)";
     }
 };
-#endif //EXCEPTIONDEF
+#endif //FILTERSIZEEXCEPTIONDEF

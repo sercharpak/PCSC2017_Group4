@@ -1,18 +1,20 @@
 //
 // Created by shernand on 12/10/17.
 //
-
-#ifndef PROJECT_CONFIGFILEPARSER_H
-#define PROJECT_CONFIGFILEPARSER_H
+//=======================================================================
 /** @file ConfigFileParser.h
  *  @author Didier Bieler && Sergio Hernandez
  *
  * This file is part of the project of Sound Processing
  *
  *
- * This class is essential to run the program using a configuration file.
+ * This class performs the parsing of a standard configuration file.
  *
  */
+//=======================================================================
+#ifndef PROJECT_CONFIGFILEPARSER_H
+#define PROJECT_CONFIGFILEPARSER_H
+
 #include <string>
 #include <map>
 #include <iostream>

@@ -1,7 +1,17 @@
 //
 // Created by shernand on 12/7/17.
 //
-
+//=======================================================================
+/** @file PrewittFilter.h
+ *  @author Didier Bieler && Sergio Hernandez
+ *
+ * This file is part of the project of Sound Processing
+ *
+ *
+ * This class defines a prewitt edge detection filter in the spatial domain.
+ *
+ */
+//=======================================================================
 template<typename T> PrewittFilter<T>::PrewittFilter() : StandardFilter<T>()
 {
     this->setLength(5);

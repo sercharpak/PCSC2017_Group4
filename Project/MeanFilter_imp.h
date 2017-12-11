@@ -1,7 +1,17 @@
 //
 // Created by shernand on 12/4/17.
 //
-
+//=======================================================================
+/** @file MeanFilter.h
+ *  @author Didier Bieler && Sergio Hernandez
+ *
+ * This file is part of the project of Sound Processing
+ *
+ *
+ * This class defines a mean filter in the spatial domain.
+ *
+ */
+//=======================================================================
 template<typename T> MeanFilter<T>::MeanFilter() : StandardFilter<T>()
 {
     this->setLength(5);
