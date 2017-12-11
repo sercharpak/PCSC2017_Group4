@@ -31,6 +31,12 @@ fourierCompute=0
 #1 to save it
 fourierWrite=1
 outputFourierFile=test_mono_16bit_44100_fourier.dat
+#------------------Histogram----------------
+#Flag to compute or not the histogram
+#1 to compute it
+histogram=1
+histogramBins=100
+outputHistogramFile=test_mono_16bit_44100_histogram.dat
 #----------------Output-File----------------
 #-Be careful to write the path with no quotes
 #-Can be:

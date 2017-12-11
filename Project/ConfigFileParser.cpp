@@ -18,6 +18,7 @@ ConfigFileParser::ConfigFileParser() {
     defaultKeys.push_back("type_input");
     defaultKeys.push_back("filename");
     defaultKeys.push_back("fourierWrite");
+    defaultKeys.push_back("histogram");
     defaultKeys.push_back("type_output");
     defaultKeys.push_back("outputFile");
     defaultFilters.push_back("mean");

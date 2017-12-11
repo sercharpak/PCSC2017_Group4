@@ -49,50 +49,21 @@ void ConfigFileExecuter::execute(){
                   [&SoundSignal](StandardFilter<double> filter) {
                       std::cout <<"Applying Filter: "<< filter.getName()<<" with mask size: "<<filter.getLength()<<std::endl;
                       SoundSignal = filter.apply(SoundSignal); });
-    /*
-    if(filterSizes.empty()){
-        std::for_each(filters.begin(), filters.end(),
-                      [&SoundSignal](std::string filter) {
-                          std::cout <<"Applying Filter: "<< filter <<std::endl;
-                          if(filter=="mean"){
-                              MeanFilter<double> myMean = MeanFilter<double>();
-                              SoundSignal = myMean.apply(SoundSignal);
-                          }
-                          if(filter=="prewitt"){
-                              PrewittFilter<double> myEdge = PrewittFilter<double>();
-                              SoundSignal = myEdge.apply(SoundSignal);
-                          }
-                          if(filter=="laplace"){
-                              LaplaceFilter<double> myLaplace = LaplaceFilter<double>();
-                              SoundSignal = myLaplace.apply(SoundSignal);
-                          }
-                          //\todo Can insert here new filter types
-
-                      });
+    tempKey = "histogram";
+    iter = data.find(tempKey);
+    valueTemp = iter->second;
+    //Checks the cases
+    if(valueTemp=="1"){
+        tempKey = "outputHistogramFile";
+        std::string fileName;
+        auto iter_file = data.find(tempKey);
+        fileName =(iter->second);
+        tempKey = "histogramBins";
+        int binsHistogram;
+        iter_file = data.find(tempKey);
+        binsHistogram =stoi(iter->second);
+        SoundSignal.Histogram(binsHistogram,fileName);
     }
-    else{
-        for(int i=0;i<filters.size();++i){
-            std::string filter = filters[i];
-            int filterSize = filterSizes[i];
-            std::cout <<"Applying Filter: "<< filter <<" with maskSize: "<<filterSize<<std::endl;
-            if(filter=="mean"){
-                MeanFilter<double> myMean = MeanFilter<double>(filterSize);
-                SoundSignal = myMean.apply(SoundSignal);
-
-            }
-            if(filter=="prewitt"){
-                PrewittFilter<double> myEdge = PrewittFilter<double>(filterSize);
-                SoundSignal = myEdge.apply(SoundSignal);
-            }
-            if(filter=="laplace"){
-                LaplaceFilter<double> myLaplace = LaplaceFilter<double>(filterSize);
-                SoundSignal = myLaplace.apply(SoundSignal);
-            }
-            //\todo Can insert here new filter types
-        }
-    }
-     */
-
     tempKey = "fourierWrite";
     iter = data.find(tempKey);
     valueTemp = iter->second;
