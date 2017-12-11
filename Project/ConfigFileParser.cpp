@@ -55,6 +55,7 @@ std::string ConfigFileParser::getFName(){
 
 void ConfigFileParser::parseFile(std::string pFname){
     fName = pFname;
+    std::cout<<"Parsing file: " << fName << std::endl;
     std::ifstream file;
     file.open(fName.c_str());
     if (!file)
