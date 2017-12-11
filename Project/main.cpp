@@ -16,11 +16,11 @@
 #include "LaplaceFilter.h"
 #include "Read.h"
 #include "FilterSizeException.hpp"
-
+/*
 int testFiltersSpatial();
 int testFiltersSpatialSignal();
 int testIDFT();
-
+*/
 int main(int argc, char* argv[]) {
 
     /*
@@ -34,8 +34,8 @@ int main(int argc, char* argv[]) {
         std::cout << e.what() <<std::endl;
         return 1;
     }*/
-    /*
-    ConstructFromFrequency LA_Note(440);
+
+    ConstructFromFrequency LA_Note(3);
     Signal LA_NoteSignal;
     LA_NoteSignal = LA_Note.construct();
 
@@ -77,21 +77,21 @@ int main(int argc, char* argv[]) {
         //We use a sampling rate of 44100...
         for (size_t k(0); k < size; ++k) {
             //double t(k/44100.0);
-            double t(k/44100.0);
+            double t(Freque[k]/44100.0);
             std::complex<double> temp(cos((2*M_PI*t*w)),sin((2*M_PI*t*w)));
             Fourier_transform += (1.0/size)*Fourier[k] *temp;
         }
         ResultSample.push_back(Fourier_transform);
         EndSample[w] = ResultSample[w].real()+ ResultSample[w].imag();
         write_tf << w << " ";
-        write_tf << (ResultSample[w].real()+ResultSample[w].imag()) << std::endl;
+        write_tf << (ResultSample[w].real()) << std::endl;
         std::cout<<w << std::endl;
     }
 
     Signal SignFI(EndSample);
 
     SignFI.WriteSound("Retour.wav");
-    */
+    /**/
 
     /*std::ofstream write_tf("inv.dat");
 
@@ -121,16 +121,17 @@ int main(int argc, char* argv[]) {
 
     }
     write_tf.close();
-    */
+
 
     //SDHC \todo Testing the Spatial Domain Filters
     int testSpatialFilters = testFiltersSpatial();
     int testSpatialFilterSignals = testFiltersSpatialSignal();
     //SDHC \todo Testing my own DFT and IDFT so far it DOES NOT WORK
     //int testIDFTs = testIDFT();
+     */
     return 0;
 }
-
+/*
 int testIDFT(){
     try{
         Signal SoundSignal;
@@ -313,4 +314,4 @@ int testFiltersSpatialSignal(){
         std::cout << e.what() <<std::endl;
         return 1;
     }
-}
+}*/
