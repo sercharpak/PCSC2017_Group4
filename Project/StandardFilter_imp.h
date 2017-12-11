@@ -66,7 +66,6 @@ std::vector<T> StandardFilter<T>::apply(std::vector<T> pSignal)
     int n = pSignal.size();
     std::vector<T> outputSignal = std::vector<T>(n);
     int l0 = (length -1)/2;
-    std::cout << l0;
     for (int i = 0; i < n; ++i) {
         T outputValue = 0;
         for (int j = -l0; j <= l0; ++j) {

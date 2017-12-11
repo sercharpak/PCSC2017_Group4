@@ -21,6 +21,7 @@
 #include <fstream>
 #include <vector>
 #include <sstream>
+#include <algorithm>
 #include "FileNotFoundException.hpp"
 #include "FileParserException.hpp"
 
@@ -28,6 +29,10 @@
  */
 class ConfigFileParser {
 private:
+    /**
+     * The default keys that should be in the config file
+     */
+    std::vector<std::string> defaultKeys;
     /**
      * The filename (path) of the configuration file
      */
@@ -42,6 +47,10 @@ private:
      * The vector of the different filters to apply to the signal
      */
     std::vector<std::string> filters;
+    /**
+     * The vector of the different filters sizes to apply to the signal
+     */
+    std::vector<int> filtersizes;
 
 public:
     /** Standard Constructor
@@ -60,6 +69,11 @@ public:
      * @return std::vector<std::string> filters the filters to be executed
      */
     std::vector<std::string> getFilters();
+    /**
+     * Gets the sizes of the filters (in order) to be executed
+     * @return std::vector<int> filters the filters to be executed
+     */
+    std::vector<int> getFilterSizes();
     /** Gives the map of the keys and values in the configuration file
      * @return std::map<std::string,std::string> The map of the configuration file
      */
@@ -78,6 +92,17 @@ public:
      * @param pFname The filename (path) of the configuration file
      */
     void parseFile(std::string pFname);
+
+    /**
+     * Verifies that the parsed file is well formatted and formed
+     */
+    void verify();
+
+    /**
+     * Verifies a value exists for a key in the map data
+     * @param std::string the key for which we want to verify the existence of the value
+     */
+    bool valueExistsForKey(std::string key);
 
 
 };

@@ -45,8 +45,8 @@ std::vector<int> Signal::getFrequencies() const{
     return Frequencies;
 }
 
-void Signal::Histogram(int number_bin, std::ofstream& file){
-
+void Signal::Histogram(int number_bin, std::string fileName){
+    std::ofstream file(fileName);
     std::vector<double> audio = sample; // Do a copy of the vector of samples.
     int channel = 0; // Choose the channel (in c++ notation, starting from 0).
     int numSamples = sample.size(); // Calculating the size of the vector of samples.
@@ -98,28 +98,32 @@ void Signal::FourierTransformCalculator(int min_frequency, int max_frequency){
     std::cout<<"Fourier Transform calculated successfully" << std::endl;
 }
 
-void Signal::FourierTransformCalculator(int min_frequency, int max_frequency, std::ofstream& file) {
+void Signal::FourierTransformCalculator(int min_frequency, int max_frequency, std::string fileName) {
+    std::ofstream file(fileName);
     Signal::FourierTransformCalculator(min_frequency,max_frequency);
     for (size_t i (0); i<Frequencies.size(); ++i){// Store the Fourier Transform into a file.
         file << Frequencies[i] << " ";
         file << std::abs(FourierTransform[i]) << std::endl;
     }
+    file.close();
 }
 
-void Signal::SaveSignal(std::ofstream& file){
+void Signal::SaveSignal(std::string fileName){
+    std::ofstream file(fileName);
     for (size_t i(0); i< sample.size(); ++i){ // Save the signal and the samples into a file.
         file << time[i] << " ";
         file << sample[i] << std::endl;
     }
 
     std::cout<<"Signal saved successfully" << std::endl;
+    file.close();
 }
 
 void Signal::InverseFourierTransform(){
     //Compute the inverse Fourier Transform
 }
 
-void Signal::WriteSound(std::string FileName){
+void Signal::WriteSound(std::string fileName){
 
     AudioFile<double> audioFile;// Define an object of the class AudioFile.
     double numSamples = sample.size();
@@ -148,11 +152,9 @@ void Signal::WriteSound(std::string FileName){
 
     // Wav file (implicit)
 
-    audioFile.save(FileName);
+    audioFile.save(fileName);
 
-
-
-    std::cout<<"Audio file : " << FileName << " saved " << std::endl;
+    std::cout<<"Audio file : " << fileName << " saved " << std::endl;
 }
 
 Signal concatenate(const Signal& S1,const Signal& S2) {

@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 //
 // Created by didier on 02/12/17.
 //
@@ -102,7 +101,7 @@ public:
      * @param number_bin int which represents the number of bins we want in the histogram.
      * @param file std::ofstream in which we store the histogram and the corresponding bins
      */
-    void Histogram(int number_bin,std::ofstream& file) ;
+    void Histogram(int number_bin,std::string fileName) ;
     /** Fourier Transform
      *
      * Compute the Fourier transform of the signal.
@@ -110,7 +109,7 @@ public:
      * @param max_frequency in which represents the maximum frequency where we stop the computation of the Fourier transform.
      * @param file std::ofstream in which we store the Fourier transform modulus and the corresponding frequencies.
     */
-    void FourierTransformCalculator(int min_frequency, int max_frequency, std::ofstream& file);
+    void FourierTransformCalculator(int min_frequency, int max_frequency, std::string fileName);
 
     /** Fourier Transform (no file saved)
      *
@@ -121,9 +120,9 @@ public:
     void FourierTransformCalculator(int min_frequency, int max_frequency);
 
     /** Save the signal sample and time in a file
-     * @param file std::ofstream in which we want to store the samples and the time.
+     * @param fileName std::string the filename of the file in which we want to store the samples and the time.
      */
-    void SaveSignal(std::ofstream& file);
+    void SaveSignal(std::string fileName);
 
     /** Compute the inverse Fourier Transform.
      */
@@ -133,7 +132,7 @@ public:
      *
      * @param FileName  string which gives the name of the sound file inside we want to store the signal.
      */
-    void WriteSound(std::string FileName);
+    void WriteSound(std::string fileName);
 
 
 

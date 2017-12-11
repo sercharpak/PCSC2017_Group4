@@ -22,6 +22,7 @@
 #include "FileNotFoundException.hpp"
 #include "FileParserException.hpp"
 #include "ConfigFileParser.h"
+#include "ConfigFileExecuter.h"
 
 int testFiltersSpatial();
 int testFiltersSpatialSignal();
@@ -219,77 +220,9 @@ int testConfigParserClass(){
         std::cout<<"Testing Parser Class with file = " << fName << std::endl;
         ConfigFileParser parser = ConfigFileParser();
         parser.parseFile(fName);
-        std::vector<std::string> filters = parser.getFilters();
-        std::map<std::string,std::string> data = parser.getData();
-
-        //Now it can begin to execute the program.
-        //\todo Here there should be a difference between FT filters and Spatial Filters
-        //\todo Need to specify in the config file the size of spatial filters
-        Signal SoundSignal;
-        auto it = data.begin();
-        auto end = data.end();
-        //Type input
-        std::string tempKey = "type_input";
-        auto iter = data.find(tempKey);
-        if (iter != data.end()) {
-            //Check the value and loads the file
-            std::string valueTemp = iter->second;
-            //Checks the cases
-            if(valueTemp=="audio"){
-                tempKey = "filename";
-                auto iter_file = data.find(tempKey);
-                std::string fName = iter_file->second;
-                std::cout<<"Opening = " << fName << std::endl;
-                ReadAudioFile Sound(fName);
-                SoundSignal = Sound.construct();
-            }
-            //\todo complete the different cases of construction of a signal
-        }
-        else
-            throw FileParserException();
-
-        //Apply the filters in order
-        //\todo Still have to insert in the options the mask size!
-        std::for_each(filters.begin(), filters.end(),
-                      [&SoundSignal](std::string filter) {
-                          std::cout << "Applying Filter" << filter <<std::endl;
-                          if(filter=="mean"){
-                              MeanFilter<double> myMean = MeanFilter<double>();
-                              SoundSignal = myMean.apply(SoundSignal);
-
-                          }
-                          if(filter=="prewitt"){
-                              PrewittFilter<double> myEdge = PrewittFilter<double>();
-                              SoundSignal = myEdge.apply(SoundSignal);
-                          }
-                          if(filter=="laplace"){
-                              LaplaceFilter<double> myLaplace = LaplaceFilter<double>();
-                              SoundSignal = myLaplace.apply(SoundSignal);
-                          }
-                          //\todo Can insert here new filter types
-
-                      });
-        tempKey = "outputFile";
-        iter = data.find(tempKey);
-        if (iter != data.end()) {
-            SoundSignal.WriteSound(iter->second);
-        }
-        else
-            throw FileParserException();
-
-        tempKey = "fourierCompute";
-        iter = data.find(tempKey);
-        if (iter != data.end()) {
-            //Check the value and loads the file
-            std::string valueTemp = iter->second;
-            //Checks the cases
-            if(valueTemp=="1"){
-                SoundSignal.FourierTransformCalculator(0,500);
-            }
-        }
-        else
-            throw FileParserException();
-
+        parser.verify();
+        ConfigFileExecuter executer = ConfigFileParser(parser);
+        executer.execute();
         return 0;
 
     }
