@@ -20,6 +20,7 @@
 #include "MeanFilter.h"
 #include "PrewittFilter.h"
 #include "LaplaceFilter.h"
+#include "StandardFilter.h"
 #include "Read.h"
 
 /** Class to execute from a parsed configuration file following the standard specified in the documentation.

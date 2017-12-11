@@ -22,7 +22,7 @@ filename=../test-audio/wav_mono_16bit_44100.wav
 #-Prewitt (band pass)
 #-Laplace (high pass)
 filters=mean,prewitt,laplace
-#filtersizes=7,3,5
+filtersizes=7,3,5
 #------------Fourier-Transform--------------
 #Flag to compute or not the fourier transform
 #1 to compute it

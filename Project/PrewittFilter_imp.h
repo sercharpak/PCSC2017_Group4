@@ -16,6 +16,7 @@ template<typename T> PrewittFilter<T>::PrewittFilter() : StandardFilter<T>()
 {
     this->setLength(5);
     int pLength = this->length;
+    this->setName("Prewitt Filter (band pass)");
     std::vector<T> pMask =this->mask;
     pMask = std::vector<T>(pLength);
     //\todo Find a way to implement the prewitt mas with iota o foreach
@@ -30,7 +31,8 @@ template<typename T> PrewittFilter<T>::PrewittFilter() : StandardFilter<T>()
 }
 template<typename T> PrewittFilter<T>::PrewittFilter(int pLength) : StandardFilter<T>(pLength)
 {
-    this->length=pLength;
+    this->setLength(pLength);
+    this->setName("Prewitt Filter (band pass)");
     std::vector<T> mask = std::vector<T>(pLength);
     int half = pLength/2;
     for(int i = 0; i<=half;i++){

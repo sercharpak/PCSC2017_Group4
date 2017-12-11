@@ -24,6 +24,10 @@
 #include <algorithm>
 #include "FileNotFoundException.hpp"
 #include "FileParserException.hpp"
+#include "StandardFilter.h"
+#include "PrewittFilter.h"
+#include "MeanFilter.h"
+#include "LaplaceFilter.h"
 
 /** Class to parse a configuration file following the standard specified in the documentation.
  */
@@ -33,6 +37,14 @@ private:
      * The default keys that should be in the config file
      */
     std::vector<std::string> defaultKeys;
+    /**
+     * The default values for the i/o operations
+     */
+    std::vector<std::string> defaultIO;
+    /**
+     * The default values for the type of filters
+     */
+    std::vector<std::string> defaultFilters;
     /**
      * The filename (path) of the configuration file
      */
@@ -44,14 +56,18 @@ private:
     std::map<std::string,std::string> data;
 
     /**
-     * The vector of the different filters to apply to the signal
+     * The vector of the different filters names  to apply to the signal
      */
-    std::vector<std::string> filters;
+    std::vector<std::string> filterNames;
     /**
      * The vector of the different filters sizes to apply to the signal
      */
-    std::vector<int> filtersizes;
+    std::vector<int> filterSizes;
 
+    /**
+     * The vector of the different filters objects to apply to the signal
+     */
+    std::vector<StandardFilter<double>> filters;
 public:
     /** Standard Constructor
      */
@@ -63,12 +79,17 @@ public:
      * Sets the name of the filters (in order) to be executed
      * @param std::vector<std::string> pFilters the filters to be executed
      */
-    void setFilters(std::vector<std::string> pFilters);
+    void setFilterNames(std::vector<std::string> pFilters);
     /**
      * Gets the name of the filters (in order) to be executed
      * @return std::vector<std::string> filters the filters to be executed
      */
-    std::vector<std::string> getFilters();
+    std::vector<std::string> getFilterNames();
+    /**
+     * Gets the filters objects (in order) to be executed
+     * @return std::vector<StandardFilter> filters the filters to be executed
+     */
+    std::vector<StandardFilter<double>> getFilters();
     /**
      * Gets the sizes of the filters (in order) to be executed
      * @return std::vector<int> filters the filters to be executed
@@ -104,7 +125,15 @@ public:
      */
     bool valueExistsForKey(std::string key);
 
-
+    /**
+     * Verifies a filter name exists in the defaultFilter vector
+     * @param std::string the name of the filter to verify if contained in the defaultFilter vector
+     */
+    bool verifyFilterName(std::string filterName);
+    /**
+     * Forms the StandardFilter vector correctly depending if the sizes are specified or not
+     */
+    void formFiltersVector();
 };
 
 

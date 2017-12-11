@@ -11,7 +11,8 @@ ConfigFileExecuter::~ConfigFileExecuter(){}
 
 void ConfigFileExecuter::execute(){
     //Gets the parsed values
-    std::vector<std::string> filters = configFile.getFilters();
+    //std::vector<std::string> filters = configFile.getFilterNames();
+    std::vector<StandardFilter<double>> filters = configFile.getFilters();
     std::vector<int> filterSizes = configFile.getFilterSizes();
     std::map<std::string,std::string> data = configFile.getData();
     //Constructs the Signal
@@ -22,17 +23,33 @@ void ConfigFileExecuter::execute(){
     std::string tempKey = "type_input";
     auto iter = data.find(tempKey);
     std::string valueTemp = iter->second;
+    std::string fileNameKey = "filename";
+    iter = data.find(fileNameKey);
+    std::string fileName = iter->second;;
+    std::cout<<"Opening = " << fileName << std::endl;
     //Checks the cases
     if(valueTemp=="audio"){
-        tempKey = "filename";
-        auto iter_file = data.find(tempKey);
-        std::string fName = iter_file->second;
-        std::cout<<"Opening = " << fName << std::endl;
-        ReadAudioFile Sound(fName);
-        SoundSignal = Sound.construct();
+        ReadAudioFile reader(fileName);
+        SoundSignal = reader.construct();
     }
+    else if(valueTemp=="ampl"){
+        ReadAmplitudeFile reader(fileName);
+        SoundSignal = reader.construct();
+    }
+    //\todo Implement a Reader class which reads a frequency file and constructs a Signal from it
+    //else if(valueTemp="freq"){
+    //    ReadFrequenciesFile reader(fileName);
+    //    SoundSignal = reader.construct();
+    //}
+    else
+        throw FileParserException();
 
     //Apply the filters in order
+    std::for_each(filters.begin(), filters.end(),
+                  [&SoundSignal](StandardFilter<double> filter) {
+                      std::cout <<"Applying Filter: "<< filter.getName()<<" with mask size: "<<filter.getLength()<<std::endl;
+                      SoundSignal = filter.apply(SoundSignal); });
+    /*
     if(filterSizes.empty()){
         std::for_each(filters.begin(), filters.end(),
                       [&SoundSignal](std::string filter) {
@@ -74,6 +91,7 @@ void ConfigFileExecuter::execute(){
             //\todo Can insert here new filter types
         }
     }
+     */
 
     tempKey = "fourierWrite";
     iter = data.find(tempKey);
@@ -96,10 +114,9 @@ void ConfigFileExecuter::execute(){
     tempKey = "type_output";
     iter = data.find(tempKey);
     valueTemp = iter->second;
-    std::string fileNameKey = "outputFile";
-    std::string fileName;
-    auto iter_file = data.find(fileNameKey);
-    fileName =(iter_file->second);
+    fileNameKey = "outputFile";
+    iter = data.find(fileNameKey);
+    fileName =(iter->second);
     //Checks the cases
     if(valueTemp=="audio")
         SoundSignal.WriteSound(fileName);

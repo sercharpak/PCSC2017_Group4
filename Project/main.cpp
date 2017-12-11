@@ -221,7 +221,7 @@ int testConfigParserClass(){
         ConfigFileParser parser = ConfigFileParser();
         parser.parseFile(fName);
         parser.verify();
-        ConfigFileExecuter executer = ConfigFileParser(parser);
+        ConfigFileExecuter executer = ConfigFileExecuter(parser);
         executer.execute();
         return 0;
 
