@@ -26,10 +26,13 @@ template<typename T> StandardFilter<T>::StandardFilter(int pLength)
     }
     length=pLength;
     mask = std::vector<T>(pLength);
+    name = "Standard Filter";
 }
 template<typename T> StandardFilter<T>::StandardFilter(std::vector<T> pMask)
 {
     mask=pMask;
+    length = mask.size();
+    name = "Standard Filter";
 }
 
 template<typename T>
@@ -56,7 +59,16 @@ int StandardFilter<T>::getLength()
 {
     return length;
 }
-
+template<typename T>
+void StandardFilter<T>::setName(std::string pName)
+{
+    name=pName;
+}
+template<typename T>
+std::string StandardFilter<T>::getName()
+{
+    return name;
+}
 template<typename T>
 std::vector<T> StandardFilter<T>::apply(std::vector<T> pSignal)
 {
@@ -66,7 +78,6 @@ std::vector<T> StandardFilter<T>::apply(std::vector<T> pSignal)
     int n = pSignal.size();
     std::vector<T> outputSignal = std::vector<T>(n);
     int l0 = (length -1)/2;
-    std::cout << l0;
     for (int i = 0; i < n; ++i) {
         T outputValue = 0;
         for (int j = -l0; j <= l0; ++j) {

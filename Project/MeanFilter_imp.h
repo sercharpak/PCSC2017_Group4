@@ -15,6 +15,7 @@
 template<typename T> MeanFilter<T>::MeanFilter() : StandardFilter<T>()
 {
     this->setLength(5);
+    this->setName("Mean Filter (low pass)");
     int pLength = this->length;
     std::vector<T> pMask =this->mask;
     pMask = std::vector<T>(pLength);
@@ -24,7 +25,8 @@ template<typename T> MeanFilter<T>::MeanFilter() : StandardFilter<T>()
 }
 template<typename T> MeanFilter<T>::MeanFilter(int pLength) : StandardFilter<T>(pLength)
 {
-    this->length=pLength;
+    this->setLength(pLength);
+    this->setName("Mean Filter (low pass)");
     std::vector<T> mask = std::vector<T>(pLength);
     std::for_each(mask.begin(), mask.end(),
                   [pLength](T &x) { x = (1.0/pLength); }); //Fills the mask

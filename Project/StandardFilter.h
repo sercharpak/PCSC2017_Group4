@@ -17,7 +17,9 @@
 /** Class which defines a standard filter in the spatial domain.
  */
 #include <math.h>
+#include <string>
 #include <vector>
+#include "Signal.h"
 #include "FilterSizeException.hpp"
 template <class T>
 class StandardFilter {
@@ -28,6 +30,9 @@ protected:
     /** Length of the mask of the filter
     */
     int length;
+    /** name of the filter
+    */
+    std::string name;
 public:
     /** Standard Constructor
      * The length is set to 5
@@ -60,6 +65,14 @@ public:
      * @return int the length of the filter
      */
     int getLength();
+    /** Sets the name of the filter
+     * @param std::string the name to be set
+     */
+    void setName(std::string pName);
+    /** Gives the name of the 1D filter
+     * @return std::string the name of the filter
+     */
+    std::string getName();
     /** Applies the filter to the raw data of a signal
      * @param std::vector<T> the raw data to which we want to apply the filter.
      * @return std::vector<T> the raw data filtered

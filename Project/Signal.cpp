@@ -49,8 +49,9 @@ double Signal::getSampleRate() const{
     return sampleRate;
 }
 
-void Signal::Histogram(int number_bin, std::ofstream& file){
 
+void Signal::Histogram(int number_bin, std::string fileName){
+    std::ofstream file(fileName);
     std::vector<double> audio = sample; // Do a copy of the vector of samples.
     int channel = 0; // Choose the channel (in c++ notation, starting from 0).
     int numSamples = sample.size(); // Calculating the size of the vector of samples.
@@ -108,24 +109,29 @@ void Signal::FourierTransformCalculator(int min_frequency, int max_frequency){
     std::cout<<"Fourier Transform calculated successfully" << std::endl;
 }
 
-void Signal::FourierTransformCalculator(int min_frequency, int max_frequency, std::ofstream& file) {
+void Signal::FourierTransformCalculator(int min_frequency, int max_frequency, std::string fileName) {
+    std::ofstream file(fileName);
     Signal::FourierTransformCalculator(min_frequency,max_frequency);
     for (size_t i (0); i<Frequencies.size(); ++i){// Store the Fourier Transform into a file.
         file << Frequencies[i] << " ";
         file << std::abs(FourierTransform[i]) << std::endl;
     }
+    file.close();
 }
 
-void Signal::SaveSignal(std::ofstream& file){
+void Signal::SaveSignal(std::string fileName){
+    std::ofstream file(fileName);
     for (size_t i(0); i< sample.size(); ++i){ // Save the signal and the samples into a file.
         file << time[i] << " ";//Change this to not have the time in the file
         file << sample[i] << std::endl;
     }
 
     std::cout<<"Signal saved successfully" << std::endl;
+    file.close();
 }
 
-std::vector<double> Signal::InverseFourierTransform(std::ofstream& file){
+std::vector<double> Signal::InverseFourierTransform(std::string fileName){
+    std::ofstream file(fileName);
     size_t sizeFre(Frequencies.size());
     size_t sizeSam(sample.size());
     std::vector<std::complex<double>> ResultSample;
@@ -147,12 +153,12 @@ std::vector<double> Signal::InverseFourierTransform(std::ofstream& file){
     }
 
     std::cout<<"Inverse Fourier Transform calculated sucessfully" << std::endl;
-
+    file.close();
     return EndSample;
 
 }
 
-void Signal::WriteSound(std::string FileName){
+void Signal::WriteSound(std::string fileName){
 
     AudioFile<double> audioFile;// Define an object of the class AudioFile.
     double numSamples = sample.size();
@@ -175,17 +181,15 @@ void Signal::WriteSound(std::string FileName){
 
     // Set bit depth and sample rate
     audioFile.setBitDepth (16);
-    audioFile.setSampleRate (44100);
+    audioFile.setSampleRate(44100);
 
     //  Save the audio file to disk
 
     // Wav file (implicit)
 
-    audioFile.save(FileName);
+    audioFile.save(fileName);
 
-
-
-    std::cout<<"Audio file : " << FileName << " saved " << std::endl;
+    std::cout<<"Audio file : " << fileName << " saved " << std::endl;
 }
 
 Signal concatenate(const Signal& S1,const Signal& S2) {

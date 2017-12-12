@@ -1,23 +1,48 @@
 #Text file with the options to execute te Sound Processing Program
-#-----Input-File-----
+#===========================================
+#----------------Format---------------------
+#-To comment just start a line with the '#' character
+#The format goes by: key=value with no spaces.
+#For keys with several values these are separated with the ',' character
+#Keys are unique
+#===========================================
+#----------------Input-File-----------------
+#-Be careful to write the path with no quotes
 #-Can be:
 #-an AudioFile:'audio'
 #-a text file with the frequencies:'freq'
 #-a text file with the times and amplitudes:'ampl'
 type_input=audio
-#Insert the data filename without quotes
 filename=../test-audio/wav_mono_16bit_44100.wav
+#------------Filters-Spatial-Domain---------
+#Standard mask size is 5. If desired different mask sizes please specify
+#the sizes for all filters
 #Available filters are:
 #-Mean (low pass)
 #-Prewitt (band pass)
 #-Laplace (high pass)
 filters=mean,prewitt,laplace
-#\todo need to specify the mask sizes
+filtersizes=7,3,5
+#------------Fourier-Transform--------------
 #Flag to compute or not the fourier transform
-#-1 to compute it
-fourierCompute=1
+#1 to compute it
+fourierCompute=0
 #Flag to write or not the fourier transform to a file
-#-1 to save it
+#1 to save it
 fourierWrite=1
-#Output Filename without quotes
-outputFile=test_mono_16bit_44100.wav
+outputFourierFile=test_mono_16bit_44100_fourier.dat
+#------------------Histogram----------------
+#Flag to compute or not the histogram
+#1 to compute it
+histogram=1
+histogramBins=100
+outputHistogramFile=test_mono_16bit_44100_histogram.dat
+#----------------Output-File----------------
+#-Be careful to write the path with no quotes
+#-Can be:
+#-an AudioFile:'audio'
+#-a text file with the times and amplitudes:'ampl'
+#type_output=audio
+#outputFile=test_mono_16bit_44100.wav
+type_output=ampl
+outputFile=test_mono_16bit_44100.dat

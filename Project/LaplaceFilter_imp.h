@@ -15,6 +15,7 @@
 template<typename T> LaplaceFilter<T>::LaplaceFilter() : StandardFilter<T>()
 {
     this->setLength(5);
+    this->setName("Laplace Filter (high pass)");
     int pLength = this->length;
     std::vector<T> pMask =this->mask;
     pMask = std::vector<T>(pLength);
@@ -30,7 +31,8 @@ template<typename T> LaplaceFilter<T>::LaplaceFilter() : StandardFilter<T>()
 }
 template<typename T> LaplaceFilter<T>::LaplaceFilter(int pLength) : StandardFilter<T>(pLength)
 {
-    this->length=pLength;
+    this->setLength(pLength);
+    this->setName("Laplace Filter (high pass)");
     std::vector<T> mask = std::vector<T>(pLength);
     int half = pLength/2;
     for(int i = 0; i<=half;i++){

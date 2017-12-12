@@ -2,7 +2,6 @@
 // Created by shernand on 11/30/17.
 //
 
-/*
 #include <fstream>
 #include <vector>
 #include <cmath>
@@ -20,20 +19,49 @@
 #include "LaplaceFilter.h"
 #include "Read.h"
 #include "FilterSizeException.hpp"
-
 #include "FileNotFoundException.hpp"
 #include "FileParserException.hpp"
 #include "ConfigFileParser.h"
+#include "ConfigFileExecuter.h"
 
 int testFiltersSpatial();
 int testFiltersSpatialSignal();
 int testIDFT();
 int testConfigParser();
 int testConfigParserClass();
-
-
+/**
+ * Constant to inform the user the correct usage of the program in case of a misuse.
+ */
+#define USAGE "Please enter correctly one argument (a config file). Use: ./Project configFile.txt"
+/**
+ * Constant which defines the correct number of arguments the program can receive.
+ */
+#define N_ARGS 2
 int main(int argc, char* argv[]) {
+    if(argc!=N_ARGS){
+        std::cout<<USAGE<< std::endl;
+        return 1;
+    }
+    try{
+        std::string fName = argv[1];
+        ConfigFileParser parser = ConfigFileParser();
+        parser.parseFile(fName);
+        parser.verify();
+        ConfigFileExecuter executer = ConfigFileExecuter(parser);
+        executer.execute();
+        return 0;
 
+    }
+    catch(const std::runtime_error &e){
+        std::cout << e.what() <<std::endl;
+        return 1;
+    }
+
+
+    std::cout << "Have " << argc << " arguments:" << std::endl;
+    for (int i = 0; i < argc; ++i) {
+        std::cout << argv[i] << std::endl;
+    }
     /*
     try {
         Signal Sign("../test-audio/wav_mono_16bit_44100.wav");
@@ -46,14 +74,18 @@ int main(int argc, char* argv[]) {
         return 1;
     }*/
     /*
-    ConstructFromFrequency LA_Note(3);
+    ConstructFromFrequency LA_Note(440);
     Signal LA_NoteSignal;
     LA_NoteSignal = LA_Note.construct();
 
-    LA_NoteSignal.FourierTransformCalculator(0,500,"Fre_LA.dat");
-    LA_NoteSignal.Histogram(50,"Hist_LA.dat");
+    std::ofstream write_hist("Hist_LA.dat");
+    std::ofstream write_fre("Fre_LA.dat");
 
-    LA_NoteSignal.SaveSignal("Sample_LA.dat");
+    LA_NoteSignal.FourierTransformCalculator(-100,500,write_fre);
+    LA_NoteSignal.Histogram(50,write_hist);
+
+    std:: ofstream write_sample("Sample_LA.dat");
+    LA_NoteSignal.SaveSignal(write_sample);
 
     LA_NoteSignal.WriteSound("LA440.wav");
 
@@ -61,64 +93,44 @@ int main(int argc, char* argv[]) {
     Signal SoundSignal;
     SoundSignal = Sound.construct();
 
-    SoundSignal.FourierTransformCalculator(0,500,"Fre_S.dat");
-    SoundSignal.Histogram(50,"Hist_S.dat");
+    std::ofstream write_hist_Sound("Hist_S.dat");
+    std::ofstream write_fre_Sound("Fre_S.dat");
 
-    SoundSignal.SaveSignal("Sample_S.dat");
+    SoundSignal.FourierTransformCalculator(0,500,write_fre_Sound);
+    SoundSignal.Histogram(50,write_hist_Sound);
 
-
+    std:: ofstream write_sample_Sound("Sample_S.dat");
+    SoundSignal.SaveSignal(write_sample_Sound);
 
     std::ofstream write_tf("inv.dat");
-    std::vector<double> InvFourier;
-    InvFourier = LA_NoteSignal.InverseFourierTransform(write_tf);
-    /*
-    size_t size(LA_NoteSignal.getFrequencies().size());
-    std::cout<<"Size : "<<size<<std::endl;
+
+    size_t size(SoundSignal.getFrequencies().size());
     std::vector<std::complex<double>> ResultSample;
-    std::vector<std::complex<double>> Fourier = LA_NoteSignal.getFourierTransform();
-    std::vector<int> Freque = LA_NoteSignal.getFrequencies();
+    std::vector<std::complex<double>> Fourier = SoundSignal.getFourierTransform();
+    std::vector<int> Freque = SoundSignal.getFrequencies();
 
     std::vector<double> EndSample(352800);
-    int pause(0);
-    //Voir si je peux encore améliorer ou si je suis déjà au max de ce que je peux faire
-    //IMPORTANT : Je dois faire que tout le code marche donc j'ai modifié des choses dans la classe ReadFre
-    // et aussi dans la classe signal et aussi dans les constructeurs et les attributs donc il faut faire en sorte que ça nmarche encore
-    for (int w(0);w<352800;++w){
+
+    for (int w(0);w<=352800;++w){
         std::complex<double> Fourier_transform(0,0);
         //We use a sampling rate of 44100...
         for (size_t k(0); k < size; ++k) {
             //double t(k/44100.0);
-            double t((k*1.0)/44100.0);
+            double t(k/44100.0);
             std::complex<double> temp(cos((2*M_PI*t*w)),sin((2*M_PI*t*w)));
-            Fourier_transform += (1.0/sqrt(size))*Fourier[k] *temp;
-            /*
-            std::cout<<"======================="<<std::endl;
-            std::cout<<"Frequence : "<< Freque[k] << std::endl;
-            std::cout<<"temp : "<< temp << std::endl;
-            std::cout<<"Fourier: " << Fourier[k] <<std::endl;
-            std::cout<<"Fourier Transform :"<< Fourier_transform << std::endl;
-            std::cout<<"Time : " << t << std::endl;
-            std::cout << "(2*M_PI*t*w) : " << (2*M_PI*t*w) << std::endl;
-            std::cout<<"======================="<<std::endl;
-            */
-            //if (pause == 5){
-            //    std::cin >> pause;
-            //}
-            //++pause;
-    /*
+            Fourier_transform += (1.0/size)*Fourier[k] *temp;
         }
         ResultSample.push_back(Fourier_transform);
         EndSample[w] = ResultSample[w].real()+ ResultSample[w].imag();
         write_tf << w << " ";
-        write_tf << (ResultSample[w].real()) << std::endl;
+        write_tf << (ResultSample[w].real()+ResultSample[w].imag()) << std::endl;
         std::cout<<w << std::endl;
     }
 
     Signal SignFI(EndSample);
 
     SignFI.WriteSound("Retour.wav");
-   */
-    /**/
+    */
 
     /*std::ofstream write_tf("inv.dat");
 
@@ -148,19 +160,13 @@ int main(int argc, char* argv[]) {
 
     }
     write_tf.close();
-
+    */
 
     //SDHC \todo Testing the Spatial Domain Filters
     //int testSpatialFilters = testFiltersSpatial();
     //int testSpatialFilterSignals = testFiltersSpatialSignal();
     //SDHC \todo Testing my own DFT and IDFT so far it DOES NOT WORK
     //int testIDFTs = testIDFT();
-
-    return 0;
-}
-/*
-
-
     //SHDC \todo Testing the config file parser
     //int testConfigParsers = testConfigParser();
     int testConfigParserClasss = testConfigParserClass();
@@ -234,42 +240,14 @@ int testConfigParser(){
     }
     catch(const std::runtime_error &e){
         std::cout << e.what() <<std::endl;
-*/
-//=======================================================================
-/** @file main.cpp
- *  @author Didier Bieler && Sergio Hernandez
- *
- * This file is part of the project of Sound Processing
- *
- * main.cpp is the entry point
- *
- */
-//=======================================================================
-#include "ConfigFileParser.h"
-#include "ConfigFileExecuter.h"
-#include <cmath>
-
-/**
- * Constant to inform the user the correct usage of the program in case of a misuse.
- */
-#define USAGE "Please enter correctly one argument (a config file). Example: ./Project configFile.txt"
-/**
- * Constant which defines the correct number of arguments the program can receive.
- */
-#define N_ARGS 2
-/**
- * Main method of the program
- * @param argc int number of arguments received
- * @param argv char* the arguments received.
- * @return int 0 if well executed 1 if not.
- */
-int main(int argc, char* argv[]) {
-    if(argc!=N_ARGS){
-        std::cout<<USAGE<< std::endl;
         return 1;
     }
+}
+
+int testConfigParserClass(){
     try{
-        std::string fName = argv[1];
+        std::string fName = "../input_options.txt";
+        std::cout<<"Testing Parser Class with file = " << fName << std::endl;
         ConfigFileParser parser = ConfigFileParser();
         parser.parseFile(fName);
         parser.verify();
@@ -282,9 +260,7 @@ int main(int argc, char* argv[]) {
         std::cout << e.what() <<std::endl;
         return 1;
     }
-
 }
-
 
 int testIDFT(){
     try{
@@ -363,7 +339,7 @@ int testIDFT(){
         return 1;
     }
 }
-/*
+
 int testFiltersSpatial(){
     try {
 
@@ -386,10 +362,37 @@ int testFiltersSpatial(){
         std::vector<double> signalFilteredMyEdge = myEdge.apply(signalToFilter);
         std::cout << "Size of the Prewitt edge signal " << signalFilteredMyEdge.size()<< std::endl;
 
+        LaplaceFilter<double> myLaplace = LaplaceFilter<double>(filterSize);
+        std::vector<double> signalFilteredMyLaplace = myLaplace.apply(signalToFilter);
+        std::cout << "Size of the Lapalcian signal " << signalFilteredMyLaplace.size()<< std::endl;
 
+
+        std::ofstream write_output("Output_Filter.dat");
+        std::vector<double> time = SoundSignal.getTime();
+        std::cout << "Size of the time " << time.size()<< std::endl;
+        for (int i = 0; i < numSamples; i++)
+        {
+            write_output<<time[i]<<" ";
+            write_output<<signalToFilter[i]<<" ";
+            write_output<<signalFilteredMyMean[i]<<" ";
+            write_output<<signalFilteredMyEdge[i]<<" ";
+            write_output<<signalFilteredMyLaplace[i]<<std::endl;
+
+        }
+
+        write_output.close();
+        return 0;
+    }
+        catch (FilterSizeException &e){
+            std::cout << e.what() <<std::endl;
+            return 1;
+        }
+    catch(const std::runtime_error &e){
+        std::cout << e.what() <<std::endl;
+        return 1;
+    }
 }
 
-*/
 int testFiltersSpatialSignal(){
     try {
         ReadAudioFile Sound("../test-audio/wav_mono_16bit_44100.wav");
