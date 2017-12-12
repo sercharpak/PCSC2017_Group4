@@ -17,7 +17,6 @@
 #define PROJECT_READ_H
 
 #include <iostream>
-#include <vector>
 #include <string>
 #include <cmath>
 #include "Signal.h"

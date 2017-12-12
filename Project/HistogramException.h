@@ -1,14 +1,11 @@
-//
-// Created by didier on 12/12/17.
-//
 //=======================================================================
-/** @file FilterSizeException.hpp
+/** @file HistogramException.h
  *  @author Didier Bieler && Sergio Hernandez
  *
  * This file is part of the project of Sound Processing
  *
  *
- * This class defines an Exception in the case of a wrong filter size delivered to a StandardFilter class object.
+ * This class defines an Exception in the case of a wrong number of bins in the histogram in the class Signal.
  *
  */
 //=======================================================================
