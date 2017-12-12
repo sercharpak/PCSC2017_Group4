@@ -1,9 +1,3 @@
-<<<<<<< HEAD
-=======
-//
-// Created by didier on 02/12/17.
-//
->>>>>>> ea9a947fad4d3e1db52fd9a7c8b5a7a288dbed85
 //=======================================================================
 /** @file Signal.h
  *  @author Didier Bieler && Sergio Hernandez
@@ -12,7 +6,7 @@
  *
  * Signal is the core class of the program. It contains the raw sound signals and the
  * Fourier Transform related methods. It can also computes the histogram of the signal
- * and perform the i/o taks for a sound file.
+ * and perform the i/o task for a sound file.
  *
  */
 //=======================================================================
@@ -24,9 +18,9 @@
 #include <stdexcept>
 #include <fstream>
 #include <algorithm>
-#include <utility> //For the function swap
 #include <iostream>
 #include <cmath>
+#include "HistogramException.h"
 
 #include "AudioFile.h"
 
@@ -44,15 +38,15 @@ private:
     std::vector<double> time;
     /** Sample rate of the signal
      */
-    double sampleRate;
+    double samplerate;
 
     /** Fourier Transform .
      */
-    std::vector<std::complex<double>> FourierTransform;
+    std::vector<std::complex<double>> fouriertransform;
 
     /** Frequencies of the Fourier Transform.
      */
-    std::vector<int> Frequencies;
+    std::vector<int> frequencies;
 
 public:
 

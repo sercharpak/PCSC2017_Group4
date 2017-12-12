@@ -275,6 +275,26 @@ int main(int argc, char* argv[]) {
         parser.verify();
         ConfigFileExecuter executer = ConfigFileExecuter(parser);
         executer.execute();
+
+        //Trying some Stuff
+        //=======================================================
+
+        ConstructFromFrequency LA_Note(440);
+        Signal LA_NoteSignal;
+        LA_NoteSignal = LA_Note.construct();
+
+        LA_NoteSignal.FourierTransformCalculator(0,500,"Fre_LA.dat");
+        LA_NoteSignal.Histogram(-3,"Hist_LA.dat"); //Does not give the message of error...
+
+        LA_NoteSignal.SaveSignal("Sample_LA.dat");
+
+        LA_NoteSignal.WriteSound("LA440.wav");
+
+        std::vector<double> InvFourier;
+        InvFourier = LA_NoteSignal.InverseFourierTransform("Inv.dat"); // Not the good Height...
+
+        //=======================================================
+
         return 0;
 
     }

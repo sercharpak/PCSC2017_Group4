@@ -4,13 +4,15 @@
  *
  * This file is part of the project of Sound Processing
  *
- * This class is useful to handle a signal.
+ * Signal is the core class of the program. It contains the raw sound signals and the
+ * Fourier Transform related methods. It can also computes the histogram of the signal
+ * and perform the i/o task for a sound file..
  */
 //=======================================================================
 
 #include "Signal.h"
 
-Signal::Signal(AudioFile<double> audio):sample(audio.samples[0]),sampleRate(audio.getSampleRate()){
+Signal::Signal(AudioFile<double> audio):sample(audio.samples[0]),samplerate(audio.getSampleRate()){
     double numSamples(audio.getNumSamplesPerChannel());
     double step((numSamples /(audio.getSampleRate()*1.0))/numSamples);
     for (int i = 0; i<numSamples;++i){
@@ -18,10 +20,9 @@ Signal::Signal(AudioFile<double> audio):sample(audio.samples[0]),sampleRate(audi
     }
 }
 
-Signal::Signal(std::vector<double> sam, double samRate):sample(sam),sampleRate(samRate){
+Signal::Signal(std::vector<double> sam, double samRate):sample(sam),samplerate(samRate){
     double numSamples(sam.size());
-    //double SampleRate(44100); // Provisoire to have a signal with a sample rate of the length of the signal
-    double step((numSamples /(sampleRate*1.0))/numSamples);
+    double step((numSamples /(samplerate*1.0))/numSamples);
     for (int i = 0; i<numSamples;++i){
         time.push_back(i*step);
     }
@@ -38,19 +39,23 @@ std::vector<double> Signal::getSamples() const{
 }
 
 std::vector<std::complex<double>> Signal::getFourierTransform() const{
-    return FourierTransform;
+    return fouriertransform;
 }
 
 std::vector<int> Signal::getFrequencies() const{
-    return Frequencies;
+    return frequencies;
 }
 
 double Signal::getSampleRate() const{
-    return sampleRate;
+    return samplerate;
 }
 
 
 void Signal::Histogram(int number_bin, std::string fileName){
+    if (number_bin<= 0){ //Check if the number of bin is positive.
+        throw HistogramException();
+    }
+
     std::ofstream file(fileName);
     std::vector<double> audio = sample; // Do a copy of the vector of samples.
     int channel = 0; // Choose the channel (in c++ notation, starting from 0).
@@ -77,6 +82,8 @@ void Signal::Histogram(int number_bin, std::string fileName){
         value_per_bin +=1;// Or we increase the number of values in the current bin.
 
     }
+
+    std::cout << "Histogram calculated sucessfully" << std::endl;
 }
 
 void Signal::FourierTransformCalculator(int min_frequency, int max_frequency){
@@ -84,27 +91,18 @@ void Signal::FourierTransformCalculator(int min_frequency, int max_frequency){
         int temp (min_frequency);
         min_frequency = max_frequency;
         max_frequency = temp;
-        //std::swap(min_frequency,max_frequency); Doesnt work
     }
 
     size_t size(sample.size());
-    double w(min_frequency);
-    while (w<max_frequency){
+    for (int w(min_frequency); w<max_frequency; w++){
         std::complex<double> Fourier_transform(0,0);
-        //std::cout << w << std::endl;
-        //We use a sampling rate of 44100...
         for (size_t k(0); k < size; ++k) {
-            //double t((k*1.0)/size);// I can use this if the sample rate is = numSample
-            double t(k/sampleRate);// I can use this if the sample rate is 44100.0
-            //int t(k/size);
-            //std::complex<double> temp(sample[k] * cos((2*M_PI*t*w))*(1.0/(sqrt(size))),(-1.0) * sample[k] * sin((2*M_PI*t*w))*(1.0/(sqrt(size))));
+            double t(k/samplerate);
             std::complex<double> temp(sample[k] * cos((2*M_PI*t*w)),(-1.0) * sample[k] * sin((2*M_PI*t*w)));
             Fourier_transform += (1.0/sqrt(size))*temp;
         }
-        FourierTransform.push_back(Fourier_transform);
-        Frequencies.push_back(w);
-        w+=1;
-        //std::cout<< w << std::endl;
+        fouriertransform.push_back(Fourier_transform);
+        frequencies.push_back(w);
     }
     std::cout<<"Fourier Transform calculated successfully" << std::endl;
 }
@@ -112,9 +110,9 @@ void Signal::FourierTransformCalculator(int min_frequency, int max_frequency){
 void Signal::FourierTransformCalculator(int min_frequency, int max_frequency, std::string fileName) {
     std::ofstream file(fileName);
     Signal::FourierTransformCalculator(min_frequency,max_frequency);
-    for (size_t i (0); i<Frequencies.size(); ++i){// Store the Fourier Transform into a file.
-        file << Frequencies[i] << " ";
-        file << std::abs(FourierTransform[i]) << std::endl;
+    for (size_t i (0); i<frequencies.size(); ++i){// Store the Fourier Transform into a file.
+        file << frequencies[i] << " ";
+        file << std::abs(fouriertransform[i]) << std::endl;
     }
     file.close();
 }
@@ -132,17 +130,17 @@ void Signal::SaveSignal(std::string fileName){
 
 std::vector<double> Signal::InverseFourierTransform(std::string fileName){
     std::ofstream file(fileName);
-    size_t sizeFre(Frequencies.size());
+    size_t sizeFre(frequencies.size());
     size_t sizeSam(sample.size());
     std::vector<std::complex<double>> ResultSample;
-    std::vector<std::complex<double>> Fourier = FourierTransform;
-    std::vector<int> Freque = Frequencies;
+    std::vector<std::complex<double>> Fourier = fouriertransform;
+    std::vector<int> Freque = frequencies;
 
     std::vector<double> EndSample(sizeSam);
     for (int w(0);w<sizeSam;++w){
         std::complex<double> InvFourier_transform(0,0);
         for (size_t k(0); k < sizeFre; ++k) {
-            double t((k*1.0)/sampleRate);
+            double t((k*1.0)/samplerate);
             std::complex<double> temp(cos((2*M_PI*t*w)),sin((2*M_PI*t*w)));
             InvFourier_transform += (1.0/sizeFre)*Fourier[k] *temp;
         }
