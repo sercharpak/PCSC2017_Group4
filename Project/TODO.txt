@@ -1,8 +1,9 @@
-Add some try-catch in the class signal
-Correct the inverse fourier transform/ matlab and calculate by hand
-Change the value of 44100, do it as a member
-readme
-Fourier filter
-median filter
-See where to optimize the code (beautiful code)
+1) Add some try-catch in the class signal
+2) Correct the inverse fourier transform/ matlab and calculate by hand
+3) readme
+4) Fourier filter
+5) median filter
+6) See where to optimize the code (beautiful code)
+7) Need to check why the histogram doesn't give the right amplitude of the signal.
+8) Need to check the histogram error handler to see if it is correct (we need to see the message).
 
