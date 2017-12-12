@@ -1,7 +1,18 @@
 //
 // Created by shernand on 10/12/17.
 //
-
+//=======================================================================
+/** @file FileParserException.hpp
+ *  @author Didier Bieler && Sergio Hernandez
+ *
+ * This file is part of the project of Sound Processing
+ *
+ *
+ * This class defines an Exception in the case of the occurrance of an error during the parsing
+ * of the configuration file.
+ *
+ */
+//=======================================================================
 #ifndef FILEPARSEREXCEPTIONDEF
 #define FILEPARSEREXCEPTIONDEF
 

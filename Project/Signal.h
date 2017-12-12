@@ -4,9 +4,10 @@
  *
  * This file is part of the project of Sound Processing
  *
- * This class is useful to handle a signal.
- * We can compute the histogram and the Fourier Transform of a signal.
- * We can save the sample into a text file or into a sound file.
+ * Signal is the core class of the program. It contains the raw sound signals and the
+ * Fourier Transform related methods. It can also computes the histogram of the signal
+ * and perform the i/o taks for a sound file.
+ *
  */
 //=======================================================================
 
@@ -34,6 +35,9 @@ private:
     /** Time of the sample.
      */
     std::vector<double> time;
+    /** Sample rate of the signal
+     */
+    double sampleRate;
 
     /** Fourier Transform .
      */
@@ -59,7 +63,7 @@ public:
      *
      * @param sam std::vector<double> containing the samples.
      */
-    Signal(std::vector<double> sam);
+    Signal(std::vector<double> sam,double samRate=44100);
 
 
     /** Default destructor
@@ -88,6 +92,12 @@ public:
     /** Getter for the Frequencies.
      *
      * @return std::vector<double> Frequencies
+     */
+    double getSampleRate() const;
+
+    /** Getter for the sample rate.
+     *
+     * @return double sample rate
      */
     std::vector<int> getFrequencies() const;
 
@@ -122,7 +132,7 @@ public:
 
     /** Compute the inverse Fourier Transform.
      */
-    void InverseFourierTransform();
+    std::vector<double> InverseFourierTransform(std::ofstream& file);
 
     /** Write the signal inside a sound file.
      *

@@ -1,7 +1,17 @@
 //
 // Created by shernand on 12/8/17.
 //
-
+//=======================================================================
+/** @file LaplaceFilter.h
+ *  @author Didier Bieler && Sergio Hernandez
+ *
+ * This file is part of the project of Sound Processing
+ *
+ *
+ * This class defines a laplace filter in the spatial domain.
+ *
+ */
+//=======================================================================
 #ifndef PROJECT_LAPLACEFILTER_H
 #define PROJECT_LAPLACEFILTER_H
 /** Class which defines a laplace filter in the spatial domain.

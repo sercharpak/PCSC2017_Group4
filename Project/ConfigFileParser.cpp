@@ -1,7 +1,17 @@
 //
 // Created by shernand on 12/10/17.
 //
-
+//=======================================================================
+/** @file ConfigFileParser.h
+ *  @author Didier Bieler && Sergio Hernandez
+ *
+ * This file is part of the project of Sound Processing
+ *
+ *
+ * This class performs the parsing of a standard configuration file.
+ *
+ */
+//=======================================================================
 #include "ConfigFileParser.h"
 
 ConfigFileParser::ConfigFileParser() {

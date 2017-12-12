@@ -10,7 +10,7 @@
 
 #include "Signal.h"
 
-Signal::Signal(AudioFile<double> audio):sample(audio.samples[0]){
+Signal::Signal(AudioFile<double> audio):sample(audio.samples[0]),sampleRate(audio.getSampleRate()){
     double numSamples(audio.getNumSamplesPerChannel());
     double step((numSamples /(audio.getSampleRate()*1.0))/numSamples);
     for (int i = 0; i<numSamples;++i){
@@ -18,10 +18,10 @@ Signal::Signal(AudioFile<double> audio):sample(audio.samples[0]){
     }
 }
 
-Signal::Signal(std::vector<double> sam):sample(sam){
+Signal::Signal(std::vector<double> sam, double samRate):sample(sam),sampleRate(samRate){
     double numSamples(sam.size());
-    double SampleRate(44100);
-    double step((numSamples /(SampleRate*1.0))/numSamples);
+    //double SampleRate(44100); // Provisoire to have a signal with a sample rate of the length of the signal
+    double step((numSamples /(sampleRate*1.0))/numSamples);
     for (int i = 0; i<numSamples;++i){
         time.push_back(i*step);
     }
@@ -43,6 +43,10 @@ std::vector<std::complex<double>> Signal::getFourierTransform() const{
 
 std::vector<int> Signal::getFrequencies() const{
     return Frequencies;
+}
+
+double Signal::getSampleRate() const{
+    return sampleRate;
 }
 
 void Signal::Histogram(int number_bin, std::ofstream& file){
@@ -83,17 +87,23 @@ void Signal::FourierTransformCalculator(int min_frequency, int max_frequency){
     }
 
     size_t size(sample.size());
-
-    for (int w(min_frequency);w<=max_frequency;++w){
+    double w(min_frequency);
+    while (w<max_frequency){
         std::complex<double> Fourier_transform(0,0);
+        //std::cout << w << std::endl;
         //We use a sampling rate of 44100...
         for (size_t k(0); k < size; ++k) {
-            double t(k/44100.0);
-            std::complex<double> temp(sample[k] * cos((2*M_PI*t*w))*(1.0/(sqrt(size))),(-1.0) * sample[k] * sin((2*M_PI*t*w))*(1.0/(sqrt(size))));
-            Fourier_transform += temp;
+            //double t((k*1.0)/size);// I can use this if the sample rate is = numSample
+            double t(k/sampleRate);// I can use this if the sample rate is 44100.0
+            //int t(k/size);
+            //std::complex<double> temp(sample[k] * cos((2*M_PI*t*w))*(1.0/(sqrt(size))),(-1.0) * sample[k] * sin((2*M_PI*t*w))*(1.0/(sqrt(size))));
+            std::complex<double> temp(sample[k] * cos((2*M_PI*t*w)),(-1.0) * sample[k] * sin((2*M_PI*t*w)));
+            Fourier_transform += (1.0/sqrt(size))*temp;
         }
         FourierTransform.push_back(Fourier_transform);
         Frequencies.push_back(w);
+        w+=1;
+        //std::cout<< w << std::endl;
     }
     std::cout<<"Fourier Transform calculated successfully" << std::endl;
 }
@@ -108,15 +118,38 @@ void Signal::FourierTransformCalculator(int min_frequency, int max_frequency, st
 
 void Signal::SaveSignal(std::ofstream& file){
     for (size_t i(0); i< sample.size(); ++i){ // Save the signal and the samples into a file.
-        file << time[i] << " ";
+        file << time[i] << " ";//Change this to not have the time in the file
         file << sample[i] << std::endl;
     }
 
     std::cout<<"Signal saved successfully" << std::endl;
 }
 
-void Signal::InverseFourierTransform(){
-    //Compute the inverse Fourier Transform
+std::vector<double> Signal::InverseFourierTransform(std::ofstream& file){
+    size_t sizeFre(Frequencies.size());
+    size_t sizeSam(sample.size());
+    std::vector<std::complex<double>> ResultSample;
+    std::vector<std::complex<double>> Fourier = FourierTransform;
+    std::vector<int> Freque = Frequencies;
+
+    std::vector<double> EndSample(sizeSam);
+    for (int w(0);w<sizeSam;++w){
+        std::complex<double> InvFourier_transform(0,0);
+        for (size_t k(0); k < sizeFre; ++k) {
+            double t((k*1.0)/sampleRate);
+            std::complex<double> temp(cos((2*M_PI*t*w)),sin((2*M_PI*t*w)));
+            InvFourier_transform += (1.0/sizeFre)*Fourier[k] *temp;
+        }
+        ResultSample.push_back(InvFourier_transform);
+        EndSample[w] = ResultSample[w].real();
+        file << w << " ";
+        file << InvFourier_transform.real() <<std::endl;
+    }
+
+    std::cout<<"Inverse Fourier Transform calculated sucessfully" << std::endl;
+
+    return EndSample;
+
 }
 
 void Signal::WriteSound(std::string FileName){

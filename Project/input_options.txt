@@ -5,8 +5,19 @@
 #-a text file with the frequencies:'freq'
 #-a text file with the times and amplitudes:'ampl'
 type_input=audio
-filename='../test-audio/wav_mono_16bit_44100.wav'
+#Insert the data filename without quotes
+filename=../test-audio/wav_mono_16bit_44100.wav
+#Available filters are:
+#-Mean (low pass)
+#-Prewitt (band pass)
+#-Laplace (high pass)
 filters=mean,prewitt,laplace
+#\todo need to specify the mask sizes
+#Flag to compute or not the fourier transform
+#-1 to compute it
 fourierCompute=1
+#Flag to write or not the fourier transform to a file
+#-1 to save it
 fourierWrite=1
-outputFile='test_mono_16bit_44100.wav'
+#Output Filename without quotes
+outputFile=test_mono_16bit_44100.wav

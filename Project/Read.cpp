@@ -21,7 +21,9 @@ ReadAudioFile::ReadAudioFile(std::string n):name(n){
 Signal ReadAudioFile::construct()
 {
     AudioFile<double> audio;
-    audio.load(name);
+    bool load_bool = audio.load(name);
+    if (!load_bool)
+        throw FileNotFoundException();
     Signal sign (audio);
     return sign;
 }
@@ -36,7 +38,7 @@ Signal ConstructFromFrequency::construct()
 
     for (int i = 0; i < numSamples; i++)
     {
-        double t = i/ 44100.0;
+        double t = i/ 44100.0;//i/numSamples;//i/ 44100.0; // I put everything in the first second of the signal
         sample.push_back(sin(frequency*t*2*pi));
     }
 
@@ -51,6 +53,8 @@ Signal ReadAmplitudeFile::construct()
 {
     std::vector<double> sample;
     std::ifstream FileToRead(name);
+    if (!FileToRead)
+        throw FileNotFoundException();
     while(!FileToRead.eof()){
         double t,s;
         FileToRead >> t >> s;

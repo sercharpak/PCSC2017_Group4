@@ -21,6 +21,7 @@
 #include <string>
 #include <cmath>
 #include "Signal.h"
+#include "FileNotFoundException.hpp"
 
 /** Virtual abstract class which defines a standard construction of a signal.
  */

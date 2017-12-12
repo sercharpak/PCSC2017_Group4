@@ -7,6 +7,9 @@
 #include <cmath>
 #include <algorithm>
 #include <iostream>
+#include <map>
+#include <string>
+
 
 #include "AudioFile.h"
 #include "Signal.h"
@@ -16,11 +19,18 @@
 #include "LaplaceFilter.h"
 #include "Read.h"
 #include "FilterSizeException.hpp"
-/*
+
+#include "FileNotFoundException.hpp"
+#include "FileParserException.hpp"
+#include "ConfigFileParser.h"
+
 int testFiltersSpatial();
 int testFiltersSpatialSignal();
 int testIDFT();
-*/
+int testConfigParser();
+int testConfigParserClass();
+
+
 int main(int argc, char* argv[]) {
 
     /*
@@ -42,7 +52,7 @@ int main(int argc, char* argv[]) {
     std::ofstream write_hist("Hist_LA.dat");
     std::ofstream write_fre("Fre_LA.dat");
 
-    LA_NoteSignal.FourierTransformCalculator(-100,500,write_fre);
+    LA_NoteSignal.FourierTransformCalculator(0,500,write_fre);
     LA_NoteSignal.Histogram(50,write_hist);
 
     std:: ofstream write_sample("Sample_LA.dat");
@@ -63,23 +73,57 @@ int main(int argc, char* argv[]) {
     std:: ofstream write_sample_Sound("Sample_S.dat");
     SoundSignal.SaveSignal(write_sample_Sound);
 
-    std::ofstream write_tf("inv.dat");
+    //New signal
+    std::vector<double> NewSample(SoundSignal.getSamples()[0]);
+    for (size_t a(1); a <1000; ++a){
+        NewSample.push_back(SoundSignal.getSamples()[a]);
+    }
 
-    size_t size(SoundSignal.getFrequencies().size());
+    Signal NewSignal(NewSample);
+    std::ofstream write_FreN("Fre_NewS.dat");
+
+    NewSignal.FourierTransformCalculator(0,1000,write_FreN);
+    std::ofstream write_NewSample("NewSample.dat");
+    NewSignal.SaveSignal(write_NewSample);
+
+    std::ofstream write_tf("inv.dat");
+    std::vector<double> InvFourier;
+    InvFourier = LA_NoteSignal.InverseFourierTransform(write_tf);
+    /*
+    size_t size(LA_NoteSignal.getFrequencies().size());
+    std::cout<<"Size : "<<size<<std::endl;
     std::vector<std::complex<double>> ResultSample;
-    std::vector<std::complex<double>> Fourier = SoundSignal.getFourierTransform();
-    std::vector<int> Freque = SoundSignal.getFrequencies();
+    std::vector<std::complex<double>> Fourier = LA_NoteSignal.getFourierTransform();
+    std::vector<int> Freque = LA_NoteSignal.getFrequencies();
 
     std::vector<double> EndSample(352800);
-
-    for (int w(0);w<=352800;++w){
+    int pause(0);
+    //Voir si je peux encore améliorer ou si je suis déjà au max de ce que je peux faire
+    //IMPORTANT : Je dois faire que tout le code marche donc j'ai modifié des choses dans la classe ReadFre
+    // et aussi dans la classe signal et aussi dans les constructeurs et les attributs donc il faut faire en sorte que ça nmarche encore
+    for (int w(0);w<352800;++w){
         std::complex<double> Fourier_transform(0,0);
         //We use a sampling rate of 44100...
         for (size_t k(0); k < size; ++k) {
             //double t(k/44100.0);
-            double t(Freque[k]/44100.0);
+            double t((k*1.0)/44100.0);
             std::complex<double> temp(cos((2*M_PI*t*w)),sin((2*M_PI*t*w)));
-            Fourier_transform += (1.0/size)*Fourier[k] *temp;
+            Fourier_transform += (1.0/sqrt(size))*Fourier[k] *temp;
+            /*
+            std::cout<<"======================="<<std::endl;
+            std::cout<<"Frequence : "<< Freque[k] << std::endl;
+            std::cout<<"temp : "<< temp << std::endl;
+            std::cout<<"Fourier: " << Fourier[k] <<std::endl;
+            std::cout<<"Fourier Transform :"<< Fourier_transform << std::endl;
+            std::cout<<"Time : " << t << std::endl;
+            std::cout << "(2*M_PI*t*w) : " << (2*M_PI*t*w) << std::endl;
+            std::cout<<"======================="<<std::endl;
+            */
+            //if (pause == 5){
+            //    std::cin >> pause;
+            //}
+            //++pause;
+    /*
         }
         ResultSample.push_back(Fourier_transform);
         EndSample[w] = ResultSample[w].real()+ ResultSample[w].imag();
@@ -91,6 +135,7 @@ int main(int argc, char* argv[]) {
     Signal SignFI(EndSample);
 
     SignFI.WriteSound("Retour.wav");
+   */
     /**/
 
     /*std::ofstream write_tf("inv.dat");
@@ -124,14 +169,179 @@ int main(int argc, char* argv[]) {
 
 
     //SDHC \todo Testing the Spatial Domain Filters
-    int testSpatialFilters = testFiltersSpatial();
-    int testSpatialFilterSignals = testFiltersSpatialSignal();
+    //int testSpatialFilters = testFiltersSpatial();
+    //int testSpatialFilterSignals = testFiltersSpatialSignal();
     //SDHC \todo Testing my own DFT and IDFT so far it DOES NOT WORK
     //int testIDFTs = testIDFT();
      */
     return 0;
 }
 /*
+
+    //SHDC \todo Testing the config file parser
+    //int testConfigParsers = testConfigParser();
+    int testConfigParserClasss = testConfigParserClass();
+
+
+
+
+    return 0;
+}
+int testConfigParser(){
+    try{
+        std::string fName = "../input_options.txt";
+        std::cout<<"Testing Parser with file = " << fName << std::endl;
+        std::ifstream file;
+        file.open(fName.c_str());
+        if (!file)
+            throw FileNotFoundException();
+
+        std::string line;
+        std::vector<std::string> filters;
+        std::map<std::string,std::string> data;
+
+        while (std::getline(file, line))
+        {
+            std::string temp = line;
+            //std::cout<<"Line = " << temp << std::endl;
+            if (temp.empty())
+                continue;
+            if(temp.front() =='#'){
+                std::cout<<"Comment line = " << temp << std::endl;
+                continue;
+            }
+            std::istringstream is_line(temp);
+            std::string key;
+            if( std::getline(is_line, key, '=') )
+            {
+                std::string value;
+                if( std::getline(is_line, value) ){
+                    std::cout<<"Key = " << key << std::endl;
+                    std::cout<<"Value = " << value << std::endl;
+                    data[key] = value;
+                    if(key=="filters"){
+
+                        std::string token;
+                        std::istringstream tokenStream(value);
+                        while (std::getline(tokenStream, token,','))
+                        {
+                            filters.push_back(token);
+                        }
+                    }
+                }
+            }
+        }
+        file.close();
+        //Finished parsing the config file
+
+        std::for_each(filters.begin(), filters.end(),
+                      [](std::string x) { std::cout << x << std::endl; });
+
+        auto it = data.begin();
+        auto end = data.end();
+        for (; it != end; ++it) {
+            std::string key = it->first;
+            std::string value = it->second;
+            std::cout << "key:" << key << " -> ";
+            std::cout << value << std::endl;
+        }
+        return 0;
+
+
+    }
+    catch(const std::runtime_error &e){
+        std::cout << e.what() <<std::endl;
+        return 1;
+    }
+}
+
+int testConfigParserClass(){
+    try{
+        std::string fName = "../input_options.txt";
+        std::cout<<"Testing Parser Class with file = " << fName << std::endl;
+        ConfigFileParser parser = ConfigFileParser();
+        parser.parseFile(fName);
+        std::vector<std::string> filters = parser.getFilters();
+        std::map<std::string,std::string> data = parser.getData();
+
+        //Now it can begin to execute the program.
+        //\todo Here there should be a difference between FT filters and Spatial Filters
+        //\todo Need to specify in the config file the size of spatial filters
+        Signal SoundSignal;
+        auto it = data.begin();
+        auto end = data.end();
+        //Type input
+        std::string tempKey = "type_input";
+        auto iter = data.find(tempKey);
+        if (iter != data.end()) {
+            //Check the value and loads the file
+            std::string valueTemp = iter->second;
+            //Checks the cases
+            if(valueTemp=="audio"){
+                tempKey = "filename";
+                auto iter_file = data.find(tempKey);
+                std::string fName = iter_file->second;
+                std::cout<<"Opening = " << fName << std::endl;
+                ReadAudioFile Sound(fName);
+                SoundSignal = Sound.construct();
+            }
+            //\todo complete the different cases of construction of a signal
+        }
+        else
+            throw FileParserException();
+
+        //Apply the filters in order
+        //\todo Still have to insert in the options the mask size!
+        std::for_each(filters.begin(), filters.end(),
+                      [&SoundSignal](std::string filter) {
+                          std::cout << "Applying Filter" << filter <<std::endl;
+                          if(filter=="mean"){
+                              MeanFilter<double> myMean = MeanFilter<double>();
+                              SoundSignal = myMean.apply(SoundSignal);
+
+                          }
+                          if(filter=="prewitt"){
+                              PrewittFilter<double> myEdge = PrewittFilter<double>();
+                              SoundSignal = myEdge.apply(SoundSignal);
+                          }
+                          if(filter=="laplace"){
+                              LaplaceFilter<double> myLaplace = LaplaceFilter<double>();
+                              SoundSignal = myLaplace.apply(SoundSignal);
+                          }
+                          //\todo Can insert here new filter types
+
+                      });
+        tempKey = "outputFile";
+        iter = data.find(tempKey);
+        if (iter != data.end()) {
+            SoundSignal.WriteSound(iter->second);
+        }
+        else
+            throw FileParserException();
+
+        tempKey = "fourierCompute";
+        iter = data.find(tempKey);
+        if (iter != data.end()) {
+            //Check the value and loads the file
+            std::string valueTemp = iter->second;
+            //Checks the cases
+            if(valueTemp=="1"){
+                SoundSignal.FourierTransformCalculator(0,500);
+            }
+        }
+        else
+            throw FileParserException();
+
+        return 0;
+
+    }
+    catch(const std::runtime_error &e){
+        std::cout << e.what() <<std::endl;
+        return 1;
+    }
+}
+
+
 int testIDFT(){
     try{
         Signal SoundSignal;
@@ -222,7 +432,7 @@ int testFiltersSpatial(){
         int numSamples = signalToFilter.size();
         std::cout << "Size of the input signal " << signalToFilter.size()<< std::endl;
 
-        int filterSize = 6;
+        int filterSize = 5;
 
         MeanFilter<double> myMean = MeanFilter<double>(filterSize);
         std::vector<double> signalFilteredMyMean = myMean.apply(signalToFilter);
