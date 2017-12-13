@@ -8,7 +8,7 @@ type_output=ampl
 outputFile=../test-audio/highLowSignal_Filtered.dat
 #------------Filters-Spatial-Domain---------
 filters=laplace
-filtersizes=7
+filtersizes=3
 #===========================================
 fourierCompute=0
 fourierWrite=0
