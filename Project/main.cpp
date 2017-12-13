@@ -41,7 +41,7 @@ int main(int argc, char* argv[]) {
 
         //Trying some Stuff
         //=======================================================
-
+/*
         ConstructFromFrequency LA_Note(440);
         Signal LA_NoteSignal;
         LA_NoteSignal = LA_Note.construct();
@@ -57,7 +57,7 @@ int main(int argc, char* argv[]) {
         InvFourier = LA_NoteSignal.InverseFourierTransform("Inv.dat"); // Not the good Height...
 
         //=======================================================
-
+*/
         return 0;
 
     }

@@ -1,0 +1,18 @@
+#Options to use the Project to conver an amplitude .dat to a wav file
+#===========================================
+#----------------Input-File-----------------
+type_input=ampl
+filename=../test-audio/impulseSignal.dat
+#----------------Output-File----------------
+type_output=audio
+outputFile=../test-audio/impulseSignal.wav
+#===========================================
+filters=
+filtersizes=
+fourierCompute=0
+fourierWrite=0
+outputFourierFile=
+histogram=0
+histogramBins=
+outputHistogramFile=
+

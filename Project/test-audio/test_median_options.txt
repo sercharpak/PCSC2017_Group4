@@ -1,0 +1,19 @@
+#Text file with the options to test a median filter
+#===========================================
+#----------------Input-File-----------------
+type_input=ampl
+filename=../test-audio/impulseSignal.dat
+#----------------Output-File----------------
+type_output=ampl
+outputFile=../test-audio/impulseSignal_Filtered.dat
+#------------Filters-Spatial-Domain---------
+filters=median
+filtersizes=7
+#===========================================
+fourierCompute=0
+fourierWrite=0
+outputFourierFile=
+histogram=0
+histogramBins=
+outputHistogramFile=
+
