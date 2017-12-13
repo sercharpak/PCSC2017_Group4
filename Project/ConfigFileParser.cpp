@@ -2,7 +2,7 @@
 // Created by shernand on 12/10/17.
 //
 //=======================================================================
-/** @file ConfigFileParser.h
+/** @file ConfigFileParser.cpp
  *  @author Didier Bieler && Sergio Hernandez
  *
  * This file is part of the project of Sound Processing

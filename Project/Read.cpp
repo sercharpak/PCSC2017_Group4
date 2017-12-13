@@ -38,7 +38,7 @@ Signal ConstructFromFrequency::construct()
 
     for (int i = 0; i < numSamples; i++)
     {
-        double t = i/ 44100.0;//i/numSamples;//i/ 44100.0; // I put everything in the first second of the signal
+        double t = i/sampleRate;//i/numSamples;//i/ 44100.0; // I put everything in the first second of the signal
         sample.push_back(sin(frequency*t*2*pi));
     }
 

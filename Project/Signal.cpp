@@ -92,14 +92,14 @@ void Signal::FourierTransformCalculator(int min_frequency, int max_frequency){
         min_frequency = max_frequency;
         max_frequency = temp;
     }
-
+    // Throw pour négative
     size_t size(sample.size());
     for (int w(min_frequency); w<max_frequency; w++){
         std::complex<double> Fourier_transform(0,0);
         for (size_t k(0); k < size; ++k) {
-            double t(k/samplerate);
+            double t(k*1.0/size);
             std::complex<double> temp(sample[k] * cos((2*M_PI*t*w)),(-1.0) * sample[k] * sin((2*M_PI*t*w)));
-            Fourier_transform += (1.0/sqrt(size))*temp;
+            Fourier_transform += temp;//(1.0/sqrt(size))*temp;
         }
         fouriertransform.push_back(Fourier_transform);
         frequencies.push_back(w);
@@ -142,7 +142,7 @@ std::vector<double> Signal::InverseFourierTransform(std::string fileName){
         for (size_t k(0); k < sizeFre; ++k) {
             double t((k*1.0)/samplerate);
             std::complex<double> temp(cos((2*M_PI*t*w)),sin((2*M_PI*t*w)));
-            InvFourier_transform += (1.0/sizeFre)*Fourier[k] *temp;
+            InvFourier_transform += (1.0/sizeSam)*Fourier[k] *temp;
         }
         ResultSample.push_back(InvFourier_transform);
         EndSample[w] = ResultSample[w].real();

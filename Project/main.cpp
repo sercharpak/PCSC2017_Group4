@@ -10,7 +10,10 @@
 //=======================================================================
 #include "ConfigFileParser.h"
 #include "ConfigFileExecuter.h"
-#include <cmath>
+#include "HistogramException.h"
+
+
+int testIDFT();
 
 /**
  * Constant to inform the user the correct usage of the program in case of a misuse.
@@ -42,12 +45,12 @@ int main(int argc, char* argv[]) {
         //Trying some Stuff
         //=======================================================
 
-        ConstructFromFrequency LA_Note(440);
+        ConstructFromFrequency LA_Note(3,1000);
         Signal LA_NoteSignal;
         LA_NoteSignal = LA_Note.construct();
 
         LA_NoteSignal.FourierTransformCalculator(0,500,"Fre_LA.dat");
-        LA_NoteSignal.Histogram(-3,"Hist_LA.dat"); //Does not give the message of error...
+        LA_NoteSignal.Histogram(50,"Hist_LA.dat"); //Does not give the message of error...
 
         LA_NoteSignal.SaveSignal("Sample_LA.dat");
 
@@ -56,11 +59,16 @@ int main(int argc, char* argv[]) {
         std::vector<double> InvFourier;
         InvFourier = LA_NoteSignal.InverseFourierTransform("Inv.dat"); // Not the good Height...
 
+        std::cout << "PI = " << M_PI << std::endl;
+
+        int a(testIDFT());
+
         //=======================================================
 
         return 0;
 
     }
+
     catch(const std::runtime_error &e){
         std::cout << e.what() <<std::endl;
         return 1;
@@ -73,14 +81,29 @@ int testIDFT(){
     try{
         Signal SoundSignal;
         //ReadAudioFile Sound("../test-audio/wav_mono_16bit_44100.wav");
-        ConstructFromFrequency LA_Note(440);
+        ConstructFromFrequency LA_Note(4000,10000);
         SoundSignal = LA_Note.construct();
 
-        //SoundSignal = Sound.construct();
+        //SoundSignal2 = Sound.construct();
+
 
         //Testing DFT
         std::vector<double> signalOrig = SoundSignal.getSamples();
-        int N = signalOrig.size();
+
+
+        size_t N = signalOrig.size();
+        //size_t N = signalOrig.size()/16;
+        /*
+        std::vector<double>NewSample(N);
+
+        for (size_t i(0); i<N; ++i){
+            NewSample[i] = signalOrig[i];
+        }
+*/
+        //Signal SoundSignal(NewSample);
+
+
+        std::cout<<"Value in 0 = "<<signalOrig[0] << std::endl;
 
         std::vector<std::complex<double>> signalDFT = std::vector<std::complex<double>>(N);
         std::vector<double> frequencies = std::vector<double>(N);
@@ -90,19 +113,25 @@ int testIDFT(){
 
         std::cout << "Computing the DTF " << std::endl;
 
-        for (int k=0;k<N;++k){
+        for (size_t k=0;k<N;++k){
             //Value k
             std::complex<double> sum(0,0);
-            for (int n=0;n<N;++n){
+            for (size_t n=0;n<N;++n){
                 //Sum
                 double x_n = signalOrig[n];
-                double exp_arg = (-2.0*M_PI*k*n)/N ;
-                std::complex<double> sum_temp(x_n*cos(exp_arg),x_n*sin(exp_arg));
-                sum = sum + sum_temp;
+                double exp_arg = (2.0*M_PI*k*n)/N ;
+                std::complex<double> sum_temp(x_n*cos(exp_arg),(-1.0)*x_n*sin(exp_arg));
+                sum = (sum + sum_temp);
             }
             signalDFT[k]=sum;
-            double freq = k/N;
-            frequencies[k]=freq;
+            if(k<=N/2.0) {
+                double freq = k * 44100.0 / N;
+                frequencies[k] = freq;
+            }
+        }
+        std::vector<std::complex<double>> FT_S(frequencies.size());
+        for (size_t i(0); i<frequencies.size(); ++i){
+            FT_S[i] = signalDFT[i];
         }
         std::cout << "Finished computing the DTF " << std::endl;
 
@@ -118,9 +147,9 @@ int testIDFT(){
                 double real_part = X_k.real()*cos(exp_arg) - X_k.imag()*sin(exp_arg);
                 double imag_part = X_k.real()*sin(exp_arg) + X_k.imag()*cos(exp_arg);
                 std::complex<double> sum_temp(real_part,imag_part);
-                sum = sum + sum_temp;
+                sum += sum_temp;
             }
-            signalRecov[n]=sum.real();
+            signalRecov[n]=(1.0/N)*sum.real();
         }
 
         std::cout << "Finished computing the IDTF " << std::endl;
@@ -128,14 +157,24 @@ int testIDFT(){
         std::vector<double> time = SoundSignal.getTime();
 
         std::ofstream write_output("Output_DFT.dat");
-        for (int i = 0; i < N; i++)
+        std::ofstream write_input("Input_DFT.dat");
+        std::ofstream write_frequencies("Fre_DFT.dat");
+        for (int i = 0; i < N; i++) //Prendre la première moitié de la fourier transform
         {
             write_output<<time[i]<<" ";
-            write_output<<signalOrig[i]<<" ";
-            write_output<<frequencies[i]<<" ";
-            write_output<<signalDFT[i].real()<<std::endl;
+            write_input<<time[i]<<" ";
+            write_input<<signalOrig[i]<<std::endl;
+            write_frequencies << frequencies[i] << " ";
+            //write_output<<frequencies[i]<<" ";
+            //write_output<<signalDFT[i].real()<<std::endl;
+            write_frequencies<<std::abs(signalDFT[i]) << std::endl;
             write_output<<signalRecov[i]<<std::endl;
 
+        }
+        for (int i = 0; i < frequencies.size(); ++i) {
+            write_frequencies << frequencies[i] << " ";
+
+            write_frequencies << std::abs(signalDFT[i]) << std::endl;
         }
 
         write_output.close();
