@@ -1,0 +1,18 @@
+#Text file with the options to test a high pass filter (Laplace)
+#===========================================
+#----------------Input-File-----------------
+type_input=ampl
+filename=../test-audio/highLowSignal.dat
+#----------------Output-File----------------
+type_output=ampl
+outputFile=../test-audio/highLowSignal_Filtered.dat
+#------------Filters-Spatial-Domain---------
+filters=laplace
+filtersizes=3
+#===========================================
+fourierCompute=0
+fourierWrite=0
+outputFourierFile=
+histogram=0
+histogramBins=
+outputHistogramFile=

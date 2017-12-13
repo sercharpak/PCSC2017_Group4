@@ -17,7 +17,7 @@
 
 #include <string>
 #include <stdexcept>
-class FileNotFoundException : std::runtime_error{
+class FileNotFoundException : public std::runtime_error{
 public:
     FileNotFoundException() : std::runtime_error("FILE NOT FOUND: The file cannot be found") { }
     virtual const char* what() const throw()

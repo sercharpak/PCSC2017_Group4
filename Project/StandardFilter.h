@@ -77,7 +77,7 @@ public:
      * @param std::vector<T> the raw data to which we want to apply the filter.
      * @return std::vector<T> the raw data filtered
      */
-    std::vector<T> apply(std::vector<T> pSignal);
+    std::vector<T> applySamples(std::vector<T> pSignal);
     /** Applies the filter to the signal object
      * @param Signal the signal to which we want to apply the filter.
      * @return New Signal object with the data filtered

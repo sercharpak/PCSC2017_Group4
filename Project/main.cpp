@@ -45,7 +45,10 @@ int main(int argc, char* argv[]) {
         //Trying some Stuff
         //=======================================================
 
+
         ConstructFromFrequency LA_Note(3,1000);
+
+        //ConstructFromFrequency LA_Note(440);
         Signal LA_NoteSignal;
         LA_NoteSignal = LA_Note.construct();
 

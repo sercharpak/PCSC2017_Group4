@@ -11,8 +11,7 @@ ConfigFileExecuter::~ConfigFileExecuter(){}
 
 void ConfigFileExecuter::execute(){
     //Gets the parsed values
-    //std::vector<std::string> filters = configFile.getFilterNames();
-    std::vector<StandardFilter<double>> filters = configFile.getFilters();
+    std::vector<std::string> filterNames = configFile.getFilterNames();
     std::vector<int> filterSizes = configFile.getFilterSizes();
     std::map<std::string,std::string> data = configFile.getData();
     //Constructs the Signal
@@ -45,10 +44,63 @@ void ConfigFileExecuter::execute(){
         throw FileParserException();
 
     //Apply the filters in order
-    std::for_each(filters.begin(), filters.end(),
-                  [&SoundSignal](StandardFilter<double> filter) {
-                      std::cout <<"Applying Filter: "<< filter.getName()<<" with mask size: "<<filter.getLength()<<std::endl;
-                      SoundSignal = filter.apply(SoundSignal); });
+    if(!filterSizes.empty()) {
+        //Creates the filters and adds them to the vector
+        for(int i=0;i<filterNames.size();++i) {
+            std::string filter = filterNames[i];
+            int filterSize = filterSizes[i];
+            if (filter == "mean") {
+                MeanFilter<double> myMean = MeanFilter<double>(filterSize);
+                std::cout <<"Applying Filter: "<< myMean.getName()<<" with mask size: "<<myMean.getLength()<<std::endl;
+                SoundSignal = myMean.apply(SoundSignal);
+            }
+            if (filter == "prewitt") {
+                PrewittFilter<double> myEdge = PrewittFilter<double>(filterSize);
+                std::cout <<"Applying Filter: "<< myEdge.getName()<<" with mask size: "<<myEdge.getLength()<<std::endl;
+                SoundSignal = myEdge.apply(SoundSignal);
+            }
+            if (filter == "laplace") {
+                LaplaceFilter<double> myLaplace = LaplaceFilter<double>(filterSize);
+                std::cout <<"Applying Filter: "<< myLaplace.getName()<<" with mask size: "<<myLaplace.getLength()<<std::endl;
+                SoundSignal = myLaplace.apply(SoundSignal);
+            }
+            if (filter == "median"){
+                MedianFilter myMedian = MedianFilter(filterSize);
+                std::cout <<"Applying Filter: "<< myMedian.getName()<<" with mask size: "<<myMedian.getLength()<<std::endl;
+                SoundSignal = myMedian.apply(SoundSignal);
+            }
+            //\todo Can insert here new filter types
+        }
+    }
+
+    else{   //No sizes are specified
+        std::vector<StandardFilter<double>> filters_temp;
+        std::for_each(filterNames.begin(), filterNames.end(),
+                      [&SoundSignal](std::string filter) {
+                          if (filter == "mean") {
+                              MeanFilter<double> myMean = MeanFilter<double>();
+                              std::cout <<"Applying Filter: "<< myMean.getName()<<" with mask size: "<<myMean.getLength()<<std::endl;
+                              SoundSignal = myMean.apply(SoundSignal);
+                          }
+                          if (filter == "prewitt") {
+                              PrewittFilter<double> myEdge = PrewittFilter<double>();
+                              std::cout <<"Applying Filter: "<< myEdge.getName()<<" with mask size: "<<myEdge.getLength()<<std::endl;
+                              SoundSignal = myEdge.apply(SoundSignal);
+                          }
+                          if (filter == "laplace") {
+                              LaplaceFilter<double> myLaplace = LaplaceFilter<double>();
+                              std::cout <<"Applying Filter: "<< myLaplace.getName()<<" with mask size: "<<myLaplace.getLength()<<std::endl;
+                              SoundSignal = myLaplace.apply(SoundSignal);
+                          }
+                          if (filter == "median"){
+                              MedianFilter myMedian = MedianFilter();
+                              std::cout <<"Applying Filter: "<< myMedian.getName()<<" with mask size: "<<myMedian.getLength()<<std::endl;
+                              SoundSignal = myMedian.apply(SoundSignal);
+                          }
+                          //\todo Can insert here new filter types
+
+                      });
+    }
     tempKey = "histogram";
     iter = data.find(tempKey);
     valueTemp = iter->second;
