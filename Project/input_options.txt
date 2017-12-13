@@ -21,8 +21,8 @@ filename=../test-audio/wav_mono_16bit_44100.wav
 #-Mean (low pass)
 #-Prewitt (band pass)
 #-Laplace (high pass)
-filters=mean,prewitt,laplace
-filtersizes=7,3,5
+filters=mean,prewitt,laplace,median
+filtersizes=7,3,5,9
 #------------Fourier-Transform--------------
 #Flag to compute or not the fourier transform
 #1 to compute it

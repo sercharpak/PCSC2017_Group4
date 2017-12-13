@@ -70,7 +70,7 @@ std::string StandardFilter<T>::getName()
     return name;
 }
 template<typename T>
-std::vector<T> StandardFilter<T>::apply(std::vector<T> pSignal)
+std::vector<T> StandardFilter<T>::applySamples(std::vector<T> pSignal)
 {
     //\todo Verify that the mirror boundary conditions are correct
     //\todo Use some of the new C++ features here (for_each, iota, etc...)
@@ -98,7 +98,7 @@ template<typename T>
 Signal StandardFilter<T>::apply(Signal pSignal)
 {
     std::vector<T> samples = pSignal.getSamples();
-    std::vector<T> outSamples = apply(samples);
+    std::vector<T> outSamples = applySamples(samples);
     Signal outputSignal = Signal(outSamples);
     return outputSignal;
 }
