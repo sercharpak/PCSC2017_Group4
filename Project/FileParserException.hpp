@@ -18,7 +18,7 @@
 
 #include <string>
 #include <stdexcept>
-class FileParserException : std::runtime_error{
+class FileParserException : public std::runtime_error{
 public:
     FileParserException() : std::runtime_error("FILE PARSER ERROR: The parsing of the file failed. \n Please verify the file is well formatted.") { }
     virtual const char* what() const throw()

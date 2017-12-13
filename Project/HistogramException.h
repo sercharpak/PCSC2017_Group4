@@ -15,7 +15,7 @@
 
 #include <string>
 #include <stdexcept>
-class HistogramException  : std::runtime_error{
+class HistogramException  : public std::runtime_error{
 public:
     HistogramException() : std::runtime_error("HISTOGRAM SIZE IS SMALLER OR EQUAL TO 0. It must be stricly bigger than 0") { }
     virtual const char* what() const throw()
