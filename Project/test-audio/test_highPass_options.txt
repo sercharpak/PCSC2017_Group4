@@ -1,48 +1,18 @@
-#Text file with the options to execute te Sound Processing Program
-#===========================================
-#----------------Format---------------------
-#-To comment just start a line with the '#' character
-#The format goes by: key=value with no spaces.
-#For keys with several values these are separated with the ',' character
-#Keys are unique
+#Text file with the options to test a high pass filter (Laplace)
 #===========================================
 #----------------Input-File-----------------
-#-Be careful to write the path with no quotes
-#-Can be:
-#-an AudioFile:'audio'
-#-a text file with the frequencies:'freq'
-#-a text file with the times and amplitudes:'ampl'
 type_input=ampl
-filename=../test-audio/impulseSignal.dat
-#------------Filters-Spatial-Domain---------
-#Standard mask size is 5. If desired different mask sizes please specify
-#the sizes for all filters
-#Available filters are:
-#-Mean (low pass)
-#-Prewitt (band pass)
-#-Laplace (high pass)
-filters=median
-filtersizes=5
-#------------Fourier-Transform--------------
-#Flag to compute or not the fourier transform
-#1 to compute it
-fourierCompute=0
-#Flag to write or not the fourier transform to a file
-#1 to save it
-fourierWrite=0
-outputFourierFile=test_mono_16bit_44100_fourier.dat
-#------------------Histogram----------------
-#Flag to compute or not the histogram
-#1 to compute it
-histogram=1
-histogramBins=100
-outputHistogramFile=test_Impulse_Signal_histogram.dat
+filename=../test-audio/highLowSignal.dat
 #----------------Output-File----------------
-#-Be careful to write the path with no quotes
-#-Can be:
-#-an AudioFile:'audio'
-#-a text file with the times and amplitudes:'ampl'
-#type_output=audio
-#outputFile=test_mono_16bit_44100.wav
 type_output=ampl
-outputFile=../test-audio/impulseSignal_Filtered.dat
+outputFile=../test-audio/highLowSignal_Filtered.dat
+#------------Filters-Spatial-Domain---------
+filters=laplace
+filtersizes=7
+#===========================================
+fourierCompute=0
+fourierWrite=0
+outputFourierFile=
+histogram=0
+histogramBins=
+outputHistogramFile=
