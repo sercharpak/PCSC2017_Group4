@@ -1,0 +1,22 @@
+README of the PCSC project 8 "Image/Sound processing" during the fall semester 2017, done by Sergio Daniel Hernandez Charpak and Didier Bieler
+
+This project was coded using the librairy AudioFile (you can find the source file in the directory Project on the repository) developed by Adam Stark
+
+To run the different tests, you need to execute the bash file "name.sh" using the command "./name.sh" #DIRE OU IL EST DANS LE DOSSIER
+
+The different tests are :
+1) Test of the discrete Fourier transform and discrete inverse Fourier transform. Note that the computation is expensive, thus it is better to use a small signal (~20000 samples)
+2) Test of the generation of a signal of a given frequency and saving it in a .wav file
+3) Tests of the different filters (Laplace (Highpass), Mean(Lowpass), Prewitt(Bandpass) and Median(noise removal))
+4) Tests of the different exception (Histogram, ConfigFile, ConfigParser, FilterSize)
+
+
+If you want to test yourself, you can create a config file using the template "input_options.txt".
+In this file you can choose different options:
+1) Choose the type of input file (Audio file, sample file, frequencies file). By default we load a sound_file. Note that the audio files must be monochannel.
+2) Choose which filter you want to apply and the size of the filter (aka the size of the mask).
+3) Choose if you want to compute the Fourier Transform and if yes if you want to save it in a file. Note that the complexity is in O(N^2) where N is the size of the signal. We recommand not to do the Fourier transform of a signal bigger than 20000 samples.
+4) Choose if you want to compute the histogram of the signal and if so, how many bins you like to use. You also need to specify the file in which you want to save the histogram.
+5) Choose in which format you want to save the signal and also the name of the file you want to save into.
+
+Be careful that the names of the different files must NOT contain any quotes! 
