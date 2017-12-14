@@ -29,10 +29,10 @@ int testIDFT();
  * @return int 0 if well executed 1 if not.
  */
 int main(int argc, char* argv[]) {
-    if(argc!=N_ARGS){
-        std::cout<<USAGE<< std::endl;
-        return 1;
-    }
+    //if(argc!=N_ARGS){
+    //    std::cout<<USAGE<< std::endl;
+    //    return 1;
+    //}
     try{
         /*
         std::string fName = argv[1];
@@ -65,7 +65,7 @@ int main(int argc, char* argv[]) {
         std::cout << "PI = " << M_PI << std::endl;
 
         int a(testIDFT());*/
-
+    /*
         LA_NoteSignal.FourierTransformCalculator();
         std::ofstream fft ("fft.dat");
         for (size_t i(0); i < (LA_NoteSignal.getFrequencies().size())/2; ++i){
@@ -81,7 +81,25 @@ int main(int argc, char* argv[]) {
         }
 
         LA_NoteSignal.WriteSound("AAAAAAAAAA.wav");
+
+    */
+        ReadFrequencyFile file ("frequencyFile.dat",10000);
+        Signal Fre = file.construct();
+
+        Fre.Histogram(50,"HistogramFrequencyFile.dat");
+
+        //Fre.FourierTransformCalculator();
+        std::string FT ("LectureFT.dat");
+        //for (size_t i(0); i < (Fre.getFrequencies().size())/2; ++i){
+        //    FT << Fre.getFrequencies()[i] << " ";
+        //    FT << std::abs(Fre.getFourierTransform()[i]) << std::endl;
+        //}
+
+        Fre.WriteFourier(FT);
+
         //=======================================================
+
+
 
         return 0;
 

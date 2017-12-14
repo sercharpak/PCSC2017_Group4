@@ -19,14 +19,16 @@
  * In order to do that, I generate three signals from 3 different frequenceies and then concatenate the signals
  * together and save the result into a file.
  *
+ * BE CAREFUL: THIS TEST TAKES TIME DUE TO THE FOURIER TRANSFORM!
+ *
 */
 
 int main(int argc, char* argv[]) {
 
     //Construct the signal from the frequency for DO, RE, MI
-    ConstructFromFrequency DO_Note(261.63, 88200);
-    ConstructFromFrequency RE_Note(293.66, 88200);
-    ConstructFromFrequency MI_Note(329.63, 88200);
+    ConstructFromFrequency DO_Note(261.63, 11025);
+    ConstructFromFrequency RE_Note(293.66, 11025);
+    ConstructFromFrequency MI_Note(329.63, 11025);
 
     Signal DO_NoteSignal;
     Signal RE_NoteSignal;
@@ -40,11 +42,9 @@ int main(int argc, char* argv[]) {
 
     Song = concatenate(DO_NoteSignal, RE_NoteSignal);
     Song = concatenate(Song, MI_NoteSignal);
-    Song = concatenate(Song,RE_NoteSignal);
-    Song = concatenate(Song, DO_NoteSignal);
 
     std::string songFourier ="SongFourier.dat";
-    Song.FourierTransformCalculator(0,400,songFourier);
+    Song.WriteFourier(songFourier);
 
     // Finally I wrote the signal in a sound file.
     Song.WriteSound("Song.wav");

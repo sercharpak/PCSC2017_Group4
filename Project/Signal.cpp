@@ -26,6 +26,7 @@ Signal::Signal(std::vector<double> sam, double samRate):sample(sam),samplerate(s
     for (int i = 0; i<numSamples;++i){
         time.push_back(i*step);
     }
+
 }
 
 Signal::~Signal(){}
@@ -68,6 +69,10 @@ void Signal::Histogram(int number_bin, std::string fileName){
     double bin(audio[0] + pas);
     double value_per_bin(0);
 
+    file << "# File containing the Histogram of the signal computed with the method 'Histogram' in the project sound processing"
+         << std::endl;
+    file << "# BIN, NUMBER OF VALUES" << std::endl;
+
     for (int i = 0; i < numSamples; i++)
     {
 
@@ -106,7 +111,7 @@ void Signal::FourierTransformCalculator(){
             sum = (sum + sum_temp);
         }
         signalDFT[k]=sum;
-        double freq = k * 44100.0 / N;
+        double freq = k * samplerate / N;
         Frequencies[k] = freq;
     }
 
@@ -116,9 +121,17 @@ void Signal::FourierTransformCalculator(){
     std::cout << "Finished computing the DTF " << std::endl;
 }
 
-void Signal::FourierTransformCalculator(int min_frequency, int max_frequency, std::string fileName) {//Changer ça, mettre une execption et changer le nom pour seulement enregister le fichier avec les fréquences
+void Signal::WriteFourier(std::string fileName){//Changer ça, mettre une execption et changer le nom pour seulement enregister le fichier avec les fréquences
     std::ofstream file(fileName);
-    Signal::FourierTransformCalculator();
+    if(fouriertransform.empty()) {//Avoid recomputing the fourier transform (heavy computationnaly)
+        Signal::FourierTransformCalculator();
+
+    }
+
+    file << "# File containing the modulus of the fourier transform of the signal computed with the method 'WriteFourier' in the project sound processing"
+         << std::endl;
+    file << "# FREQUENCIES, AMPLITUDES" << std::endl;
+
     for (size_t i (0); i<frequencies.size(); ++i){// Store the Fourier Transform into a file.
         file << frequencies[i] << " ";
         file << std::abs(fouriertransform[i]) << std::endl;
@@ -128,6 +141,11 @@ void Signal::FourierTransformCalculator(int min_frequency, int max_frequency, st
 
 void Signal::SaveSignal(std::string fileName){
     std::ofstream file(fileName);
+
+    file << "# File containing the amplitude of the signal computed with the method 'SaveSignal' in the project sound processing"
+         << std::endl;
+    file << "# TIME, SAMPLES" << std::endl;
+
     for (size_t i(0); i< sample.size(); ++i){ // Save the signal and the samples into a file.
         file << time[i] << " ";//Change this to not have the time in the file
         file << sample[i] << std::endl;
@@ -210,7 +228,6 @@ Signal concatenate(const Signal& S1,const Signal& S2) {
     }
 
     Signal sign(Sf);
-    std::cout << "Concatenation done" << std::endl;
 
     return Sf;
 }

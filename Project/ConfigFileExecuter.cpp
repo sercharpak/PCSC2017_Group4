@@ -125,7 +125,7 @@ void ConfigFileExecuter::execute(){
         std::string fileName;
         auto iter_file = data.find(fileNameKey);
         fileName =(iter->second);
-        SoundSignal.FourierTransformCalculator(0,500,fileName);
+        SoundSignal.WriteFourier(fileName);
     }
     tempKey = "fourierCompute";
     iter = data.find(tempKey);

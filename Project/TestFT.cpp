@@ -48,7 +48,7 @@ int main(int argc, char* argv[]) {
     std::cout << "The error is " << error << std::endl;
 
     // OUTPUT : The error is 1.39112e-20
-    
+
 
 
     return 0;

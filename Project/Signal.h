@@ -109,14 +109,12 @@ public:
      * @param file std::ofstream in which we store the histogram and the corresponding bins
      */
     void Histogram(int number_bin,std::string fileName) ;
-    /** Fourier Transform
+    /** Writer for the Fourier transform into a file (calculate it if not already calculated)
      *
-     * Compute the Fourier transform of the signal.
-     * @param min_frequency int which represents the minimum frequency where we start to compute the Fourier transform.
-     * @param max_frequency in which represents the maximum frequency where we stop the computation of the Fourier transform.
+     * Write the Fourier transform into a file (calculate it if not already calculated)
      * @param file std::ofstream in which we store the Fourier transform modulus and the corresponding frequencies.
     */
-    void FourierTransformCalculator(int min_frequency, int max_frequency, std::string fileName);
+    void WriteFourier(std::string fileName);
 
     /** Fourier Transform (no file saved)
      *

@@ -87,12 +87,15 @@ private:
     /** Name (and absolute path) of the frequency file.
      */
     std::string name;
+    /** Number of samples we want in the sample.
+     */
+    double numSamples;
 public:
     /** Constructor with the frequency and the number of sample.
      *
      * @param n string which is the name of the file of frequencies we want to load.
      */
-    ReadFrequencyFile(std::string n);
+    ReadFrequencyFile(std::string n, double numS = 352800.0);
 
     /** Construct the signal from the frequency.
      *
