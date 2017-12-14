@@ -21,6 +21,7 @@
 #include <iostream>
 #include <cmath>
 #include "HistogramException.h"
+#include "InverseFourierException.h"
 
 #include "AudioFile.h"
 

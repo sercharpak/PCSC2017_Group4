@@ -1,14 +1,13 @@
 //=======================================================================
-/** @file TestFT.cpp
+/** @file TestErrorFT.cpp
  *  @author Didier Bieler && Sergio Hernandez
  *
  * This file is part of the project of Sound Processing.
  *
- * This file is to test if the Fourier transform and the inverse one are working correctly
+ * This file is to test if the error handler for the inverse fourier transform is working correctly
  *
- * In order to do that, I generate a signal from a special frequency and then compute the FT and see if the frequency
- * I used is the only one that is present on the FT.
- * Then I apply the inverse Fourier transform and see if the input signal and the reconstruct one are the same.
+ * In order to do that, I generate a signal from a special frequency.
+ * Then I apply the inverse Fourier transform and see if the error is throw since the fourier transform wasn't calculated...
  */
 //=======================================================================
 #include <iostream>
@@ -32,28 +31,15 @@ int main(int argc, char* argv[]) {
     Signal LA_NoteSignal;
     LA_NoteSignal = LA_Note.construct();
 
-    //Compute the Fourier transform of the signal
-    LA_NoteSignal.FourierTransformCalculator();
     try {
+        //Compute the inverse fourier transform of a signal but the fourier transform wasn't calculated before.
         std::vector<double> ReconstructSample(LA_NoteSignal.InverseFourierTransform());
-        //Test if the input signal and the reconstruct one are close.
 
-        double error(0);
-
-        for (size_t i(0); i< LA_NoteSignal.getSamples().size(); ++i){
-            error += pow(LA_NoteSignal.getSamples()[i]-ReconstructSample[i],2);
-        }
-
-        std::cout << "The error is " << error << std::endl;
     }
     catch(const std::runtime_error &e){
         std::cout << e.what() <<std::endl;
         return 1;
     }
-
-
-
-    // OUTPUT : The error is 1.39112e-20
 
 
 

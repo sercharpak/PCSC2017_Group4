@@ -121,11 +121,10 @@ void Signal::FourierTransformCalculator(){
     std::cout << "Finished computing the DTF " << std::endl;
 }
 
-void Signal::WriteFourier(std::string fileName){//Changer ça, mettre une execption et changer le nom pour seulement enregister le fichier avec les fréquences
+void Signal::WriteFourier(std::string fileName){
     std::ofstream file(fileName);
     if(fouriertransform.empty()) {//Avoid recomputing the fourier transform (heavy computationnaly)
         Signal::FourierTransformCalculator();
-
     }
 
     file << "# File containing the modulus of the fourier transform of the signal computed with the method 'WriteFourier' in the project sound processing"
@@ -156,6 +155,9 @@ void Signal::SaveSignal(std::string fileName){
 }
 
 std::vector<double> Signal::InverseFourierTransform(){
+    if(fouriertransform.empty()){
+        throw InverseFourierException();
+    }
     std::vector<double> signalOrig = getFrequencies();
     size_t N = signalOrig.size();
 

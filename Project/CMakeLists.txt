@@ -7,7 +7,9 @@ set(SOURCE_FILES Read.cpp Signal.cpp AudioFile.cpp main.cpp ConfigFileParser.cpp
 
 add_executable(Project ${SOURCE_FILES})
 add_executable(TestFT Read.cpp Signal.cpp AudioFile.cpp TestFT.cpp)
+add_executable(TestErrorFT Read.cpp Signal.cpp AudioFile.cpp TestErrorFT.cpp)
 add_executable(TestSong Read.cpp Signal.cpp AudioFile.cpp TestSong.cpp)
+add_executable(TestFrequencyFile Read.cpp Signal.cpp AudioFile.cpp main_IDFT.cpp ConfigFileParser.cpp ConfigFileExecuter.cpp MedianFilter.cpp)
 
 #Copies files for Doxygen and test running
 file(COPY "run_tests.sh" DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/)

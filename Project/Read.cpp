@@ -1,6 +1,3 @@
-//
-// Created by didier on 04/12/17.
-//
 //=======================================================================
 /** @file Read.cpp
  *  @author Didier Bieler && Sergio Hernandez
