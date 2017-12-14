@@ -2,9 +2,10 @@
 2) Correct the inverse fourier transform/ matlab and calculate by hand
 3) readme
 4) Fourier filter
-5) median filter
+5) median filter %DONE
 6) See where to optimize the code (beautiful code)
 7) Need to check why the histogram doesn't give the right amplitude of the signal.
-8) Need to check the histogram error handler to see if it is correct (we need to see the message) and also for the other ones
+8) Need to check the histogram error handler to see if it is correct (we need to see the message)
+ and also for the other ones %DONE
 9) Construct a signal from a frequence file.
 10) Add the text in the file we give back
