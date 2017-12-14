@@ -46,7 +46,7 @@ private:
 
     /** Frequencies of the Fourier Transform.
      */
-    std::vector<int> frequencies;
+    std::vector<double> frequencies;
 
 public:
 
@@ -100,7 +100,7 @@ public:
      *
      * @return double sample rate
      */
-    std::vector<int> getFrequencies() const;
+    std::vector<double> getFrequencies() const;
 
     /** Histogram
      *
@@ -124,7 +124,7 @@ public:
      * @param min_frequency The minimum frequency where we start to compute the Fourier transform.
      * @param max_frequency The maximum frequency where we stop the computation of the Fourier transform.
     */
-    void FourierTransformCalculator(int min_frequency, int max_frequency);
+    void FourierTransformCalculator();
 
     /** Save the signal sample and time in a file
      * @param fileName std::string the filename of the file in which we want to store the samples and the time.

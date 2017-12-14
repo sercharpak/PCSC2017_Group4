@@ -82,6 +82,25 @@ public:
     virtual Signal construct() override ;
 };
 
+class ReadFrequencyFile: public ConstructSignal{
+private:
+    /** Name (and absolute path) of the frequency file.
+     */
+    std::string name;
+public:
+    /** Constructor with the frequency and the number of sample.
+     *
+     * @param n string which is the name of the file of frequencies we want to load.
+     */
+    ReadFrequencyFile(std::string n);
+
+    /** Construct the signal from the frequency.
+     *
+     * @return Signal construct from the given frequencies.
+     */
+    virtual Signal construct() override; // Need to implement this method.
+};
+
 
 /** Class to read an amplitude file and construct a signal out of it.
  */

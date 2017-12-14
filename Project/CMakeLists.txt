@@ -3,7 +3,7 @@ project(Project)
 
 set(CMAKE_CXX_STANDARD 11)
 
-set(SOURCE_FILES Read.cpp Signal.cpp AudioFile.cpp main.cpp ConfigFileParser.cpp ConfigFileExecuter.cpp)
+set(SOURCE_FILES Read.cpp Signal.cpp AudioFile.cpp main.cpp ConfigFileParser.cpp ConfigFileExecuter.cpp MedianFilter.cpp)
 #Supprimer le MedianFilter.cpp
 #set(SOURCE_FILES Read.cpp Signal.cpp AudioFile.cpp main.cpp ConfigFileParser.cpp ConfigFileParser.h ConfigFileExecuter.cpp ConfigFileExecuter.h)
 

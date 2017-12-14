@@ -35,23 +35,24 @@ int main(int argc, char* argv[]) {
         return 1;
     }
     try{
+        /*
         std::string fName = argv[1];
         ConfigFileParser parser = ConfigFileParser();
         parser.parseFile(fName);
         parser.verify();
         ConfigFileExecuter executer = ConfigFileExecuter(parser);
         executer.execute();
-
+        */
         //Trying some Stuff
         //=======================================================
 
 
-        ConstructFromFrequency LA_Note(3,1000);
+        ConstructFromFrequency LA_Note(300,10000);
 
         //ConstructFromFrequency LA_Note(440);
         Signal LA_NoteSignal;
         LA_NoteSignal = LA_Note.construct();
-
+        /*
         LA_NoteSignal.FourierTransformCalculator(0,500,"Fre_LA.dat");
         LA_NoteSignal.Histogram(50,"Hist_LA.dat"); //Does not give the message of error...
 
@@ -64,7 +65,14 @@ int main(int argc, char* argv[]) {
 
         std::cout << "PI = " << M_PI << std::endl;
 
-        int a(testIDFT());
+        int a(testIDFT());*/
+
+        LA_NoteSignal.FourierTransformCalculator();
+        std::ofstream fft ("fft.dat");
+        for (size_t i(0); i < LA_NoteSignal.getFrequencies().size(); ++i){
+            fft << LA_NoteSignal.getFrequencies()[i] << " ";
+            fft << std::abs(LA_NoteSignal.getFourierTransform()[i]) << std::endl;
+        }
 
         //=======================================================
 
@@ -109,7 +117,7 @@ int testIDFT(){
         std::cout<<"Value in 0 = "<<signalOrig[0] << std::endl;
 
         std::vector<std::complex<double>> signalDFT = std::vector<std::complex<double>>(N);
-        std::vector<double> frequencies = std::vector<double>(N);
+        std::vector<double> frequencies = std::vector<double>(N/2.0);
 
         //For all frequencies it takes too long
         //We need to put some limits for the possible frequencies

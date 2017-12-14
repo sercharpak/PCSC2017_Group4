@@ -42,7 +42,7 @@ std::vector<std::complex<double>> Signal::getFourierTransform() const{
     return fouriertransform;
 }
 
-std::vector<int> Signal::getFrequencies() const{
+std::vector<double> Signal::getFrequencies() const{
     return frequencies;
 }
 
@@ -86,30 +86,45 @@ void Signal::Histogram(int number_bin, std::string fileName){
     std::cout << "Histogram calculated sucessfully" << std::endl;
 }
 
-void Signal::FourierTransformCalculator(int min_frequency, int max_frequency){
-    if (min_frequency > max_frequency){//Check if the values are not in the wrong order...
-        int temp (min_frequency);
-        min_frequency = max_frequency;
-        max_frequency = temp;
-    }
-    // Throw pour négative
-    size_t size(sample.size());
-    for (int w(min_frequency); w<max_frequency; w++){
-        std::complex<double> Fourier_transform(0,0);
-        for (size_t k(0); k < size; ++k) {
-            double t(k*1.0/size);
-            std::complex<double> temp(sample[k] * cos((2*M_PI*t*w)),(-1.0) * sample[k] * sin((2*M_PI*t*w)));
-            Fourier_transform += temp;//(1.0/sqrt(size))*temp;
+void Signal::FourierTransformCalculator(){
+    std::vector<double> signalOrig = sample;
+
+    size_t N = signalOrig.size();
+
+    std::vector<std::complex<double>> signalDFT = std::vector<std::complex<double>>(N);
+    std::vector<double> Frequencies = std::vector<double>(N/2.0);
+
+    std::cout << "Computing the DTF " << std::endl;
+
+    for (size_t k=0;k<N;++k){
+        //Value k
+        std::complex<double> sum(0,0);
+        for (size_t n=0;n<N;++n){
+            //Sum
+            double x_n = signalOrig[n];
+            double exp_arg = (2.0*M_PI*k*n)/N ;
+            std::complex<double> sum_temp(x_n*cos(exp_arg),(-1.0)*x_n*sin(exp_arg));
+            sum = (sum + sum_temp);
         }
-        fouriertransform.push_back(Fourier_transform);
-        frequencies.push_back(w);
+        signalDFT[k]=sum;
+        if(k<N/2.0) {
+            double freq = k * 44100.0 / N;
+            Frequencies[k] = freq;
+        }
     }
-    std::cout<<"Fourier Transform calculated successfully" << std::endl;
+    //std::vector<std::complex<double>> FT_S(Frequencies.size());
+    for (size_t i(0); i<Frequencies.size(); ++i){//We only have use the half of the fourier transform
+        fouriertransform.push_back( signalDFT[i] );
+    }
+
+    frequencies = Frequencies;
+
+    std::cout << "Finished computing the DTF " << std::endl;
 }
 
-void Signal::FourierTransformCalculator(int min_frequency, int max_frequency, std::string fileName) {
+void Signal::FourierTransformCalculator(int min_frequency, int max_frequency, std::string fileName) {//Changer ça, mettre une execption et changer le nom pour seulement enregister le fichier avec les fréquences
     std::ofstream file(fileName);
-    Signal::FourierTransformCalculator(min_frequency,max_frequency);
+    Signal::FourierTransformCalculator();
     for (size_t i (0); i<frequencies.size(); ++i){// Store the Fourier Transform into a file.
         file << frequencies[i] << " ";
         file << std::abs(fouriertransform[i]) << std::endl;
@@ -134,7 +149,7 @@ std::vector<double> Signal::InverseFourierTransform(std::string fileName){
     size_t sizeSam(sample.size());
     std::vector<std::complex<double>> ResultSample;
     std::vector<std::complex<double>> Fourier = fouriertransform;
-    std::vector<int> Freque = frequencies;
+    std::vector<double> Freque = frequencies;
 
     std::vector<double> EndSample(sizeSam);
     for (int w(0);w<sizeSam;++w){
