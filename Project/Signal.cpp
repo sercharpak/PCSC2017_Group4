@@ -223,7 +223,14 @@ void Signal::WriteSound(std::string fileName){
 }
 
 Signal concatenate(const Signal& S1,const Signal& S2) {
-    std::vector<double> Sf = S1.getSamples();// Copy the first vector.
+
+    std::vector<double> Sf;
+    if (S1.getSamples().size()>= S2.getSamples().size()){//Optimization in order to add the longest signal to the smallest.
+        Sf = S1.getSamples();// Either copy the first vector.
+    }
+    else{
+        Sf = S2.getSamples();// or copy the second vector.
+    }
     double sizeS2(S2.getSamples().size());
     for (size_t i(0); i < sizeS2; ++i){ // Add the second vector behind the first one.
         Sf.push_back(S2.getSamples()[i]);
