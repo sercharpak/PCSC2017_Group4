@@ -88,11 +88,10 @@ void Signal::Histogram(int number_bin, std::string fileName){
 
 void Signal::FourierTransformCalculator(){
     std::vector<double> signalOrig = sample;
-
     size_t N = signalOrig.size();
 
     std::vector<std::complex<double>> signalDFT = std::vector<std::complex<double>>(N);
-    std::vector<double> Frequencies = std::vector<double>(N/2.0);
+    std::vector<double> Frequencies = std::vector<double>(N);
 
     std::cout << "Computing the DTF " << std::endl;
 
@@ -107,17 +106,12 @@ void Signal::FourierTransformCalculator(){
             sum = (sum + sum_temp);
         }
         signalDFT[k]=sum;
-        if(k<N/2.0) {
-            double freq = k * 44100.0 / N;
-            Frequencies[k] = freq;
-        }
-    }
-    //std::vector<std::complex<double>> FT_S(Frequencies.size());
-    for (size_t i(0); i<Frequencies.size(); ++i){//We only have use the half of the fourier transform
-        fouriertransform.push_back( signalDFT[i] );
+        double freq = k * 44100.0 / N;
+        Frequencies[k] = freq;
     }
 
     frequencies = Frequencies;
+    fouriertransform = signalDFT;
 
     std::cout << "Finished computing the DTF " << std::endl;
 }
@@ -143,31 +137,34 @@ void Signal::SaveSignal(std::string fileName){
     file.close();
 }
 
-std::vector<double> Signal::InverseFourierTransform(std::string fileName){
-    std::ofstream file(fileName);
-    size_t sizeFre(frequencies.size());
-    size_t sizeSam(sample.size());
-    std::vector<std::complex<double>> ResultSample;
-    std::vector<std::complex<double>> Fourier = fouriertransform;
-    std::vector<double> Freque = frequencies;
+std::vector<double> Signal::InverseFourierTransform(){
+    std::vector<double> signalOrig = getFrequencies();
+    size_t N = signalOrig.size();
 
-    std::vector<double> EndSample(sizeSam);
-    for (int w(0);w<sizeSam;++w){
-        std::complex<double> InvFourier_transform(0,0);
-        for (size_t k(0); k < sizeFre; ++k) {
-            double t((k*1.0)/samplerate);
-            std::complex<double> temp(cos((2*M_PI*t*w)),sin((2*M_PI*t*w)));
-            InvFourier_transform += (1.0/sizeSam)*Fourier[k] *temp;
+    std::cout << "Computing the IDTF " << std::endl;
+
+    std::vector<double> signalRecov = std::vector<double>(N);
+    std::vector<std::complex<double>> signalDFT = fouriertransform;
+
+    for (int n=0;n<N;++n){
+        //Value k
+        std::complex<double> sum(0,0);
+        for (int k=0;k<N;++k){
+            //Sum
+            std::complex<double> X_k = signalDFT[k];
+            double exp_arg = (2.0*M_PI*k*n)/N ;
+            double real_part = X_k.real()*cos(exp_arg) - X_k.imag()*sin(exp_arg);
+            double imag_part = X_k.real()*sin(exp_arg) + X_k.imag()*cos(exp_arg);
+            std::complex<double> sum_temp(real_part,imag_part);
+            sum += sum_temp;
         }
-        ResultSample.push_back(InvFourier_transform);
-        EndSample[w] = ResultSample[w].real();
-        file << w << " ";
-        file << InvFourier_transform.real() <<std::endl;
+        signalRecov[n]=(1.0/N)*sum.real();
     }
 
-    std::cout<<"Inverse Fourier Transform calculated sucessfully" << std::endl;
-    file.close();
-    return EndSample;
+    std::cout << "Finished computing the IDTF " << std::endl;
+
+    return signalRecov;
+
 
 }
 

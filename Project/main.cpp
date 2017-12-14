@@ -47,7 +47,7 @@ int main(int argc, char* argv[]) {
         //=======================================================
 
 
-        ConstructFromFrequency LA_Note(300,10000);
+        ConstructFromFrequency LA_Note(440,10000);
 
         //ConstructFromFrequency LA_Note(440);
         Signal LA_NoteSignal;
@@ -69,11 +69,19 @@ int main(int argc, char* argv[]) {
 
         LA_NoteSignal.FourierTransformCalculator();
         std::ofstream fft ("fft.dat");
-        for (size_t i(0); i < LA_NoteSignal.getFrequencies().size(); ++i){
+        for (size_t i(0); i < (LA_NoteSignal.getFrequencies().size())/2; ++i){
             fft << LA_NoteSignal.getFrequencies()[i] << " ";
             fft << std::abs(LA_NoteSignal.getFourierTransform()[i]) << std::endl;
         }
 
+        std::ofstream ifft("ifft.dat");
+        std::vector<double> INV(LA_NoteSignal.InverseFourierTransform());
+        for (size_t i(0); i < INV.size(); ++i){
+            ifft << i << " ";
+            ifft << INV[i] << std::endl;
+        }
+
+        LA_NoteSignal.WriteSound("AAAAAAAAAA.wav");
         //=======================================================
 
         return 0;
@@ -87,7 +95,7 @@ int main(int argc, char* argv[]) {
 
 }
 
-
+/*
 int testIDFT(){
     try{
         Signal SoundSignal;
@@ -110,11 +118,11 @@ int testIDFT(){
         for (size_t i(0); i<N; ++i){
             NewSample[i] = signalOrig[i];
         }
-*/
+
         //Signal SoundSignal(NewSample);
 
 
-        std::cout<<"Value in 0 = "<<signalOrig[0] << std::endl;
+        //std::cout<<"Value in 0 = "<<signalOrig[0] << std::endl;
 
         std::vector<std::complex<double>> signalDFT = std::vector<std::complex<double>>(N);
         std::vector<double> frequencies = std::vector<double>(N/2.0);
@@ -122,7 +130,7 @@ int testIDFT(){
         //For all frequencies it takes too long
         //We need to put some limits for the possible frequencies
 
-        std::cout << "Computing the DTF " << std::endl;
+        //std::cout << "Computing the DTF " << std::endl;
 
         for (size_t k=0;k<N;++k){
             //Value k
@@ -134,7 +142,7 @@ int testIDFT(){
                 std::complex<double> sum_temp(x_n*cos(exp_arg),(-1.0)*x_n*sin(exp_arg));
                 sum = (sum + sum_temp);
             }
-            signalDFT[k]=sum;
+            //signalDFT[k]=sum;
             if(k<=N/2.0) {
                 double freq = k * 44100.0 / N;
                 frequencies[k] = freq;
@@ -195,7 +203,7 @@ int testIDFT(){
         std::cout << e.what() <<std::endl;
         return 1;
     }
-}
+}*/
 /*
 int testFiltersSpatial(){
     try {

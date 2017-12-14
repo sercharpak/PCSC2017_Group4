@@ -135,7 +135,7 @@ public:
      *
      * @param fileName  string which gives the name of the file inside we want to store the inverse fourier transform.
      */
-    std::vector<double> InverseFourierTransform(std::string fileName);
+    std::vector<double> InverseFourierTransform();
 
     /** Write the signal inside a sound file.
      *
