@@ -2,13 +2,13 @@
 #===========================================
 #----------------Input-File-----------------
 type_input=ampl
-filename=../test-audio/highLowSignal.dat
+filename=./test-audio/highLowSignal.dat
 #----------------Output-File----------------
 type_output=ampl
-outputFile=../test-audio/highLowSignal_Filtered.dat
+outputFile=./test-audio/laplace_highPass_Filtered.dat
 #------------Filters-Spatial-Domain---------
 filters=laplace
-filtersizes=3
+filtersizes=21
 #===========================================
 fourierCompute=0
 fourierWrite=0

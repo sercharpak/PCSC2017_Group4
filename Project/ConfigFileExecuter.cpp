@@ -132,7 +132,7 @@ void ConfigFileExecuter::execute(){
     valueTemp = iter->second;
     //Checks the cases
     if(valueTemp=="1")
-        SoundSignal.FourierTransformCalculator(0,500);
+        SoundSignal.FourierTransformCalculator();
     //Type output
     tempKey = "type_output";
     iter = data.find(tempKey);

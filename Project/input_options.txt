@@ -1,4 +1,5 @@
 #Text file with the options to execute te Sound Processing Program
+#Authors: Didier Bieler & Sergio Daniel Hernandez Charpak
 #===========================================
 #----------------Format---------------------
 #-To comment just start a line with the '#' character
@@ -18,9 +19,10 @@ filename=../test-audio/wav_mono_16bit_44100.wav
 #Standard mask size is 5. If desired different mask sizes please specify
 #the sizes for all filters
 #Available filters are:
-#-Mean (low pass)
-#-Prewitt (band pass)
-#-Laplace (high pass)
+#-Mean (Linear, low pass)
+#-Prewitt (Linear, band pass)
+#-Laplace (Linear, high pass)
+#-Median (Non-linear, impulse denoising)
 filters=mean,prewitt,laplace,median
 filtersizes=7,3,5,9
 #------------Fourier-Transform--------------
@@ -42,7 +44,7 @@ outputHistogramFile=test_mono_16bit_44100_histogram.dat
 #-Can be:
 #-an AudioFile:'audio'
 #-a text file with the times and amplitudes:'ampl'
-#type_output=audio
-#outputFile=test_mono_16bit_44100.wav
-type_output=ampl
-outputFile=test_mono_16bit_44100.dat
+#-a text file with the frequencies:'freq'
+type_output=audio
+outputFile=test_mono_16bit_44100.wav
+
