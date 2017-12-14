@@ -1,7 +1,16 @@
-//
-// Created by didier on 07/12/17.
-//
-
+//=======================================================================
+/** @file TestFT.cpp
+ *  @author Didier Bieler && Sergio Hernandez
+ *
+ * This file is part of the project of Sound Processing.
+ *
+ * This file is to test if the Fourier transform and the inverse one are working correctly
+ *
+ * In order to do that, I generate a signal from a special frequency and then compute the FT and see if the frequency
+ * I used is the only one that is present on the FT.
+ * Then I apply the inverse Fourier transform and see if the input signal and the reconstruct one are the same.
+ */
+//=======================================================================
 #include <iostream>
 #include <fstream>
 #include <vector>
@@ -15,36 +24,31 @@
 #include "MeanFilter.h"
 #include "Read.h"
 
-/*This file is to test if the Fourier transform is working correctly
- *
- * In order to do that, I generate a signal from a special frequency and then compute the FT and see if the frequency
- * I used is the only one that is present on the FT.
- *
-*/
-
 
 int main(int argc, char* argv[]) {
 
-    //Construct the signal from the frequency 440
-    ConstructFromFrequency LA_Note(440);
+    //Construct the signal from the frequency 5 and 10000 samples
+    ConstructFromFrequency LA_Note(5,10000);
     Signal LA_NoteSignal;
     LA_NoteSignal = LA_Note.construct();
 
     //Compute the Fourier transform of the signal
-    LA_NoteSignal.FourierTransformCalculator(-500,500);
+    LA_NoteSignal.FourierTransformCalculator();
 
-    //Test if the only frequency that we found is the 440 frequency.
+    std::vector<double> ReconstructSample(LA_NoteSignal.InverseFourierTransform());
 
-    for (size_t i(0); i< LA_NoteSignal.getFourierTransform().size(); ++i){
-        if (std::abs(LA_NoteSignal.getFourierTransform()[i]) > pow(10.0,-10.0)){
-            //I test what are the frequencies for which the modulus is negligeable
-            std::cout << "The frequency " << LA_NoteSignal.getFrequencies()[i] << " is non-zero" << std::endl;
-        }
+    //Test if the input signal and the reconstruct one are close.
+
+    double error(0);
+
+    for (size_t i(0); i< LA_NoteSignal.getSamples().size(); ++i){
+        error += pow(LA_NoteSignal.getSamples()[i]-ReconstructSample[i],2);
     }
 
-    /* OUTPUT : The frequency -440 is non-zero
-                The frequency 440 is non-zero
-    */
+    std::cout << "The error is " << error << std::endl;
+
+    // OUTPUT : The error is 1.39112e-20
+    
 
 
     return 0;
