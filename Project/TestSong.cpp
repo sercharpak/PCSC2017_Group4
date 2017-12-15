@@ -44,10 +44,10 @@ int main(int argc, char* argv[]) {
     Song = concatenate(Song, MI_NoteSignal);
 
     std::string songFourier ="SongFourier.dat";
-    Song.WriteFourier(songFourier);
+    Song.writeFourier(songFourier);
 
     // Finally I wrote the signal in a sound file.
-    Song.WriteSound("Song.wav");
+    Song.writeSound("Song.wav");
 
     return 0;
 }

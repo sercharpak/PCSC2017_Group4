@@ -52,7 +52,7 @@ double Signal::getSampleRate() const{
 }
 
 
-void Signal::Histogram(int number_bin, std::string fileName){
+void Signal::histogram(int number_bin, std::string fileName){
     if (number_bin<= 0){ //Check if the number of bin is positive.
         throw HistogramException();
     }
@@ -91,7 +91,7 @@ void Signal::Histogram(int number_bin, std::string fileName){
     std::cout << "Histogram calculated sucessfully" << std::endl;
 }
 
-void Signal::FourierTransformCalculator(){
+void Signal::fouriertransformCalculator(){
     std::vector<double> signalOrig = sample;
     size_t N = signalOrig.size();
 
@@ -121,10 +121,10 @@ void Signal::FourierTransformCalculator(){
     std::cout << "Finished computing the DTF " << std::endl;
 }
 
-void Signal::WriteFourier(std::string fileName){
+void Signal::writeFourier(std::string fileName){
     std::ofstream file(fileName);
     if(fouriertransform.empty()) {//Avoid recomputing the fourier transform (heavy computationnaly)
-        Signal::FourierTransformCalculator();
+        Signal::fouriertransformCalculator();
     }
 
     file << "# File containing the modulus of the fourier transform of the signal computed with the method 'WriteFourier' in the project sound processing"
@@ -138,7 +138,7 @@ void Signal::WriteFourier(std::string fileName){
     file.close();
 }
 
-void Signal::SaveSignal(std::string fileName){
+void Signal::saveSignal(std::string fileName){
     std::ofstream file(fileName);
 
     file << "# File containing the amplitude of the signal computed with the method 'SaveSignal' in the project sound processing"
@@ -154,7 +154,7 @@ void Signal::SaveSignal(std::string fileName){
     file.close();
 }
 
-std::vector<double> Signal::InverseFourierTransform(){
+std::vector<double> Signal::inversefourierTransform(){
     if(fouriertransform.empty()){
         throw InverseFourierException();
     }
@@ -188,7 +188,7 @@ std::vector<double> Signal::InverseFourierTransform(){
 
 }
 
-void Signal::WriteSound(std::string fileName){
+void Signal::writeSound(std::string fileName){
 
     AudioFile<double> audioFile;// Define an object of the class AudioFile.
     double numSamples = sample.size();

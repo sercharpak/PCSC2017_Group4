@@ -33,7 +33,7 @@ int main(int argc, char* argv[]) {
 
     try {
         //Compute the inverse fourier transform of a signal but the fourier transform wasn't calculated before.
-        std::vector<double> ReconstructSample(LA_NoteSignal.InverseFourierTransform());
+        std::vector<double> ReconstructSample(LA_NoteSignal.inversefourierTransform());
 
     }
     catch(const std::runtime_error &e){

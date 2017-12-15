@@ -33,9 +33,9 @@ int main(int argc, char* argv[]) {
     LA_NoteSignal = LA_Note.construct();
 
     //Compute the Fourier transform of the signal
-    LA_NoteSignal.FourierTransformCalculator();
+    LA_NoteSignal.fouriertransformCalculator();
     try {
-        std::vector<double> ReconstructSample(LA_NoteSignal.InverseFourierTransform());
+        std::vector<double> ReconstructSample(LA_NoteSignal.inversefourierTransform());
         //Test if the input signal and the reconstruct one are close.
 
         double error(0);
