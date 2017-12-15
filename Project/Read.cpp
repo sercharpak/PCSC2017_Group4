@@ -5,7 +5,11 @@
  * This file is part of the project of Sound Processing
  *
  *
- * This classes are useful to generate a signal from different ways
+ * These classes are useful to generate a signal from different ways.
+ * We can generate a signal from an AudioFile.
+ * We can generate a signal from a specific frequency.
+ * We can generate a signal from a file containing the samples and the time of the signal.
+ * We can generate a signal from a file containing some precise frequencies.
  *
  */
 //=======================================================================

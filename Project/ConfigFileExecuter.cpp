@@ -36,10 +36,10 @@ void ConfigFileExecuter::execute(){
         SoundSignal = reader.construct();
     }
     //\todo Implement a Reader class which reads a frequency file and constructs a Signal from it
-    //else if(valueTemp="freq"){
-    //    ReadFrequenciesFile reader(fileName);
-    //    SoundSignal = reader.construct();
-    //}
+    else if(valueTemp=="freq"){
+        ReadFrequencyFile reader(fileName);
+        SoundSignal = reader.construct();
+    }
     else
         throw FileParserException();
 
@@ -114,7 +114,7 @@ void ConfigFileExecuter::execute(){
         int binsHistogram;
         iter_file = data.find(tempKey);
         binsHistogram =stoi(iter->second);
-        SoundSignal.Histogram(binsHistogram,fileName);
+        SoundSignal.histogram(binsHistogram,fileName);
     }
     tempKey = "fourierWrite";
     iter = data.find(tempKey);
@@ -125,14 +125,14 @@ void ConfigFileExecuter::execute(){
         std::string fileName;
         auto iter_file = data.find(fileNameKey);
         fileName =(iter->second);
-        SoundSignal.WriteFourier(fileName);
+        SoundSignal.writeFourier(fileName);
     }
     tempKey = "fourierCompute";
     iter = data.find(tempKey);
     valueTemp = iter->second;
     //Checks the cases
     if(valueTemp=="1")
-        SoundSignal.FourierTransformCalculator();
+        SoundSignal.fouriertransformCalculator();
     //Type output
     tempKey = "type_output";
     iter = data.find(tempKey);
@@ -142,8 +142,8 @@ void ConfigFileExecuter::execute(){
     fileName =(iter->second);
     //Checks the cases
     if(valueTemp=="audio")
-        SoundSignal.WriteSound(fileName);
+        SoundSignal.writeSound(fileName);
     if(valueTemp=="ampl")
-        SoundSignal.SaveSignal(fileName);
+        SoundSignal.saveSignal(fileName);
 
 }

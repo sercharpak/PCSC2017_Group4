@@ -9,6 +9,7 @@
  * We can generate a signal from an AudioFile.
  * We can generate a signal from a specific frequency.
  * We can generate a signal from a file containing the samples and the time of the signal.
+ * We can generate a signal from a file containing some precise frequencies.
  *
  */
 //=======================================================================
@@ -38,7 +39,7 @@ public:
 
 /** Class to read an audio file and construct a signal out of it.
  */
-class ReadAudioFile:public ConstructSignal{
+class ReadAudioFile: public ConstructSignal{
 private:
     /** Name (and absolute path) of the audio file (and the absolute path).
      */
