@@ -72,9 +72,6 @@ std::string StandardFilter<T>::getName()
 template<typename T>
 std::vector<T> StandardFilter<T>::applySamples(std::vector<T> pSignal)
 {
-    //\todo Verify that the mirror boundary conditions are correct
-    //\todo Use some of the new C++ features here (for_each, iota, etc...)
-    //\todo verify if no recursion can be done as a standard manner.
     int n = pSignal.size();
     std::vector<T> outputSignal = std::vector<T>(n);
     int l0 = (length -1)/2;
@@ -88,7 +85,7 @@ std::vector<T> StandardFilter<T>::applySamples(std::vector<T> pSignal)
             if(index > (n-1)){
                 index = 2*(n-1) - index;
             }
-            outputValue = outputValue + mask[j]*pSignal[index];
+            outputValue = outputValue + mask[j+l0]*pSignal[index];
         }
         outputSignal[i] = outputValue;
     }

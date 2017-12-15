@@ -23,6 +23,7 @@
 #include "HistogramException.h"
 #include "InverseFourierException.h"
 
+
 #include "AudioFile.h"
 
 
@@ -84,12 +85,27 @@ public:
      * @return std::vector<double> sample
      */
     std::vector<double> getSamples() const;
+    /** Setter for the vector of samples.
+     *
+     * @param std::vector<double> pSamples
+     */
+    void setSamples(std::vector<double> pSamples);
+    /** Setter for the vector of frequencies.
+     *
+     * @param std::vector<double> pFrequencies
+     */
+    void setFrequencies(std::vector<double> pFrequencies);
 
-    /** Getter for the Fourier Transform.
+    /** Getter for the Fourier Transforms.
      *
      * @return std::vector<std::complex<double>> FourierTransform
      */
     std::vector<std::complex<double>> getFourierTransform() const;
+    /** Setter for the Fourier Transforms.
+     *
+     * @param std::vector<std::complex<double>> FourierTransform
+     */
+    void setFourierTransform(std::vector<std::complex<double>> pFourierTransform);
 
     /** Getter for the Frequencies.
      *

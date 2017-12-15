@@ -8,7 +8,7 @@ type_output=ampl
 outputFile=./test-audio/mean_lowPass_Filtered.dat
 #------------Filters-Spatial-Domain---------
 filters=mean
-filtersizes=7
+filtersizes=21
 #===========================================
 fourierCompute=0
 fourierWrite=0
