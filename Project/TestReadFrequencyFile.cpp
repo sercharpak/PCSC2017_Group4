@@ -9,6 +9,7 @@
  * In order to do that, I open a file containing 3 different frequencies.
  * Then I read this file and construct the signal out of it.
  *
+ *
 */
 //=======================================================================
 
@@ -26,6 +27,11 @@
 int main(int argc, char* argv[]) {
 
     std::string name("frequencyFile.dat");
+
+    //Create the file with some frequencies
+    std::ofstream File(name);
+    File << "20 440 500 ";
+    File.close();
 
     //Create the signal from the frequency file
     ReadFrequencyFile FileFrequency (name,10000);
