@@ -36,10 +36,10 @@ void ConfigFileExecuter::execute(){
         SoundSignal = reader.construct();
     }
     //\todo Implement a Reader class which reads a frequency file and constructs a Signal from it
-    //else if(valueTemp="freq"){
-    //    ReadFrequenciesFile reader(fileName);
-    //    SoundSignal = reader.construct();
-    //}
+    else if(valueTemp=="freq"){
+        ReadFrequencyFile reader(fileName);
+        SoundSignal = reader.construct();
+    }
     else
         throw FileParserException();
 
