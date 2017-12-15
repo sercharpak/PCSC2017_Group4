@@ -24,4 +24,6 @@ In this file you can choose different options:
 
 Be careful that the names of the different files must NOT contain any quotes! 
 
+If you want to see the doxygen file, you first need to follow the manual to generate the doc for doxygen and then you need to go in the folder PCSC2017_Group4/Project/doc/html and open in your browser the file index.html.
+
 Note that in the folder Project/test-audio/AditionalScripts you can find some script to run gnuplot and draw some examples of outputs.

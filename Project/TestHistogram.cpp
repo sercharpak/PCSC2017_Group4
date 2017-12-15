@@ -4,7 +4,7 @@
  *
  * This file is part of the project of Sound Processing.
  *
- * This file is to test if the error handler for the histogram is working correctly
+ * This file is to test if the histogram is working correctly
  *
  * In order to do that, I generate a signal from a special frequency.
  * Then I apply the histogram and see if it is correct.
