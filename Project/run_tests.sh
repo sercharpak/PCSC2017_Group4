@@ -25,6 +25,10 @@ echo "Laplace (high pass) test ran succesfully"
 echo "Runing Prewitt (band pass) test"
 ./Project ${TEST_FILES_FOLDER}/test_prewitt_bandPass_options.txt
 echo "Prewitt (band pass) test ran succesfully"
+## Runs the Fourier domain filter tests
+echo "Running the Fourier domain filter tests"
+./TestFourierFilters
+echo "Fourier domain filter tests ran succesfully"
 ##Runs the Song Test
 echo "Running Test Song"
 ./TestSong
