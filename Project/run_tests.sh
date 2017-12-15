@@ -25,3 +25,20 @@ echo "Laplace (high pass) test ran succesfully"
 echo "Runing Prewitt (band pass) test"
 ./Project ${TEST_FILES_FOLDER}/test_prewitt_bandPass_options.txt
 echo "Prewitt (band pass) test ran succesfully"
+##Runs the Song Test
+echo "Running Test Song"
+./TestSong
+echo "Test Song ran succesfully"
+##Runs the Fourier Transform error test
+echo "Running Fourier Transform error test"
+./TestErrorFT
+echo "Fourier Transform error test ran succesfully"
+##Runs the Fourier Transform test
+echo "Running Fourier Transform test"
+./TestFT
+echo "Fourier Transform test ran succesfully"
+##Runs the Fourier Transform test
+echo "Running test for reading the frequency file"
+./TestFrequencyFile
+echo "Test for reading the frequency file ran succesfully"
+
