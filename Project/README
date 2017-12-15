@@ -8,7 +8,8 @@ The different tests are :
 1) Test of the discrete Fourier transform and discrete inverse Fourier transform. Note that the computation is expensive, thus it is better to use a small signal (~20000 samples)
 2) Test of the generation of a signal of a given frequency and saving it in a .wav file
 3) Tests of the different filters (Laplace (Highpass), Mean(Lowpass), Prewitt(Bandpass) and Median(noise removal))
-4) Tests of the different exception (Histogram, ConfigFile, ConfigParser, FilterSize)
+4) Tests of the different Fourier Filters (SingleFrequency, BandPass, LowPass, HighPass)
+5) Tests of the different exception (Histogram, ConfigFile, ConfigParser, FilterSize)
 
 
 If you want to test yourself, you can create a config file using the template "input_options.txt".
