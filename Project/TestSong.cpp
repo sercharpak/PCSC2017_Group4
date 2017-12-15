@@ -1,6 +1,19 @@
-//
-// Created by didier on 08/12/17.
-//
+//=======================================================================
+/** @file TestSong.cpp
+ *  @author Didier Bieler && Sergio Hernandez
+ *
+ * This file is part of the project of Sound Processing.
+ *
+ * This file is to test if the creation of a signal from a frequency is working correctly and also if the saving of the
+ * sound into a file.wav is correct.
+ *
+ * In order to do that, I generate three signals from 3 different frequencies and then concatenate the signals
+ * together and save the result into a file.
+ *
+ * BE CAREFUL: THIS TEST TAKES TIME DUE TO THE FOURIER TRANSFORM!
+ *
+*/
+//=======================================================================
 
 #include <iostream>
 #include <fstream>
@@ -13,15 +26,7 @@
 #include "Signal.h"
 #include "Read.h"
 
-/*This file is to test if the creation of a signal from a frequency is working correctly and also if the saving of the
- * sound into a file.wav is correct
- *
- * In order to do that, I generate three signals from 3 different frequenceies and then concatenate the signals
- * together and save the result into a file.
- *
- * BE CAREFUL: THIS TEST TAKES TIME DUE TO THE FOURIER TRANSFORM!
- *
-*/
+
 
 int main(int argc, char* argv[]) {
 
