@@ -140,7 +140,7 @@ void Signal::writeFourier(std::string fileName){
          << std::endl;
     file << "# FREQUENCIES, AMPLITUDES" << std::endl;
 
-    for (size_t i (0); i<frequencies.size(); ++i){// Store the Fourier Transform into a file.
+    for (size_t i (0); i<frequencies.size()/2; ++i){// Store the Fourier Transform into a file. Only half of the signal since it is periodic
         file << frequencies[i] << " ";
         file << std::abs(fouriertransform[i]) << std::endl;
     }

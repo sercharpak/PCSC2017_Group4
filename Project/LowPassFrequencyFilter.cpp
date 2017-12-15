@@ -1,6 +1,14 @@
-//
-// Created by laptop on 12/15/17.
-//
+//=======================================================================
+/** @file HighPassFrequencyFilter.cpp
+ *  @author Didier Bieler && Sergio Hernandez
+ *
+ * This file is part of the project of Sound Processing
+ *
+ *
+ * This class defines a High Pass Frequency filter in the Fourier domain.
+ *
+ */
+//=======================================================================
 
 #include "LowPassFrequencyFilter.h"
 

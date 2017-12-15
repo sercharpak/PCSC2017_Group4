@@ -1,6 +1,3 @@
-//
-// Created by shernand on 12/7/17.
-//
 //=======================================================================
 /** @file FrequencyFilter.h
  *  @author Didier Bieler && Sergio Hernandez
@@ -8,7 +5,7 @@
  * This file is part of the project of Sound Processing
  *
  *
- * This class defines a Standard Frequency filter in the Fourier domain.
+ * This class defines the filtering in the Fourier Domain
  *
  */
 //=======================================================================

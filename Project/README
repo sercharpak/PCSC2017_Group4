@@ -2,7 +2,9 @@ README of the PCSC project 8 "Image/Sound processing" during the fall semester 2
 
 This project was coded using the librairy AudioFile (you can find the source file in the directory Project on the repository) developed by Adam Stark
 
-To run the different tests, you need to execute the bash file "name.sh" using the command "./name.sh" #DIRE OU IL EST DANS LE DOSSIER
+You first need to compile all the code. You can refer to the manual.pdf given in the main folder
+
+To run the different tests, you need to execute the bash file "run_tests.sh" using the command "./run_tests.sh" in the folder you create with the manual. You might need to alload this file to be executed.
 
 The different tests are :
 1) Test of the discrete Fourier transform and discrete inverse Fourier transform. Note that the computation is expensive, thus it is better to use a small signal (~20000 samples)
@@ -21,3 +23,5 @@ In this file you can choose different options:
 5) Choose in which format you want to save the signal and also the name of the file you want to save into.
 
 Be careful that the names of the different files must NOT contain any quotes! 
+
+Note that in the folder Project/test-audio/AditionalScripts you can find some script to run gnuplot and draw some examples of outputs.

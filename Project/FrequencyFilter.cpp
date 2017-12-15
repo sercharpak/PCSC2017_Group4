@@ -1,14 +1,11 @@
-//
-// Created by shernand on 12/4/17.
-//
 //=======================================================================
-/** @file MeanFilter_imp.h
+/** @file FrequencyFilter.cpp
  *  @author Didier Bieler && Sergio Hernandez
  *
  * This file is part of the project of Sound Processing
  *
  *
- * This class defines a mean filter in the spatial domain.
+ * This class defines the filtering in the Fourier Domain
  *
  */
 //=======================================================================
@@ -41,9 +38,10 @@ std::string FrequencyFilter::getName()
 
 std::vector<std::complex<double>> FrequencyFilter::applyFilter(std::vector<double> pFrequencies,std::vector<std::complex<double>> pFourierTransform){
     double cutFreq = frequencies.back();
-    double epsilon = 1.0;
+    double epsilon = 10.0; // Epsilon quite big because of the small "lag" in the fourier transform
     double upBound = cutFreq+epsilon;
     double downBound = cutFreq-epsilon;
+
     for (int i =0;i<pFrequencies.size();++i){
         double x = pFrequencies[i];
         if(!((x<=upBound) && (x>=downBound))){

@@ -37,6 +37,10 @@ echo "Test Song ran succesfully"
 echo "Running Fourier Transform error test"
 ./TestErrorFT
 echo "Fourier Transform error test ran succesfully"
+##Runs the histogram error test
+echo "Running Histogram error test"
+./TestErrorHistogram
+echo "Histogram error test ran succesfully"
 ##Runs the Fourier Transform test
 echo "Running Fourier Transform test"
 ./TestFT
@@ -45,4 +49,8 @@ echo "Fourier Transform test ran succesfully"
 echo "Running test for reading the frequency file"
 ./TestFrequencyFile
 echo "Test for reading the frequency file ran succesfully"
+##Runs the histogram test
+echo "Running Histogram test"
+./TestHistogram
+echo "Histogram test ran succesfully"
 

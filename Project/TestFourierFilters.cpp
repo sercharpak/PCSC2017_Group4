@@ -1,6 +1,17 @@
-//
-// Created by laptop on 12/15/17.
-//
+//=======================================================================
+/** @file TestFourierFilters.cpp
+ *  @author Didier Bieler && Sergio Hernandez
+ *
+ * This file is part of the project of Sound Processing.
+ *
+ * This file is to test if the Fourier domain filters are working correctly
+ *
+ * In order to do that, I generate a signal from three different frequencies.
+ * I than apply the Fourier Filter to the signal in order to see if they correctly work.
+ * I also apply the inverse fourier transform in order to create a new signal, the transformed one.
+ *
+ */
+//=======================================================================
 #include <iostream>
 #include <fstream>
 #include <vector>
@@ -45,11 +56,13 @@ int main(int argc, char* argv[]) {
         //------Single Frequency Filter
         FrequencyFilter mySingle = FrequencyFilter(freq_1);
         Signal do_OutputSignal = mySingle.apply(song);
+
+        std::string songSingleFreq ="Song_Single_Fourier.dat";
+        do_OutputSignal.writeFourier(songSingleFreq);
         //Inverse Transform it
         std::vector<double> do_OutputSamples(do_OutputSignal.inversefourierTransform());
         do_OutputSignal.setSamples(do_OutputSamples);
-        std::string songSingleFreq ="Song_Single_Fourier.dat";
-        do_OutputSignal.writeFourier(songSingleFreq);
+
         songSingleFreq ="Song_Single.wav";
         do_OutputSignal.writeSound(songSingleFreq);
 
@@ -60,9 +73,10 @@ int main(int argc, char* argv[]) {
         std::vector<double> re_mi_OutputSamples(re_mi_OutputSignal.inversefourierTransform());
         do_OutputSignal.setSamples(re_mi_OutputSamples);
         std::string songHighPass ="Song_HighPass_Fourier.dat";
-        do_OutputSignal.writeFourier(songHighPass);
+        re_mi_OutputSignal.writeFourier(songHighPass);
         songHighPass ="Song_HighPass.wav";
         do_OutputSignal.writeSound(songHighPass);
+
         //------Low Pass Filter
         LowPassFrequencyFilter myLowPass = LowPassFrequencyFilter(freq_2+10.0);
         Signal low_OutputSignal = myLowPass.apply(song);
@@ -73,6 +87,7 @@ int main(int argc, char* argv[]) {
         low_OutputSignal.writeFourier(songLowPass);
         songLowPass ="Song_LowPass.wav";
         low_OutputSignal.writeSound(songLowPass);
+
         //------Band Pass Filter
         std::vector<double> bandPassVec;
         bandPassVec.push_back(freq_1+10);

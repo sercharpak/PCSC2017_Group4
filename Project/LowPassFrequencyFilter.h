@@ -1,6 +1,3 @@
-//
-// Created by laptop on 12/15/17.
-//
 //=======================================================================
 /** @file HighPassFrequencyFilter.h
  *  @author Didier Bieler && Sergio Hernandez
