@@ -68,4 +68,4 @@ public:
 };
 
 
-#endif //PROJECT_MEDIANFILTER_Hv
+#endif //PROJECT_MEDIANFILTER_H

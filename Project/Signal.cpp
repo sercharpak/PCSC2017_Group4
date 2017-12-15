@@ -38,7 +38,16 @@ std::vector<double> Signal::getTime() const{
 std::vector<double> Signal::getSamples() const{
     return sample;
 }
+void Signal::setSamples(std::vector<double> pSamples){
+    sample=pSamples;
+}
+void Signal::setFrequencies(std::vector<double> pFrequencies){
 
+        frequencies=pFrequencies;
+}
+void Signal::setFourierTransform(std::vector<std::complex<double>> pFourierTransform){
+    fouriertransform=pFourierTransform;
+}
 std::vector<std::complex<double>> Signal::getFourierTransform() const{
     return fouriertransform;
 }
